@@ -34,7 +34,7 @@ export function ProductImage({
   }
 
   return (
-    <div className={classNames('relative overflow-hidden bg-stone-100', className)}>
+    <div className={classNames('relative overflow-hidden bg-coal', className)}>
       {!hasError && (
         <img
           src={src}
@@ -47,7 +47,7 @@ export function ProductImage({
       )}
 
       {hasError && (
-        <div className="flex size-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-stone-200 via-stone-100 to-stone-300 text-stone-500">
+        <div className="flex size-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-charcoal via-coal to-charcoal text-ash">
           <svg viewBox="0 0 48 48" className="size-12" aria-hidden="true">
             <circle cx="24" cy="24" r="15" fill="none" stroke="currentColor" strokeWidth="1.5" />
             <circle cx="24" cy="24" r="2" fill="currentColor" />
@@ -60,7 +60,7 @@ export function ProductImage({
               strokeLinejoin="round"
             />
           </svg>
-          {label && <span className="eyebrow text-stone-500">{label}</span>}
+          {label && <span className="eyebrow text-ash">{label}</span>}
         </div>
       )}
     </div>

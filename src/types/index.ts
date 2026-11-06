@@ -28,6 +28,9 @@ export type Collection =
   | 'Dress'
   | 'Aviator'
   | 'Sport'
+  | 'Executive'
+  | 'Fashion'
+  | 'Signature'
 
 export type Feature =
   | 'Automatic Movement'
@@ -93,8 +96,26 @@ export interface ShippingDetails {
   country: string
 }
 
+export type OrderStatus =
+  | 'processing'
+  | 'confirmed'
+  | 'shipped'
+  | 'out-for-delivery'
+  | 'delivered'
+  | 'cancelled'
+
+export interface OrderStatusEntry {
+  status: OrderStatus
+  /** ISO timestamp of the status change. */
+  at: string
+  note?: string
+}
+
+export type PaymentMethod = 'cod' | 'bank-transfer' | 'easypaisa' | 'jazzcash'
+
 export interface OrderLine {
   productId: string
+  slug: string
   name: string
   brand: string
   price: number
@@ -115,4 +136,43 @@ export interface Order {
   tax: number
   total: number
   couponCode?: string
+  paymentMethod: PaymentMethod
+  status: OrderStatus
+  statusHistory: OrderStatusEntry[]
+  /** Set when the order was placed by a signed-in customer. */
+  accountId?: string
 }
+
+/* ------------------------------------------------------------------ */
+/*  Customer accounts                                                  */
+/* ------------------------------------------------------------------ */
+
+export type AccountRole = 'customer' | 'admin'
+
+export interface CustomerAccount {
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  passwordHash: string
+  salt: string
+  role: AccountRole
+  createdAt: string
+  address?: string
+  city?: string
+  state?: string
+  postalCode?: string
+  country?: string
+}
+
+/** The account shape that is safe to keep in memory and render. */
+export type AccountProfile = Omit<CustomerAccount, 'passwordHash' | 'salt'>
+
+/** Fields a customer may edit from their account dashboard. */
+export type ProfilePatch = Partial<
+  Pick<
+    CustomerAccount,
+    'firstName' | 'lastName' | 'phone' | 'address' | 'city' | 'state' | 'postalCode' | 'country'
+  >
+>

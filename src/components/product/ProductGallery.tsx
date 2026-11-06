@@ -34,7 +34,7 @@ export function ProductGallery({ images, alt, label }: ProductGalleryProps) {
               aria-current={index === active}
               className={classNames(
                 'border transition-colors',
-                index === active ? 'border-charcoal' : 'border-transparent hover:border-stone-300',
+                index === active ? 'border-gold' : 'border-transparent hover:border-gold',
               )}
             >
               <ProductImage

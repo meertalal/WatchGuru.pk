@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Award, Compass, Gem, Hammer, Leaf, ShieldCheck } from 'lucide-react'
+import { useDocumentMeta } from '../hooks/useDocumentMeta'
 import { PageBanner } from '../components/layout/PageBanner'
 import { Container } from '../components/ui/Container'
 import { SectionHeading } from '../components/ui/SectionHeading'
@@ -7,9 +8,9 @@ import { Reveal } from '../components/ui/Reveal'
 import { Button } from '../components/ui/Button'
 
 const STORY_IMAGE =
-  'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=1200&q=80'
+  '/watches/beaumont-monarch-perpetual.svg'
 const CRAFT_IMAGE =
-  'https://images.unsplash.com/photo-1594534475808-b18fc33b045e?auto=format&fit=crop&w=1200&q=80'
+  '/watches/beaumont-regent-chronograph.svg'
 
 const CRAFT = [
   {
@@ -37,23 +38,29 @@ const CRAFT = [
 const VALUES = [
   { icon: Award, title: 'Provenance', copy: 'Every piece is authenticated and documented before it reaches you.' },
   { icon: Leaf, title: 'Responsibility', copy: 'Responsibly sourced materials and plastic-free packaging.' },
-  { icon: ShieldCheck, title: 'Confidence', copy: 'A five-year international warranty on every watch we sell.' },
+  { icon: ShieldCheck, title: 'Confidence', copy: 'A one-year machine warranty — five years on WatchGuru Atelier pieces.' },
 ]
 
 const STATS = [
-  { value: '1898', label: 'Maison established' },
-  { value: '06', label: 'Independent brands' },
+  { value: '07', label: 'Maisons we carry' },
+  { value: '100%', label: 'Original watches' },
   { value: '40k+', label: 'Watches delivered' },
   { value: '98%', label: 'Client satisfaction' },
 ]
 
 export function About() {
+  useDocumentMeta({
+    title: 'About Us — The WatchGuru Story',
+    description:
+      'Pakistan’s home for 100% original luxury watches — hand-picked boutique, authorised maisons, in-house verification and concierge service.',
+  })
+
   return (
     <>
       <PageBanner
         eyebrow="Our Story"
-        title="Craftsmanship, kept alive."
-        description="WatchGuru.pk began as a single vitrine of hand-picked watches. More than a century later, we remain a small, independent boutique guided by one idea: a fine watch is made to be kept."
+        title="Original watches, honestly sold."
+        description="WatchGuru.pk began with one obsession — that buying a luxury watch in Pakistan should feel as safe as buying it in Geneva. Every piece we carry proves it."
         breadcrumbs={[{ label: 'Home', to: '/' }, { label: 'About' }]}
       />
 
@@ -65,42 +72,45 @@ export function About() {
               <div className="relative">
                 <img
                   src={STORY_IMAGE}
-                  alt="A fine watch on a workbench"
+                  alt="Beaumont Monarch Perpetual — original artwork"
                   loading="lazy"
                   className="aspect-[4/5] w-full object-cover"
                 />
-                <div className="absolute -right-4 -bottom-4 hidden border border-gold bg-ivory px-6 py-4 text-center sm:block">
-                  <p className="font-playfair font-normal text-3xl text-charcoal">125</p>
-                  <p className="font-montserrat text-[10px] tracking-[0.18em] text-stone-500 uppercase">
-                    Years of service
+                <div className="absolute -right-4 -bottom-4 hidden border border-gold bg-obsidian px-6 py-4 text-center sm:block">
+                  <p className="font-playfair font-normal text-3xl text-white">Est.</p>
+                  <p className="font-montserrat text-[10px] tracking-[0.18em] text-ash uppercase">
+                    Geneva · Karachi
                   </p>
                 </div>
               </div>
             </Reveal>
 
             <Reveal delay={120}>
-              <p className="eyebrow text-gold">Since 1898</p>
+              <p className="eyebrow text-gold">Our promise</p>
               <h2 className="mt-4 text-3xl leading-tight sm:text-4xl">
                 A boutique built on a single principle.
               </h2>
-              <div className="mt-6 flex flex-col gap-5 text-sm leading-relaxed text-stone-600">
+              <div className="mt-6 flex flex-col gap-5 text-sm leading-relaxed text-ash">
                 <p>
-                  Our founder, Ellinor Vance, believed that a watch should be chosen the way one
-                  chooses a companion — slowly, deliberately, and with an eye to the decades ahead.
-                  That philosophy still guides everything we do.
+                  WatchGuru.pk was founded by collectors who were tired of two things: paying
+                  grey-market prices for uncertain pieces, and never knowing where a watch truly
+                  came from. So we built the boutique we always wanted — every watch sourced
+                  through authorised channels, verified in-house, and backed in writing.
                 </p>
                 <p>
-                  We work directly with six independent maisons, each with its own atelier and its own
-                  obsession. We visit them, we wear their watches, and we only carry the references we
-                  would happily pass to our own families.
+                  We carry six partner maisons — Meridian, Beaumont, Aurelian, Halcyon, Nordvik and
+                  Delacroix — and our own in-house label, WatchGuru Atelier, assembled in Geneva
+                  and engraved by hand. We visit the ateliers, we wear the watches, and we only
+                  sell references we would pass to our own families.
                 </p>
                 <p>
-                  Nothing is mass-produced here. Every watch is inspected, regulated and prepared by
-                  hand before it is wrapped and sent on its way.
+                  Nothing here is sold blind. Every piece is authenticated, regulated and prepared
+                  by hand before it is wrapped, insured and dispatched — with its papers, seals
+                  and warranty card intact.
                 </p>
               </div>
               <div className="mt-8">
-                <Link to="/shop">
+                <Link to="/collections/all">
                   <Button variant="outline">Explore the collection</Button>
                 </Link>
               </div>
@@ -110,7 +120,7 @@ export function About() {
       </section>
 
       {/* Craft pillars */}
-      <section className="border-y border-stone-200 bg-stone-100 py-16 sm:py-24">
+      <section className="border-y border-line bg-coal py-16 sm:py-24">
         <Container>
           <Reveal>
             <SectionHeading
@@ -125,11 +135,11 @@ export function About() {
               return (
                 <Reveal key={item.title} delay={index * 80}>
                   <div className="flex flex-col items-center gap-4 text-center">
-                    <span className="flex size-14 items-center justify-center rounded-full border border-stone-300 bg-white text-gold">
+                    <span className="flex size-14 items-center justify-center rounded-full border border-line bg-charcoal text-gold">
                       <Icon className="size-6" strokeWidth={1.4} />
                     </span>
                     <h3 className="text-lg">{item.title}</h3>
-                    <p className="text-sm leading-relaxed text-stone-500">{item.copy}</p>
+                    <p className="text-sm leading-relaxed text-ash">{item.copy}</p>
                   </div>
                 </Reveal>
               )
@@ -147,7 +157,7 @@ export function About() {
               <h2 className="mt-4 text-3xl leading-tight sm:text-4xl">
                 The last two per cent is the part you feel.
               </h2>
-              <div className="mt-6 flex flex-col gap-5 text-sm leading-relaxed text-stone-600">
+              <div className="mt-6 flex flex-col gap-5 text-sm leading-relaxed text-ash">
                 <p>
                   A dial may take a year to perfect and a bracelet three months to finish — and yet
                   the difference between a good watch and a great one comes down to the final hours
@@ -162,7 +172,7 @@ export function About() {
               <ul className="mt-8 flex flex-col gap-3">
                 {['Five-position regulation', 'Fourteen-day timing test', 'Signed by the watchmaker'].map(
                   (item) => (
-                    <li key={item} className="flex items-center gap-3 text-sm text-charcoal">
+                    <li key={item} className="flex items-center gap-3 text-sm text-white">
                       <span className="h-px w-6 bg-gold" />
                       {item}
                     </li>
@@ -174,7 +184,7 @@ export function About() {
             <Reveal delay={120} className="order-1 lg:order-2">
               <img
                 src={CRAFT_IMAGE}
-                alt="Detail of a stainless steel watch bracelet"
+                alt="Beaumont Regent Chronograph — original artwork"
                 loading="lazy"
                 className="aspect-[4/5] w-full object-cover"
               />
@@ -190,7 +200,7 @@ export function About() {
             {STATS.map((stat) => (
               <div key={stat.label} className="text-center">
                 <dt className="font-playfair font-normal text-4xl text-ivory sm:text-5xl">{stat.value}</dt>
-                <dd className="mt-2 font-montserrat text-[10px] tracking-[0.2em] text-stone-400 uppercase">
+                <dd className="mt-2 font-montserrat text-[10px] tracking-[0.2em] text-ash uppercase">
                   {stat.label}
                 </dd>
               </div>
@@ -210,10 +220,10 @@ export function About() {
               const Icon = value.icon
               return (
                 <Reveal key={value.title} delay={index * 90}>
-                  <div className="flex flex-col items-center gap-4 border border-stone-200 bg-white p-8 text-center">
+                  <div className="flex flex-col items-center gap-4 border border-line bg-charcoal p-8 text-center">
                     <Icon className="size-7 text-gold" strokeWidth={1.4} />
                     <h3 className="text-xl">{value.title}</h3>
-                    <p className="text-sm leading-relaxed text-stone-500">{value.copy}</p>
+                    <p className="text-sm leading-relaxed text-ash">{value.copy}</p>
                   </div>
                 </Reveal>
               )
@@ -223,17 +233,17 @@ export function About() {
       </section>
 
       {/* CTA */}
-      <section className="border-t border-stone-200 bg-stone-100 py-16 sm:py-20">
+      <section className="border-t border-line bg-coal py-16 sm:py-20">
         <Container>
           <Reveal className="flex flex-col items-center text-center">
             <h2 className="text-3xl leading-tight sm:text-4xl">
               Find the watch you will keep for a lifetime.
             </h2>
-            <p className="mt-4 max-w-lg text-sm text-stone-500">
+            <p className="mt-4 max-w-lg text-sm text-ash">
               Browse the boutique, or speak with our concierge for a personal recommendation.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <Link to="/shop">
+              <Link to="/collections/all">
                 <Button size="lg">Shop the collection</Button>
               </Link>
               <Link to="/contact">

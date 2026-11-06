@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
   ArrowRight,
   Check,
+  Copy,
   Heart,
   Minus,
   Plus,
@@ -12,9 +13,12 @@ import {
   Sparkles,
   Truck,
 } from 'lucide-react'
-import { getProductById, getRelatedProducts } from '../data/products'
-import { classNames, formatPrice } from '../lib/format'
-import { useCart, useToast, useWishlist } from '../store/contexts'
+import { BRANDS } from '../data/collections'
+import { discountPercent, relatedProducts } from '../lib/catalog'
+import { materialsAndCare } from '../lib/product'
+import { classNames, formatPrice, formatPriceExact } from '../lib/format'
+import { useCart, useCatalog, useToast, useWishlist } from '../store'
+import { useDocumentMeta } from '../hooks/useDocumentMeta'
 import { PageBanner } from '../components/layout/PageBanner'
 import { Container } from '../components/ui/Container'
 import { Button } from '../components/ui/Button'
@@ -24,13 +28,14 @@ import { ProductGrid } from '../components/product/ProductGrid'
 import { SectionHeading } from '../components/ui/SectionHeading'
 import { EmptyState } from '../components/ui/EmptyState'
 
-const TABS = ['Details', 'Specifications', 'Shipping & Returns'] as const
+const TABS = ['Details', 'Specifications', 'Materials & Care', 'Shipping & Warranty'] as const
 type Tab = (typeof TABS)[number]
 
 export function ProductDetails() {
-  const { id = '' } = useParams()
+  const { slug = '' } = useParams()
   const navigate = useNavigate()
-  const product = getProductById(id)
+  const { products, getBySlug } = useCatalog()
+  const product = getBySlug(slug)
 
   const { addItem } = useCart()
   const { toggle, has } = useWishlist()
@@ -39,6 +44,15 @@ export function ProductDetails() {
   const [quantity, setQuantity] = useState(1)
   const [tab, setTab] = useState<Tab>('Details')
 
+  useDocumentMeta({
+    title: product ? `${product.brand} ${product.name} — Buy Online` : 'Watch Not Found',
+    description:
+      product?.description.slice(0, 155) ??
+      'Discover the piece — 100% original, insured delivery nationwide.',
+    image: product?.images[0],
+    type: 'product',
+  })
+
   if (!product) {
     return (
       <Container className="py-24">
@@ -46,7 +60,7 @@ export function ProductDetails() {
           title="We couldn’t find that watch"
           description="It may have sold out or the link may be incorrect."
           action={
-            <Link to="/shop">
+            <Link to="/collections/all">
               <Button>Back to the boutique</Button>
             </Link>
           }
@@ -56,14 +70,15 @@ export function ProductDetails() {
   }
 
   const wished = has(product.id)
-  const related = getRelatedProducts(product, 3)
-  const discounted = product.compareAtPrice && product.compareAtPrice > product.price
+  const related = relatedProducts(products, product, 3)
+  const discount = discountPercent(product)
+  const discounted = discount !== null
+  const brandSlug = BRANDS.find((b) => b.name === product.brand)?.slug
+  const careSections = materialsAndCare(product)
 
   const handleAdd = () => {
     addItem(product.id, quantity)
-    notify(
-      `${quantity} × ${product.brand} ${product.name} added to your cart`,
-    )
+    notify(`${quantity} × ${product.brand} ${product.name} added to your cart`)
   }
 
   const handleBuyNow = () => {
@@ -79,14 +94,26 @@ export function ProductDetails() {
     )
   }
 
+  const copySku = async () => {
+    try {
+      await navigator.clipboard.writeText(product.id.toUpperCase())
+      notify('SKU copied to clipboard', 'info')
+    } catch {
+      notify('Couldn’t copy — SKU shown above', 'error')
+    }
+  }
+
   return (
     <>
       <PageBanner
         title={product.name}
         breadcrumbs={[
           { label: 'Home', to: '/' },
-          { label: 'Shop', to: '/shop' },
-          { label: product.brand, to: `/shop?brand=${encodeURIComponent(product.brand)}` },
+          { label: 'Collections', to: '/collections/all' },
+          {
+            label: product.brand,
+            to: brandSlug ? `/collections/brand/${brandSlug}` : '/collections/all',
+          },
           { label: product.name },
         ]}
       />
@@ -105,34 +132,59 @@ export function ProductDetails() {
             <div>
               <p className="eyebrow text-gold">{product.brand}</p>
               <h1 className="mt-2 text-3xl leading-tight sm:text-4xl">{product.name}</h1>
+              <button
+                type="button"
+                onClick={copySku}
+                className="mt-2 inline-flex items-center gap-1.5 font-mono text-[11px] tracking-[0.18em] text-ash uppercase transition-colors hover:text-white"
+                aria-label="Copy SKU"
+              >
+                SKU · {product.id.toUpperCase()}
+                <Copy className="size-3" aria-hidden="true" />
+              </button>
             </div>
 
-            <div className="mt-4 flex items-center gap-4">
+            <div className="mt-4 flex flex-wrap items-center gap-4">
               <Rating value={product.rating} reviewCount={product.reviewCount} size="md" />
-              <span className="text-xs text-stone-400">·</span>
-              <span className="text-xs text-stone-500">
-                {product.inStock ? `${product.stock} in stock` : 'Out of stock'}
-              </span>
-            </div>
-
-            <div className="mt-6 flex items-baseline gap-4">
-              <span className="font-inter font-medium text-3xl text-charcoal">{formatPrice(product.price)}</span>
-              {discounted && (
-                <span className="text-base text-stone-400 line-through">
-                  {formatPrice(product.compareAtPrice!)}
+              <span className="text-xs text-ash">·</span>
+              {product.inStock ? (
+                <span className="flex items-center gap-1.5 text-xs text-gold">
+                  <span className="size-1.5 rounded-full bg-gold" aria-hidden="true" />
+                  In stock — {product.stock} {product.stock === 1 ? 'piece' : 'pieces'} left
+                </span>
+              ) : (
+                <span className="flex items-center gap-1.5 text-xs text-error">
+                  <span className="size-1.5 rounded-full bg-error" aria-hidden="true" />
+                  Out of stock
                 </span>
               )}
             </div>
-            <p className="mt-1 text-[11px] tracking-wide text-stone-400">
-              Includes duties and insured worldwide delivery
+
+            {/* Price */}
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <span className="font-inter font-medium text-3xl text-white">
+                {formatPrice(product.price)}
+              </span>
+              {discounted && product.compareAtPrice && (
+                <span className="text-base text-ash line-through">
+                  {formatPriceExact(product.compareAtPrice)}
+                </span>
+              )}
+              {discounted && (
+                <span className="bg-gold/15 px-2.5 py-1 font-montserrat text-[10px] font-semibold tracking-[0.2em] text-gold uppercase">
+                  Save {discount}%
+                </span>
+              )}
+            </div>
+            <p className="mt-1 text-[11px] tracking-wide text-ash">
+              Includes duties · free insured delivery nationwide · COD available
             </p>
 
-            <p className="mt-7 text-sm leading-relaxed text-stone-600">{product.description}</p>
+            <p className="mt-7 text-sm leading-relaxed text-ash">{product.description}</p>
 
             <ul className="mt-6 flex flex-col gap-2">
               {product.highlights.map((highlight) => (
-                <li key={highlight} className="flex items-start gap-3 text-sm text-stone-600">
-                  <Check className="mt-0.5 size-4 shrink-0 text-gold" strokeWidth={2} />
+                <li key={highlight} className="flex items-start gap-3 text-sm text-ash">
+                  <Check className="mt-0.5 size-4 shrink-0 text-gold" strokeWidth={2} aria-hidden="true" />
                   {highlight}
                 </li>
               ))}
@@ -140,13 +192,13 @@ export function ProductDetails() {
 
             {/* Quantity + actions */}
             <div className="mt-8 flex flex-wrap items-center gap-4">
-              <div className="flex items-center border border-stone-300 bg-white">
+              <div className="flex items-center border border-line bg-charcoal">
                 <button
                   type="button"
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                   disabled={quantity <= 1}
                   aria-label="Decrease quantity"
-                  className="flex size-12 items-center justify-center text-stone-600 transition-colors hover:bg-stone-100 disabled:opacity-40"
+                  className="flex size-12 items-center justify-center text-ash transition-colors hover:bg-lift disabled:opacity-40"
                 >
                   <Minus className="size-4" />
                 </button>
@@ -154,9 +206,9 @@ export function ProductDetails() {
                 <button
                   type="button"
                   onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
-                  disabled={quantity >= product.stock}
+                  disabled={quantity >= product.stock || !product.inStock}
                   aria-label="Increase quantity"
-                  className="flex size-12 items-center justify-center text-stone-600 transition-colors hover:bg-stone-100 disabled:opacity-40"
+                  className="flex size-12 items-center justify-center text-ash transition-colors hover:bg-lift disabled:opacity-40"
                 >
                   <Plus className="size-4" />
                 </button>
@@ -167,9 +219,9 @@ export function ProductDetails() {
                 size="lg"
                 onClick={handleAdd}
                 disabled={!product.inStock}
-                className="flex-1 min-w-[200px]"
+                className="min-w-[200px] flex-1"
               >
-                <ShoppingBag className="size-4" />
+                <ShoppingBag className="size-4" aria-hidden="true" />
                 Add to cart
               </Button>
 
@@ -182,7 +234,7 @@ export function ProductDetails() {
                   'flex size-12 items-center justify-center border transition-colors',
                   wished
                     ? 'border-gold text-gold'
-                    : 'border-stone-300 text-stone-500 hover:border-charcoal hover:text-charcoal',
+                    : 'border-line text-ash hover:border-gold hover:text-white',
                 )}
               >
                 <Heart className={classNames('size-5', wished && 'fill-gold')} strokeWidth={1.6} />
@@ -193,20 +245,23 @@ export function ProductDetails() {
               type="button"
               onClick={handleBuyNow}
               disabled={!product.inStock}
-              className="mt-3 w-full border border-charcoal py-4 font-montserrat text-[11px] font-medium tracking-[0.2em] uppercase transition-colors hover:bg-charcoal hover:text-ivory disabled:opacity-50"
+              className="mt-3 w-full border border-gold py-4 font-montserrat text-[11px] font-medium tracking-[0.2em] uppercase text-gold transition-colors hover:bg-gold hover:text-obsidian disabled:opacity-50"
             >
               Buy it now
             </button>
 
             {/* Assurances */}
-            <ul className="mt-8 grid gap-3 border-y border-stone-200 py-6 sm:grid-cols-3">
+            <ul className="mt-8 grid gap-3 border-y border-line py-6 sm:grid-cols-3">
               {[
-                { icon: Truck, text: 'Free insured shipping' },
-                { icon: ShieldCheck, text: '5-year warranty' },
-                { icon: RotateCcw, text: '30-day returns' },
+                { icon: Truck, text: 'Free insured delivery · 2–5 days' },
+                { icon: ShieldCheck, text: '1-year machine warranty' },
+                { icon: RotateCcw, text: '7-day return & exchange' },
               ].map(({ icon: Icon, text }) => (
-                <li key={text} className="flex items-center gap-2 text-[11px] tracking-wide text-stone-500">
-                  <Icon className="size-4 text-gold" strokeWidth={1.6} />
+                <li
+                  key={text}
+                  className="flex items-center gap-2 text-[11px] tracking-wide text-ash"
+                >
+                  <Icon className="size-4 shrink-0 text-gold" strokeWidth={1.6} aria-hidden="true" />
                   {text}
                 </li>
               ))}
@@ -214,17 +269,23 @@ export function ProductDetails() {
 
             {/* Tabs */}
             <div className="mt-8">
-              <div className="flex gap-6 overflow-x-auto border-b border-stone-200 no-scrollbar">
+              <div
+                role="tablist"
+                aria-label="Product information"
+                className="no-scrollbar flex gap-6 overflow-x-auto border-b border-line"
+              >
                 {TABS.map((item) => (
                   <button
                     key={item}
+                    role="tab"
+                    aria-selected={tab === item}
                     type="button"
                     onClick={() => setTab(item)}
                     className={classNames(
                       '-mb-px border-b-2 pb-3 font-montserrat text-[11px] font-medium tracking-[0.16em] whitespace-nowrap uppercase transition-colors',
                       tab === item
-                        ? 'border-gold text-charcoal'
-                        : 'border-transparent text-stone-400 hover:text-charcoal',
+                        ? 'border-gold text-white'
+                        : 'border-transparent text-ash hover:text-white',
                     )}
                   >
                     {item}
@@ -232,7 +293,7 @@ export function ProductDetails() {
                 ))}
               </div>
 
-              <div className="pt-6 text-sm leading-relaxed text-stone-600">
+              <div className="pt-6 text-sm leading-relaxed text-ash">
                 {tab === 'Details' && (
                   <div className="flex flex-col gap-5">
                     <p>{product.description}</p>
@@ -240,7 +301,7 @@ export function ProductDetails() {
                       {product.features.map((feature) => (
                         <li
                           key={feature}
-                          className="border border-stone-200 bg-white px-3 py-1.5 text-[11px] tracking-wide text-stone-600"
+                          className="border border-line bg-charcoal px-3 py-1.5 text-[11px] tracking-wide text-ash"
                         >
                           {feature}
                         </li>
@@ -250,33 +311,94 @@ export function ProductDetails() {
                 )}
 
                 {tab === 'Specifications' && (
-                  <dl className="divide-y divide-stone-200 border-y border-stone-200">
+                  <dl className="divide-y divide-line border-y border-line">
                     {product.specs.map((spec) => (
-                      <div key={spec.label} className="grid grid-cols-[96px_1fr] gap-4 py-3">
-                        <dt className="text-[11px] tracking-[0.14em] text-stone-400 uppercase">
+                      <div key={spec.label} className="grid grid-cols-[110px_1fr] gap-4 py-3">
+                        <dt className="text-[11px] tracking-[0.14em] text-ash uppercase">
                           {spec.label}
                         </dt>
-                        <dd className="text-charcoal">{spec.value}</dd>
+                        <dd className="text-white">{spec.value}</dd>
                       </div>
                     ))}
+                    <div className="grid grid-cols-[110px_1fr] gap-4 py-3">
+                      <dt className="text-[11px] tracking-[0.14em] text-ash uppercase">
+                        Reference
+                      </dt>
+                      <dd className="text-white">{product.id.toUpperCase()}</dd>
+                    </div>
                   </dl>
                 )}
 
-                {tab === 'Shipping & Returns' && (
-                  <div className="flex flex-col gap-4">
-                    <p>
-                      Each WatchGuru.pk is dispatched within two business days in fully insured,
-                      signature-required packaging. Delivery is complimentary worldwide and typically
-                      arrives in 3–6 business days.
-                    </p>
-                    <p>
-                      Returns are accepted within 30 days of delivery, provided the watch is unworn
-                      with all seals and paperwork intact. Every piece includes a five-year
-                      international warranty.
-                    </p>
-                    <p className="flex items-center gap-2 text-[11px] tracking-wide text-stone-400">
-                      <Sparkles className="size-3.5 text-gold" />
-                      Demo storefront — shipping and returns are illustrative only.
+                {tab === 'Materials & Care' && (
+                  <div className="flex flex-col gap-5">
+                    {careSections.map((section) => (
+                      <div key={section.title}>
+                        <h3 className="text-[11px] font-medium tracking-[0.16em] text-white uppercase">
+                          {section.title}
+                        </h3>
+                        <p className="mt-1.5">{section.body}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {tab === 'Shipping & Warranty' && (
+                  <div className="flex flex-col gap-5">
+                    <div>
+                      <h3 className="text-[11px] font-medium tracking-[0.16em] text-white uppercase">
+                        Shipping
+                      </h3>
+                      <p className="mt-1.5">
+                        Dispatched within 24–48 hours in tamper-evident, double-boxed packaging —
+                        fully insured, signature required on delivery. Free nationwide, 2–5
+                        business days. Cash on Delivery available with a Rs. 1,000 advance,
+                        adjusted against your bill.
+                      </p>
+                      <Link
+                        to="/policies/shipping-policy"
+                        className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-medium tracking-[0.16em] text-gold uppercase hover:opacity-75"
+                      >
+                        Read the shipping policy
+                        <ArrowRight className="size-3.5" aria-hidden="true" />
+                      </Link>
+                    </div>
+                    <div>
+                      <h3 className="text-[11px] font-medium tracking-[0.16em] text-white uppercase">
+                        1-Year Machine Warranty
+                      </h3>
+                      <p className="mt-1.5">
+                        Movement, dial, case, crown and gaskets — covered against manufacturing
+                        defects for twelve months from delivery. Straps, batteries and wear are
+                        excluded. Claims are serviced by our own watchmakers, insured both ways.
+                      </p>
+                      <Link
+                        to="/policies/warranty"
+                        className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-medium tracking-[0.16em] text-gold uppercase hover:opacity-75"
+                      >
+                        Warranty &amp; verification
+                        <ArrowRight className="size-3.5" aria-hidden="true" />
+                      </Link>
+                    </div>
+                    <div>
+                      <h3 className="text-[11px] font-medium tracking-[0.16em] text-white uppercase">
+                        Returns
+                      </h3>
+                      <p className="mt-1.5">
+                        Seven calendar days to return or exchange — unworn, seals intact.
+                        WhatsApp us with your order number and photos; approval within one
+                        business day.
+                      </p>
+                      <Link
+                        to="/policies/refund-policy"
+                        className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-medium tracking-[0.16em] text-gold uppercase hover:opacity-75"
+                      >
+                        Read the refund policy
+                        <ArrowRight className="size-3.5" aria-hidden="true" />
+                      </Link>
+                    </div>
+                    <p className="flex items-center gap-2 text-[11px] tracking-wide text-ash">
+                      <Sparkles className="size-3.5 text-gold" aria-hidden="true" />
+                      Every WatchGuru watch ships with papers, stamps and warranty card.
                     </p>
                   </div>
                 )}
@@ -287,18 +409,18 @@ export function ProductDetails() {
 
         {/* Related */}
         {related.length > 0 && (
-          <section className="mt-20 border-t border-stone-200 pt-16 lg:mt-28">
+          <section className="mt-20 border-t border-line pt-16 lg:mt-28">
             <SectionHeading
               eyebrow="You may also like"
               title="Related pieces"
               align="left"
               action={
                 <Link
-                  to="/shop"
+                  to="/collections/all"
                   className="hidden items-center gap-2 font-montserrat text-[11px] font-medium tracking-[0.2em] uppercase transition-colors hover:text-gold sm:inline-flex"
                 >
                   Browse all
-                  <ArrowRight className="size-4" />
+                  <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
               }
             />

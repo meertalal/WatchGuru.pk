@@ -67,12 +67,6 @@ export function computeTotals(
 
 export const DEMO_COUPONS = Object.values(COUPONS)
 
-export function generateOrderNumber(): string {
-  const stamp = Date.now().toString(36).toUpperCase().slice(-5)
-  const random = Math.random().toString(36).toUpperCase().slice(2, 6)
-  return `WG-${stamp}${random}`
-}
-
 /** Timestamp helper kept out of components so render stays pure. */
 export function nowIso(): string {
   return new Date().toISOString()

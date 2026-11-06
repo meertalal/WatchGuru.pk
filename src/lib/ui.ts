@@ -4,14 +4,19 @@ export type ButtonVariant = 'primary' | 'gold' | 'outline' | 'subtle' | 'ghost'
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
 const BASE =
-  'inline-flex select-none items-center justify-center gap-2 rounded-sm font-montserrat font-medium uppercase tracking-[0.18em] transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold'
+  'inline-flex select-none items-center justify-center gap-2 rounded-sm font-montserrat font-medium uppercase tracking-[0.18em] transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50'
 
 const VARIANTS: Record<ButtonVariant, string> = {
-  primary: 'bg-charcoal text-ivory hover:bg-ink',
-  gold: 'bg-gold text-white hover:bg-gold-dark',
-  outline: 'border border-charcoal/25 text-charcoal hover:border-charcoal hover:bg-charcoal hover:text-ivory',
-  subtle: 'bg-stone-200 text-charcoal hover:bg-stone-300',
-  ghost: 'text-charcoal hover:text-gold',
+  /* Solid obsidian-gold CTA — the reference button */
+  primary: 'bg-gold-bright text-obsidian hover:bg-gold',
+  /* Luxury gold accent */
+  gold: 'bg-gold text-obsidian hover:bg-gold-bright',
+  /* Outlined gold on dark */
+  outline: 'border border-gold/50 text-gold hover:border-gold hover:bg-gold hover:text-obsidian',
+  /* Raised panel button */
+  subtle: 'bg-charcoal text-ivory border border-line hover:border-gold hover:text-gold',
+  /* Text-only */
+  ghost: 'text-ash hover:text-gold',
 }
 
 const SIZES: Record<ButtonSize, string> = {

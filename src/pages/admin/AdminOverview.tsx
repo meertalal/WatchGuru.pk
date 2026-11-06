@@ -1,0 +1,160 @@
+import { Link } from 'react-router-dom'
+import {
+  AlertTriangle,
+  Banknote,
+  ListOrdered,
+  Package,
+  Receipt,
+  Wallet,
+} from 'lucide-react'
+import { useCatalog, useOrders } from '../../store'
+import { useDocumentMeta } from '../../hooks/useDocumentMeta'
+import { formatDate, formatPriceExact, classNames } from '../../lib/format'
+import { ORDER_STATUS_FLOW, ORDER_STATUS_LABEL } from '../../lib/orders'
+import type { OrderStatus } from '../../types'
+
+const SELECTABLE_STATUSES: OrderStatus[] = [...ORDER_STATUS_FLOW, 'cancelled']
+
+export function AdminOverview() {
+  const { products } = useCatalog()
+  const { orders, updateStatus } = useOrders()
+
+  useDocumentMeta({
+    title: 'Admin — Overview',
+    description: 'WatchGuru.pk store admin — orders, revenue and catalogue health at a glance.',
+  })
+
+  const activeOrders = orders.filter((o) => o.status !== 'cancelled')
+  const revenue = activeOrders.reduce((sum, o) => sum + o.total, 0)
+  const pending = orders.filter((o) => o.status === 'processing' || o.status === 'confirmed').length
+  const outForDelivery = orders.filter((o) => o.status === 'out-for-delivery').length
+  const lowStock = products.filter((p) => p.stock > 0 && p.stock < 5)
+  const soldOut = products.filter((p) => !p.inStock || p.stock === 0)
+  const recentOrders = [...orders]
+    .sort((a, b) => Date.parse(b.placedAt) - Date.parse(a.placedAt))
+    .slice(0, 5)
+
+  const stats = [
+    { label: 'Orders (all time)', value: String(orders.length), icon: ListOrdered },
+    { label: 'Awaiting action', value: String(pending + outForDelivery), icon: Receipt, accent: pending + outForDelivery > 0 },
+    { label: 'Revenue (excl. cancelled)', value: formatPriceExact(revenue), icon: Banknote },
+    { label: 'Low stock / sold out', value: `${lowStock.length} / ${soldOut.length}`, icon: AlertTriangle, accent: lowStock.length + soldOut.length > 0 },
+  ]
+
+  return (
+    <div className="mx-auto max-w-6xl p-5 sm:p-8">
+      <header className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="eyebrow text-gold">Dashboard</p>
+          <h1 className="mt-1 text-2xl sm:text-3xl">Store overview</h1>
+        </div>
+        <Link
+          to="/admin/products"
+          className="border px-5 py-3 font-montserrat text-[10px] font-medium tracking-[0.2em] uppercase transition-colors bg-gold-bright text-obsidian border-gold-bright hover:bg-gold hover:border-gold"
+        >
+          Manage products
+        </Link>
+      </header>
+
+      {/* Stats */}
+      <ul className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+        {stats.map(({ label, value, icon: Icon, accent }) => (
+          <li key={label} className="border border-line bg-charcoal p-4 sm:p-5">
+            <Icon className={classNames('size-5', accent ? 'text-gold' : 'text-ash')} strokeWidth={1.6} aria-hidden="true" />
+            <p className="mt-3 font-inter font-medium text-lg leading-tight text-white sm:text-xl">
+              {value}
+            </p>
+            <p className="mt-1 text-[10px] leading-snug tracking-wide text-ash uppercase">
+              {label}
+            </p>
+          </li>
+        ))}
+      </ul>
+
+      <div className="mt-6 grid gap-6 xl:grid-cols-5">
+        {/* Recent orders */}
+        <section className="border border-line bg-charcoal xl:col-span-3" aria-labelledby="recent-orders">
+          <div className="flex items-center justify-between border-b border-line px-5 py-4">
+            <h2 id="recent-orders" className="text-base font-medium">Recent orders</h2>
+            <Link to="/admin/orders" className="text-[10px] font-medium tracking-[0.2em] text-gold uppercase hover:opacity-75">
+              View all →
+            </Link>
+          </div>
+          <ul className="divide-y divide-line">
+            {recentOrders.length === 0 && (
+              <li className="px-5 py-8 text-center text-sm text-ash">No orders yet.</li>
+            )}
+            {recentOrders.map((order) => (
+              <li key={order.orderNumber} className="flex flex-wrap items-center justify-between gap-3 px-5 py-4">
+                <div className="min-w-0">
+                  <p className="font-inter font-medium text-sm text-white">{order.orderNumber}</p>
+                  <p className="mt-0.5 text-[11px] text-ash">
+                    {formatDate(order.placedAt)} · {order.customerName} · {formatPriceExact(order.total)}
+                  </p>
+                </div>
+                <label className="flex items-center gap-2">
+                  <span className="sr-only">Update status for {order.orderNumber}</span>
+                  <select
+                    value={order.status}
+                    onChange={(e) => updateStatus(order.orderNumber, e.target.value as OrderStatus)}
+                    className="border border-line bg-charcoal px-2 py-1.5 text-[11px] text-white outline-none focus:border-gold"
+                  >
+                    {SELECTABLE_STATUSES.map((status) => (
+                      <option key={status} value={status}>
+                        {ORDER_STATUS_LABEL[status]}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* Stock alerts */}
+        <section className="border border-line bg-charcoal xl:col-span-2" aria-labelledby="stock-alerts">
+          <div className="flex items-center justify-between border-b border-line px-5 py-4">
+            <h2 id="stock-alerts" className="text-base font-medium">Stock alerts</h2>
+            <Wallet className="size-4 text-ash" aria-hidden="true" />
+          </div>
+          <ul className="divide-y divide-line">
+            {lowStock.length === 0 && soldOut.length === 0 && (
+              <li className="px-5 py-8 text-center text-sm text-ash">
+                Everything is comfortably stocked.
+              </li>
+            )}
+            {[...soldOut.map((p) => ({ ...p, alert: 'Sold out' })), ...lowStock.map((p) => ({ ...p, alert: `${p.stock} left` }))]
+              .slice(0, 6)
+              .map((p) => (
+                <li key={p.id} className="flex items-center justify-between gap-3 px-5 py-3">
+                  <div className="min-w-0">
+                    <p className="truncate text-sm text-white">{p.name}</p>
+                    <p className="text-[11px] text-ash">{p.brand}</p>
+                  </div>
+                  <span
+                    className={classNames(
+                      'shrink-0 rounded-full px-2.5 py-1 text-[9px] font-semibold tracking-[0.18em] uppercase',
+                      p.alert === 'Sold out' ? 'border border-error/40 bg-error/10 text-error' : 'border border-gold/40 bg-gold/10 text-gold',
+                    )}
+                  >
+                    {p.alert}
+                  </span>
+                </li>
+              ))}
+          </ul>
+          <div className="border-t border-line px-5 py-4">
+            <Link to="/admin/products" className="flex items-center gap-2 text-[10px] font-medium tracking-[0.2em] text-white uppercase hover:text-gold">
+              <Package className="size-4" aria-hidden="true" />
+              Restock &amp; edit catalogue →
+            </Link>
+          </div>
+        </section>
+      </div>
+
+      <p className="mt-6 flex items-center gap-2 text-[11px] text-ash">
+        <span className="inline-block size-2 rounded-full bg-gold" aria-hidden="true" />
+        Live view — every change here is stored on this device (demo fulfilment; no courier is booked).
+      </p>
+    </div>
+  )
+}

@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Filter, SlidersHorizontal, X } from 'lucide-react'
-import { products } from '../data/products'
-import { formatPrice } from '../lib/format'
+import { formatPrice } from '../../lib/format'
 import {
   PAGE_SIZE,
   SORT_OPTIONS,
@@ -9,16 +8,32 @@ import {
   filterProducts,
   sortProducts,
   type SortValue,
-} from '../lib/shop'
-import { useShopFilters, type ArrayFilterKey } from '../hooks/useShopFilters'
-import { PageBanner } from '../components/layout/PageBanner'
-import { Container } from '../components/ui/Container'
-import { ProductGrid } from '../components/product/ProductGrid'
-import { Pagination } from '../components/ui/Pagination'
-import { EmptyState } from '../components/ui/EmptyState'
-import { Button } from '../components/ui/Button'
-import { FilterPanel } from '../components/shop/FilterPanel'
-import { FilterDrawer } from '../components/shop/FilterDrawer'
+} from '../../lib/shop'
+import { useShopFilters, type ArrayFilterKey } from '../../hooks/useShopFilters'
+import { useCatalog } from '../../store'
+import type { Product } from '../../types'
+import { PageBanner } from '../layout/PageBanner'
+import { Container } from '../ui/Container'
+import { ProductGrid } from '../product/ProductGrid'
+import { Pagination } from '../ui/Pagination'
+import { EmptyState } from '../ui/EmptyState'
+import { Button } from '../ui/Button'
+import { FilterPanel } from '../shop/FilterPanel'
+import { FilterDrawer } from '../shop/FilterDrawer'
+
+export interface CollectionBreadcrumb {
+  label: string
+  to?: string
+}
+
+export interface CollectionViewProps {
+  /** Products already matched to this collection — filters refine from here. */
+  baseProducts: Product[]
+  heading: string
+  eyebrow?: string
+  description?: string
+  breadcrumbs: CollectionBreadcrumb[]
+}
 
 interface Chip {
   key: string
@@ -26,7 +41,19 @@ interface Chip {
   clear: () => void
 }
 
-export function Shop() {
+/**
+ * The shared collection template — grid, images, prices, compare-at prices,
+ * sale badges, sorting, filtering and pagination. Every collection route
+ * renders this with its own matched product set and copy.
+ */
+export function CollectionView({
+  baseProducts,
+  heading,
+  eyebrow,
+  description,
+  breadcrumbs,
+}: CollectionViewProps) {
+  const { bounds } = useCatalog()
   const {
     filters,
     toggleArray,
@@ -36,26 +63,17 @@ export function Shop() {
     setPage,
     clearAll,
     defaults,
-  } = useShopFilters()
+  } = useShopFilters(bounds)
   const [drawerOpen, setDrawerOpen] = useState(false)
 
-  const result = useMemo(() => sortProducts(filterProducts(products, filters), filters.sort), [filters])
+  const result = useMemo(
+    () => sortProducts(filterProducts(baseProducts, filters), filters.sort),
+    [baseProducts, filters],
+  )
 
   const totalPages = Math.max(1, Math.ceil(result.length / PAGE_SIZE))
   const currentPage = Math.min(filters.page, totalPages)
   const pageItems = result.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE)
-
-  const heading = filters.tag === 'new'
-      ? 'New Arrivals'
-      : filters.tag === 'sale'
-        ? 'On Sale'
-        : filters.category === 'men'
-          ? 'Men’s Watches'
-          : filters.category === 'women'
-            ? 'Women’s Watches'
-            : filters.category === 'unisex'
-              ? 'Unisex Watches'
-              : 'All Watches'
 
   const chips: Chip[] = useMemo(() => {
     const list: Chip[] = []
@@ -92,16 +110,11 @@ export function Shop() {
     return list
   }, [filters, defaults, setSingle, setPriceRange, toggleArray])
 
-  const activeCount = countActiveFilters(filters)
+  const activeCount = countActiveFilters(filters, defaults)
 
   return (
     <>
-      <PageBanner
-        eyebrow="The Boutique"
-        title={heading}
-        description="Every watch in the WatchGuru.pk boutique is authenticated, serviced and prepared by hand before it is dispatched to you."
-        breadcrumbs={[{ label: 'Home', to: '/' }, { label: 'Shop' }]}
-      />
+      <PageBanner eyebrow={eyebrow} title={heading} description={description} breadcrumbs={breadcrumbs} />
 
       <Container className="py-10 lg:py-14">
         <div className="grid gap-10 lg:grid-cols-[264px_1fr] lg:gap-12">
@@ -110,6 +123,8 @@ export function Shop() {
             <div className="sticky top-28">
               <FilterPanel
                 filters={filters}
+                products={baseProducts}
+                bounds={bounds}
                 onToggleArray={toggleArray}
                 onSetSingle={setSingle}
                 onSetPriceRange={setPriceRange}
@@ -120,30 +135,30 @@ export function Shop() {
 
           {/* Results */}
           <div>
-            <div className="flex flex-col gap-4 border-b border-stone-200 pb-5 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-stone-500">
-                <span className="text-charcoal">{result.length}</span>{' '}
+            <div className="flex flex-col gap-4 border-b border-line pb-5 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-sm text-ash">
+                <span className="text-white">{result.length}</span>{' '}
                 {result.length === 1 ? 'watch' : 'watches'}
-                {activeCount > 0 && <span className="text-stone-400"> · {activeCount} filters</span>}
+                {activeCount > 0 && <span className="text-ash"> · {activeCount} filters</span>}
               </p>
 
               <div className="flex items-center gap-3">
                 <button
                   type="button"
                   onClick={() => setDrawerOpen(true)}
-                  className="flex items-center gap-2 border border-stone-300 px-4 py-2.5 font-montserrat text-[11px] font-medium tracking-[0.18em] uppercase transition-colors hover:border-charcoal lg:hidden"
+                  className="flex items-center gap-2 border border-line px-4 py-2.5 font-montserrat text-[11px] font-medium tracking-[0.18em] uppercase transition-colors hover:border-gold lg:hidden"
                 >
                   <SlidersHorizontal className="size-4" />
                   Filters{activeCount > 0 ? ` (${activeCount})` : ''}
                 </button>
 
-                <label className="flex items-center gap-2 font-montserrat text-[11px] tracking-[0.18em] text-stone-500 uppercase">
+                <label className="flex items-center gap-2 font-montserrat text-[11px] tracking-[0.18em] text-ash uppercase">
                   <Filter className="size-3.5" />
                   <span className="sr-only sm:not-sr-only">Sort</span>
                   <select
                     value={filters.sort}
                     onChange={(e) => setSort(e.target.value as SortValue)}
-                    className="border border-stone-300 bg-white px-3 py-2.5 text-[11px] tracking-[0.12em] text-charcoal uppercase outline-none transition-colors hover:border-charcoal focus:border-charcoal"
+                    className="border border-line bg-charcoal px-3 py-2.5 text-[11px] tracking-[0.12em] text-white uppercase outline-none transition-colors hover:border-gold focus:border-gold"
                   >
                     {SORT_OPTIONS.map((option) => (
                       <option key={option.value} value={option.value}>
@@ -162,10 +177,10 @@ export function Shop() {
                     key={chip.key}
                     type="button"
                     onClick={chip.clear}
-                    className="group flex items-center gap-2 border border-stone-300 bg-white px-3 py-1.5 text-[11px] tracking-wide text-stone-600 transition-colors hover:border-charcoal hover:text-charcoal"
+                    className="group flex items-center gap-2 border border-line bg-charcoal px-3 py-1.5 text-[11px] tracking-wide text-ash transition-colors hover:border-gold hover:text-white"
                   >
                     <span className="capitalize">{chip.label}</span>
-                    <X className="size-3 text-stone-400 transition-colors group-hover:text-charcoal" />
+                    <X className="size-3 text-ash transition-colors group-hover:text-white" />
                   </button>
                 ))}
                 <button
@@ -210,6 +225,8 @@ export function Shop() {
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         filters={filters}
+        products={baseProducts}
+        bounds={bounds}
         resultCount={result.length}
         onToggleArray={toggleArray}
         onSetSingle={setSingle}
