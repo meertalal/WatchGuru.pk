@@ -7,14 +7,18 @@ import {
   type ShopFilters,
   type SortValue,
 } from '../lib/shop'
+import type { PriceBounds } from '../lib/catalog'
 
 export type ArrayFilterKey = 'brand' | 'collection' | 'dial' | 'strap' | 'feature'
 
 /**
  * Keeps every shop control in the URL, so filters, sorting and pagination are
  * shareable and survive the browser's back button.
+ *
+ * Price bounds default to the factory catalogue but accept the live bounds
+ * from the catalog context so admin edits are reflected immediately.
  */
-export function useShopFilters() {
+export function useShopFilters(bounds: PriceBounds = PRICE_BOUNDS) {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const filters = useMemo<ShopFilters>(() => {
@@ -39,13 +43,13 @@ export function useShopFilters() {
       dials: getAll('dial'),
       straps: getAll('strap'),
       features: getAll('feature'),
-      min: num('min', PRICE_BOUNDS.min),
-      max: num('max', PRICE_BOUNDS.max),
+      min: num('min', bounds.min),
+      max: num('max', bounds.max),
       tag: get('tag'),
       sort,
       page: Math.max(1, num('page', 1)),
     }
-  }, [searchParams])
+  }, [searchParams, bounds.min, bounds.max])
 
   const mutate = useCallback(
     (apply: (params: URLSearchParams) => void, resetPage = true) => {
@@ -84,12 +88,12 @@ export function useShopFilters() {
   const setPriceRange = useCallback(
     (min: number, max: number) =>
       mutate((p) => {
-        if (min <= PRICE_BOUNDS.min) p.delete('min')
+        if (min <= bounds.min) p.delete('min')
         else p.set('min', String(min))
-        if (max >= PRICE_BOUNDS.max) p.delete('max')
+        if (max >= bounds.max) p.delete('max')
         else p.set('max', String(max))
       }),
-    [mutate],
+    [mutate, bounds.min, bounds.max],
   )
 
   const setSort = useCallback(
@@ -115,6 +119,6 @@ export function useShopFilters() {
     setSort,
     setPage,
     clearAll,
-    defaults: DEFAULT_FILTERS,
+    defaults: { ...DEFAULT_FILTERS, min: bounds.min, max: bounds.max },
   }
 }

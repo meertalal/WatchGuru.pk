@@ -2,7 +2,7 @@ import type { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes 
 import { classNames } from '../../lib/format'
 
 const CONTROL =
-  'w-full border bg-white px-4 py-3 font-lato text-sm text-charcoal outline-none transition-colors placeholder:text-stone-400 focus:border-charcoal'
+  'w-full border bg-charcoal px-4 py-3 font-lato text-sm text-white outline-none transition-colors placeholder:text-ash focus:border-gold'
 
 function FieldShell({
   label,
@@ -21,14 +21,14 @@ function FieldShell({
 }) {
   return (
     <div className={className}>
-      <label htmlFor={htmlFor} className="mb-2 block font-montserrat text-[10px] font-medium tracking-[0.18em] text-stone-500 uppercase">
+      <label htmlFor={htmlFor} className="mb-2 block font-montserrat text-[10px] font-medium tracking-[0.18em] text-ash uppercase">
         {label}
       </label>
       {children}
       {error ? (
-        <p className="mt-1.5 text-xs text-red-500">{error}</p>
+        <p className="mt-1.5 text-xs text-error">{error}</p>
       ) : hint ? (
-        <p className="mt-1.5 text-xs text-stone-400">{hint}</p>
+        <p className="mt-1.5 text-xs text-ash">{hint}</p>
       ) : null}
     </div>
   )
@@ -54,7 +54,7 @@ export function TextField({
     <FieldShell label={label} htmlFor={id} error={error} hint={hint} className={containerClassName}>
       <input
         id={id}
-        className={classNames(CONTROL, error ? 'border-red-400' : 'border-stone-300', className)}
+        className={classNames(CONTROL, error ? 'border-error' : 'border-line', className)}
         aria-invalid={Boolean(error)}
         {...props}
       />
@@ -85,7 +85,7 @@ export function TextAreaField({
         className={classNames(
           CONTROL,
           'resize-y',
-          error ? 'border-red-400' : 'border-stone-300',
+          error ? 'border-error' : 'border-line',
           className,
         )}
         aria-invalid={Boolean(error)}
@@ -119,7 +119,7 @@ export function SelectField({
     <FieldShell label={label} htmlFor={id} error={error} hint={hint} className={containerClassName}>
       <select
         id={id}
-        className={classNames(CONTROL, 'appearance-none', error ? 'border-red-400' : 'border-stone-300', className)}
+        className={classNames(CONTROL, 'appearance-none', error ? 'border-error' : 'border-line', className)}
         aria-invalid={Boolean(error)}
         {...props}
       >

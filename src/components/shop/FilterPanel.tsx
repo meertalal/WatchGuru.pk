@@ -5,16 +5,19 @@ import {
   COLLECTIONS,
   DIAL_COLORS,
   FEATURES,
-  PRICE_BOUNDS,
   STRAP_TYPES,
-  products,
 } from '../../data/products'
 import { classNames, formatPrice } from '../../lib/format'
 import type { ShopFilters } from '../../lib/shop'
+import type { PriceBounds } from '../../lib/catalog'
+import type { Product } from '../../types'
 import type { ArrayFilterKey } from '../../hooks/useShopFilters'
 
 interface FilterPanelProps {
   filters: ShopFilters
+  /** Live catalogue — counts and price bounds derive from it. */
+  products: Product[]
+  bounds: PriceBounds
   onToggleArray: (key: ArrayFilterKey, value: string) => void
   onSetSingle: (key: string, value: string | null) => void
   onSetPriceRange: (min: number, max: number) => void
@@ -40,16 +43,16 @@ function FilterSection({
 }) {
   const [open, setOpen] = useState(defaultOpen)
   return (
-    <div className="border-b border-stone-200 py-5">
+    <div className="border-b border-line py-5">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         className="flex w-full items-center justify-between"
       >
-        <span className="eyebrow text-charcoal">{title}</span>
+        <span className="eyebrow text-white">{title}</span>
         <ChevronDown
-          className={classNames('size-4 text-stone-400 transition-transform', open && 'rotate-180')}
+          className={classNames('size-4 text-ash transition-transform', open && 'rotate-180')}
         />
       </button>
       {open && <div className="mt-4">{children}</div>}
@@ -74,11 +77,11 @@ function CheckboxRow({
         <span
           className={classNames(
             'flex size-4 items-center justify-center border transition-colors',
-            checked ? 'border-charcoal bg-charcoal' : 'border-stone-300 group-hover:border-stone-400',
+            checked ? 'border-gold bg-gold' : 'border-line group-hover:border-gold',
           )}
         >
           {checked && (
-            <svg viewBox="0 0 12 12" className="size-2.5 text-ivory" aria-hidden="true">
+            <svg viewBox="0 0 12 12" className="size-2.5 text-obsidian" aria-hidden="true">
               <path
                 d="M2 6.5 4.5 9 10 3"
                 fill="none"
@@ -94,28 +97,26 @@ function CheckboxRow({
         <span
           className={classNames(
             'text-sm transition-colors',
-            checked ? 'text-charcoal' : 'text-stone-600 group-hover:text-charcoal',
+            checked ? 'text-white' : 'text-ash group-hover:text-white',
           )}
         >
           {label}
         </span>
       </span>
-      {typeof count === 'number' && <span className="text-xs text-stone-400">{count}</span>}
+      {typeof count === 'number' && <span className="text-xs text-ash">{count}</span>}
     </label>
   )
-}
-
-function countFor(predicate: (p: (typeof products)[number]) => boolean): number {
-  return products.filter(predicate).length
 }
 
 function PriceFilter({
   min,
   max,
+  bounds,
   onCommit,
 }: {
   min: number
   max: number
+  bounds: PriceBounds
   onCommit: (min: number, max: number) => void
 }) {
   const [local, setLocal] = useState({ min, max })
@@ -132,18 +133,18 @@ function PriceFilter({
 
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between text-sm text-charcoal">
+      <div className="mb-4 flex items-center justify-between text-sm text-white">
         <span className="font-inter font-medium">{formatPrice(local.min)}</span>
-        <span className="text-stone-300">—</span>
+        <span className="text-ash">—</span>
         <span className="font-inter font-medium">{formatPrice(local.max)}</span>
       </div>
       <div className="flex flex-col gap-3">
-        <label className="flex items-center gap-3 text-[11px] tracking-wide text-stone-500 uppercase">
+        <label className="flex items-center gap-3 text-[11px] tracking-wide text-ash uppercase">
           <span className="w-8">Min</span>
           <input
             type="range"
-            min={PRICE_BOUNDS.min}
-            max={PRICE_BOUNDS.max}
+            min={bounds.min}
+            max={bounds.max}
             step={step}
             value={local.min}
             onChange={(e) =>
@@ -151,15 +152,15 @@ function PriceFilter({
             }
             onPointerUp={commit}
             onKeyUp={commit}
-            className="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-stone-300 accent-charcoal"
+            className="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-line accent-gold"
           />
         </label>
-        <label className="flex items-center gap-3 text-[11px] tracking-wide text-stone-500 uppercase">
+        <label className="flex items-center gap-3 text-[11px] tracking-wide text-ash uppercase">
           <span className="w-8">Max</span>
           <input
             type="range"
-            min={PRICE_BOUNDS.min}
-            max={PRICE_BOUNDS.max}
+            min={bounds.min}
+            max={bounds.max}
             step={step}
             value={local.max}
             onChange={(e) =>
@@ -167,7 +168,7 @@ function PriceFilter({
             }
             onPointerUp={commit}
             onKeyUp={commit}
-            className="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-stone-300 accent-charcoal"
+            className="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-line accent-gold"
           />
         </label>
       </div>
@@ -177,12 +178,17 @@ function PriceFilter({
 
 export function FilterPanel({
   filters,
+  products,
+  bounds,
   onToggleArray,
   onSetSingle,
   onSetPriceRange,
   onClearAll,
   onNavigate,
 }: FilterPanelProps) {
+  const countFor = (predicate: (p: Product) => boolean): number =>
+    products.filter(predicate).length
+
   return (
     <div>
       {/* Category */}
@@ -200,7 +206,7 @@ export function FilterPanel({
                   }}
                   className={classNames(
                     'w-full text-left text-sm transition-colors',
-                    active ? 'text-gold' : 'text-stone-600 hover:text-charcoal',
+                    active ? 'text-gold' : 'text-ash hover:text-white',
                   )}
                 >
                   {cat.label}
@@ -213,7 +219,7 @@ export function FilterPanel({
 
       {/* Price */}
       <FilterSection title="Price">
-        <PriceFilter min={filters.min} max={filters.max} onCommit={onSetPriceRange} />
+        <PriceFilter min={filters.min} max={filters.max} bounds={bounds} onCommit={onSetPriceRange} />
       </FilterSection>
 
       {/* Brands */}
@@ -283,7 +289,7 @@ export function FilterPanel({
         <button
           type="button"
           onClick={onClearAll}
-          className="font-montserrat text-[11px] font-medium tracking-[0.18em] text-stone-500 uppercase transition-colors hover:text-gold"
+          className="font-montserrat text-[11px] font-medium tracking-[0.18em] text-ash uppercase transition-colors hover:text-gold"
         >
           Clear all filters
         </button>
