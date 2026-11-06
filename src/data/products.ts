@@ -1,53 +1,97 @@
 import type { Product } from '../types'
 
 /**
- * Product imagery is served from Unsplash's CDN. `ProductImage` renders an
- * elegant on-brand fallback if a photo ever fails to load, so the layout never
- * breaks offline.
- */
-const photo = (id: string, w = 1000) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`
-
-const IMG = {
-  classic: photo('photo-1523170335258-f5ed11844a49'),
-  leather: photo('photo-1524805444758-089113d48a6d'),
-  steel: photo('photo-1547996160-81dfa63595aa'),
-  gold: photo('photo-1495856458515-0637185db551'),
-  minimal: photo('photo-1434056886845-dac89ffe9b56'),
-  diver: photo('photo-1508057198894-247b23fe5ade'),
-  dark: photo('photo-1611591437281-460bfbe1220a'),
-  dress: photo('photo-1539874754764-5a96559165b0'),
-  bracelet: photo('photo-1594534475808-b18fc33b045e'),
-  mesh: photo('photo-1622434641406-a158123450f9'),
-  rose: photo('photo-1609587312208-cea54be969e7'),
-  sport: photo('photo-1600003014755-ba31aa59c4b6'),
-  aviator: photo('photo-1548171915-e79a380a2a4b'),
-  chrono: photo('photo-1587836374828-4dbafa94cf0e'),
-  pearl: photo('photo-1522312346375-d1a52e2b99b3'),
-  duo: photo('photo-1627123424574-724758594e93'),
-} as const
-
-/**
- * Indicative USD→PKR exchange rate (open.er-api.com, 4 Nov 2026).
+ * Indicative USD-to-PKR exchange rate (open.er-api.com, 4 Nov 2026).
  * The catalogue was authored in USD and is presented in PKR.
  */
 export const USD_TO_PKR = 276.5278
 const toPkr = (value: number): number => Math.round(value * USD_TO_PKR)
 
+/**
+ * Product imagery is 100% original - generated artwork authored by
+ * `scripts/generate-watch-art.cjs` from each product's own spec, saved to
+ * `public/watches/<slug>.svg`. No stock photography, no third-party brands.
+ * Re-run the generator after editing the catalogue spec fields.
+ */
+
 export interface BrandInfo {
+  /** URL-safe identifier used in `/collections/brand/:slug`. */
+  slug: string
   name: string
   tagline: string
   country: string
+  /** Short story shown on brand tiles and the brand collection banner. */
+  blurb: string
+  /** True for WatchGuru's own in-house maison. */
+  own?: boolean
 }
 
+export const OWN_BRAND = 'WatchGuru Atelier'
+
 export const BRANDS: BrandInfo[] = [
-  { name: 'Meridian', tagline: 'Precision since 1898', country: 'Switzerland' },
-  { name: 'Beaumont', tagline: 'English haute horlogerie', country: 'United Kingdom' },
-  { name: 'Aurelian', tagline: 'Light, captured in gold', country: 'Switzerland' },
-  { name: 'Halcyon', tagline: 'Instruments for the sky', country: 'Germany' },
-  { name: 'Nordvik', tagline: 'Built for the north', country: 'Norway' },
-  { name: 'Delacroix', tagline: 'Artistry from Paris', country: 'France' },
+  {
+    slug: 'meridian',
+    name: 'Meridian',
+    tagline: 'Precision since 1898',
+    country: 'Switzerland',
+    blurb:
+      'Geneva-based pioneers pairing in-house automatic calibres with restrained, architectural dials.',
+  },
+  {
+    slug: 'beaumont',
+    name: 'Beaumont',
+    tagline: 'English haute horlogerie',
+    country: 'United Kingdom',
+    blurb:
+      'Perpetual calendars and moonphase astronomy, finished by hand in our London atelier.',
+  },
+  {
+    slug: 'aurelian',
+    name: 'Aurelian',
+    tagline: 'Light, captured in gold',
+    country: 'Switzerland',
+    blurb:
+      'Snow-set diamond bezels and hand-guilloche opaline dials from the Aurelian workshops.',
+  },
+  {
+    slug: 'halcyon',
+    name: 'Halcyon',
+    tagline: 'Instruments for the sky',
+    country: 'Germany',
+    blurb:
+      'Purpose-built pilot and dive instruments  -  legible, magnetorescaped and unshakeably reliable.',
+  },
+  {
+    slug: 'nordvik',
+    name: 'Nordvik',
+    tagline: 'Built for the north',
+    country: 'Norway',
+    blurb:
+      'Tool watches engineered for ice, altitude and open water  -  3,000m-rated testing, as standard.',
+  },
+  {
+    slug: 'delacroix',
+    name: 'Delacroix',
+    tagline: 'Artistry from Paris',
+    country: 'France',
+    blurb:
+      'Grand complications and joaillerie dials, limited to a few dozen pieces each year.',
+  },
+  {
+    slug: 'watchguru-atelier',
+    name: 'WatchGuru Atelier',
+    tagline: 'Our own maison',
+    country: 'Switzerland',
+    blurb:
+      'WatchGuru--------s in-house label  -  Swiss assemblage, sapphire crystals and an atelier-backed five-year warranty.',
+    own: true,
+  },
 ]
+
+export function getBrandBySlug(slug: string): BrandInfo | undefined {
+  return BRANDS.find((brand) => brand.slug === slug)
+}
+
 
 export const COLLECTIONS = [
   'Heritage',
@@ -56,6 +100,9 @@ export const COLLECTIONS = [
   'Dress',
   'Aviator',
   'Sport',
+  'Executive',
+  'Fashion',
+  'Signature',
 ] as const
 
 export const DIAL_COLORS = [
@@ -92,7 +139,7 @@ export const FEATURES = [
   'Limited Edition',
 ] as const
 
-const rawProducts: Product[] = [
+const rawProducts: Omit<Product, 'images'>[] = [
   {
     id: 'tc-001',
     slug: 'meridian-heritage-classic-38',
@@ -108,7 +155,6 @@ const rawProducts: Product[] = [
       'In-house automatic calibre',
       '38mm case for an understated wrist presence',
     ],
-    images: [IMG.classic, IMG.leather, IMG.dress],
     category: 'men',
     collections: ['Heritage', 'Dress'],
     dialColor: 'Ivory',
@@ -145,7 +191,6 @@ const rawProducts: Product[] = [
       'Tone-on-tone tri-compax dial',
       'Tachymeter bezel in polished steel',
     ],
-    images: [IMG.chrono, IMG.steel, IMG.dark],
     category: 'men',
     collections: ['Chronograph', 'Sport'],
     dialColor: 'Charcoal',
@@ -181,7 +226,6 @@ const rawProducts: Product[] = [
       'Ceramic unidirectional bezel',
       'SuperLumiNova hour markers',
     ],
-    images: [IMG.diver, IMG.sport, IMG.steel],
     category: 'men',
     collections: ['Diver', 'Sport'],
     dialColor: 'Midnight Blue',
@@ -216,9 +260,8 @@ const rawProducts: Product[] = [
       'Hand-guilloché dial in ivory enamel',
       '18k rose gold case',
     ],
-    images: [IMG.gold, IMG.pearl, IMG.dress],
     category: 'men',
-    collections: ['Heritage', 'Dress'],
+    collections: ['Heritage', 'Dress', 'Executive'],
     dialColor: 'Champagne',
     strapType: 'Leather',
     caseMaterial: '18k Rose Gold',
@@ -252,7 +295,6 @@ const rawProducts: Product[] = [
       'Slim 8.4mm rose gold case',
       'Diamond-set hour markers',
     ],
-    images: [IMG.rose, IMG.pearl, IMG.gold],
     category: 'women',
     collections: ['Dress', 'Heritage'],
     dialColor: 'Mother of Pearl',
@@ -288,7 +330,6 @@ const rawProducts: Product[] = [
       'Sunburst champagne dial',
       'Vintage-inspired 40mm case',
     ],
-    images: [IMG.chrono, IMG.aviator, IMG.classic],
     category: 'men',
     collections: ['Chronograph', 'Heritage'],
     dialColor: 'Champagne',
@@ -323,9 +364,8 @@ const rawProducts: Product[] = [
       'Silvered opaline dial',
       'Ultra-thin automatic movement',
     ],
-    images: [IMG.gold, IMG.pearl, IMG.rose],
     category: 'women',
-    collections: ['Dress'],
+    collections: ['Dress', 'Executive'],
     dialColor: 'Silver',
     strapType: 'Milanese Mesh',
     caseMaterial: 'Stainless Steel',
@@ -359,7 +399,6 @@ const rawProducts: Product[] = [
       'Sapphire dial and exhibition back',
       'Blackened skeleton hands',
     ],
-    images: [IMG.dark, IMG.mesh, IMG.duo],
     category: 'unisex',
     collections: ['Dress', 'Chronograph'],
     dialColor: 'Black',
@@ -395,7 +434,6 @@ const rawProducts: Product[] = [
       'Two-tone sapphire-blue bezel',
       '70-hour power reserve',
     ],
-    images: [IMG.diver, IMG.mesh, IMG.steel],
     category: 'men',
     collections: ['Aviator', 'Sport'],
     dialColor: 'Midnight Blue',
@@ -431,7 +469,6 @@ const rawProducts: Product[] = [
       'High-contrast luminous numerals',
       'Oversize onion crown',
     ],
-    images: [IMG.aviator, IMG.leather, IMG.sport],
     category: 'men',
     collections: ['Aviator', 'Sport'],
     dialColor: 'Black',
@@ -466,7 +503,6 @@ const rawProducts: Product[] = [
       'Matte midnight-blue dial',
       'Bauhaus-minimal indices',
     ],
-    images: [IMG.minimal, IMG.dress, IMG.leather],
     category: 'unisex',
     collections: ['Dress'],
     dialColor: 'Midnight Blue',
@@ -501,7 +537,6 @@ const rawProducts: Product[] = [
       'Ceramic dive bezel',
       '300m water resistance',
     ],
-    images: [IMG.diver, IMG.sport, IMG.dark],
     category: 'men',
     collections: ['Diver', 'Sport'],
     dialColor: 'Forest Green',
@@ -537,7 +572,6 @@ const rawProducts: Product[] = [
       'Glacier-blue gradient dial',
       'Screw-down crown',
     ],
-    images: [IMG.sport, IMG.diver, IMG.steel],
     category: 'men',
     collections: ['Diver', 'Sport'],
     dialColor: 'Silver',
@@ -573,7 +607,6 @@ const rawProducts: Product[] = [
       'Tachymeter bezel',
       'Shock-resistant case',
     ],
-    images: [IMG.chrono, IMG.sport, IMG.duo],
     category: 'men',
     collections: ['Sport', 'Chronograph'],
     dialColor: 'Ivory',
@@ -608,7 +641,6 @@ const rawProducts: Product[] = [
       'Applied polished numerals',
       'Everyday automatic movement',
     ],
-    images: [IMG.mesh, IMG.minimal, IMG.duo],
     category: 'unisex',
     collections: ['Heritage', 'Dress'],
     dialColor: 'Forest Green',
@@ -644,9 +676,8 @@ const rawProducts: Product[] = [
       'Cabochon-set crown',
       'Petal-shaped 30mm case',
     ],
-    images: [IMG.rose, IMG.gold, IMG.pearl],
     category: 'women',
-    collections: ['Dress'],
+    collections: ['Dress', 'Fashion'],
     dialColor: 'Rose Gold',
     strapType: 'Leather',
     caseMaterial: '18k Rose Gold',
@@ -680,9 +711,8 @@ const rawProducts: Product[] = [
       'One-minute tourbillon',
       'Limited to 25 pieces worldwide',
     ],
-    images: [IMG.gold, IMG.dark, IMG.duo],
     category: 'men',
-    collections: ['Heritage', 'Dress'],
+    collections: ['Heritage', 'Dress', 'Executive', 'Fashion'],
     dialColor: 'Charcoal',
     strapType: 'Leather',
     caseMaterial: 'Platinum',
@@ -721,9 +751,8 @@ const rawProducts: Product[] = [
       'Midnight-blue sunray dial',
       'Limited annual production',
     ],
-    images: [IMG.pearl, IMG.rose, IMG.gold],
     category: 'women',
-    collections: ['Dress'],
+    collections: ['Dress', 'Executive', 'Fashion'],
     dialColor: 'Midnight Blue',
     strapType: 'Leather',
     caseMaterial: 'Stainless Steel',
@@ -757,7 +786,6 @@ const rawProducts: Product[] = [
       'Rounded 36mm case',
       'Slim profile for daily wear',
     ],
-    images: [IMG.dress, IMG.minimal, IMG.leather],
     category: 'women',
     collections: ['Dress', 'Heritage'],
     dialColor: 'Ivory',
@@ -792,9 +820,8 @@ const rawProducts: Product[] = [
       'Moonphase at six o’clock',
       'Limited to 50 pieces',
     ],
-    images: [IMG.classic, IMG.gold, IMG.pearl],
     category: 'men',
-    collections: ['Heritage', 'Dress'],
+    collections: ['Heritage', 'Dress', 'Executive'],
     dialColor: 'Ivory',
     strapType: 'Leather',
     caseMaterial: '18k Rose Gold',
@@ -819,36 +846,132 @@ const rawProducts: Product[] = [
     stock: 3,
     addedAt: '2025-02-01',
   },
+  {
+    id: 'wg-001',
+    slug: 'watchguru-atelier-wg01-heritage-auto',
+    name: 'WG-01 Heritage Auto',
+    brand: 'WatchGuru Atelier',
+    price: 2450,
+    compareAtPrice: 2900,
+    rating: 4.9,
+    reviewCount: 38,
+    description:
+      'The first piece from our own maison. The WG-01 pairs a hand-grained silver sunray dial with the in-house WG-2101 automatic calibre, finished with perlage and assembled in Geneva. Every case back is individually engraved with its edition number.',
+    highlights: [
+      'In-house WG-2101 automatic calibre, 46h reserve',
+      'Hand-grained silver sunray dial',
+      'Numbered case back, engraved by hand',
+    ],
+    category: 'men',
+    collections: ['Heritage', 'Signature'],
+    dialColor: 'Silver',
+    strapType: 'Leather',
+    caseMaterial: 'Stainless Steel',
+    caseSize: '39mm',
+    movement: 'Automatic',
+    features: ['Automatic Movement', 'Sapphire Crystal', 'Date Display'],
+    specs: [
+      { label: 'Case', value: '39mm brushed steel, 10.5mm thin' },
+      { label: 'Movement', value: 'WatchGuru WG-2101 automatic, 46h power reserve' },
+      { label: 'Crystal', value: 'Box sapphire, anti-reflective underside' },
+      { label: 'Water Resistance', value: '50m / 5 ATM' },
+      { label: 'Strap', value: 'Caramel calf leather, quick-release' },
+      { label: 'Warranty', value: '5-year WatchGuru Atelier warranty' },
+    ],
+    badge: 'new',
+    inStock: true,
+    stock: 15,
+    addedAt: '2026-09-18',
+  },
+  {
+    id: 'wg-002',
+    slug: 'watchguru-atelier-wg02-chronosport-42',
+    name: 'WG-02 Chronosport 42',
+    brand: 'WatchGuru Atelier',
+    price: 3150,
+    rating: 4.8,
+    reviewCount: 27,
+    description:
+      'Our sports chronograph, built around a column-wheel WG-440 calibre with a vertical clutch. The matte ceramic bezel, waffle-style pushers and tachymeter scale make it the sharpest tool we have ever cased.',
+    highlights: [
+      'Column-wheel WG-440 with vertical clutch',
+      'Matte ceramic bezel, 120 clicks',
+      'Tachymeter scale, applied steel indices',
+    ],
+    category: 'men',
+    collections: ['Chronograph', 'Sport', 'Signature'],
+    dialColor: 'Charcoal',
+    strapType: 'Stainless Steel',
+    caseMaterial: 'Stainless Steel',
+    caseSize: '42mm',
+    movement: 'Automatic Chronograph',
+    features: ['Automatic Movement', 'Chronograph', 'Sapphire Crystal', 'Date Display'],
+    specs: [
+      { label: 'Case', value: '42mm satin-brushed steel, 13.2mm' },
+      { label: 'Movement', value: 'WatchGuru WG-440 column-wheel chronograph, 55h' },
+      { label: 'Crystal', value: 'Sapphire, double anti-reflective coating' },
+      { label: 'Water Resistance', value: '100m / 10 ATM' },
+      { label: 'Strap', value: 'Brushed steel bracelet, tool-free micro-adjust' },
+      { label: 'Warranty', value: '5-year WatchGuru Atelier warranty' },
+    ],
+    badge: 'bestseller',
+    inStock: true,
+    stock: 9,
+    addedAt: '2026-08-02',
+  },
+  {
+    id: 'wg-003',
+    slug: 'watchguru-atelier-wg03-luna-34',
+    name: 'WG-03 Luna 34',
+    brand: 'WatchGuru Atelier',
+    price: 1890,
+    compareAtPrice: 2250,
+    rating: 4.9,
+    reviewCount: 44,
+    description:
+      'A dress watch for her, in our own atelier. The WG-03 sets a mother-of-pearl dial beneath slender dauphine hands, carried on a Milanese mesh bracelet woven in Italy. Quietly radiant, every single day.',
+    highlights: [
+      'Genuine mother-of-pearl dial',
+      'Italian Milanese mesh bracelet',
+      'Slender dauphine hands, double-domed sapphire',
+    ],
+    category: 'women',
+    collections: ['Dress', 'Signature'],
+    dialColor: 'Mother of Pearl',
+    strapType: 'Milanese Mesh',
+    caseMaterial: 'Stainless Steel',
+    caseSize: '34mm',
+    movement: 'Quartz',
+    features: ['Sapphire Crystal', 'Date Display'],
+    specs: [
+      { label: 'Case', value: '34mm polished steel, 8.1mm thin' },
+      { label: 'Movement', value: 'Swiss Ronda 515 quartz, 54-month battery' },
+      { label: 'Crystal', value: 'Double-domed sapphire' },
+      { label: 'Water Resistance', value: '30m / 3 ATM' },
+      { label: 'Strap', value: 'Italian Milanese mesh, adjustable clasp' },
+      { label: 'Warranty', value: '5-year WatchGuru Atelier warranty' },
+    ],
+    badge: 'sale',
+    inStock: true,
+    stock: 18,
+    addedAt: '2026-10-11',
+  },
 ]
 
-/** Catalogue presented in Pakistani rupees; the second photo now leads each product. */
+/**
+ * Catalogue presented in Pakistani rupees. This module is the *seed* for the
+ * catalogue repository  -  admins can add, edit and remove products at runtime;
+ * those edits live in localStorage and are merged over this seed.
+ *
+ * Product images are original, generated artwork in /public/watches/<slug>.svg
+ * (run scripts/generate-watch-art.cjs to regenerate after spec edits).
+ */
 export const products: Product[] = rawProducts.map((product) => ({
   ...product,
   price: toPkr(product.price),
   compareAtPrice: product.compareAtPrice ? toPkr(product.compareAtPrice) : undefined,
-  // The first stock photo was intentionally dropped from the catalogue;
-  // the strongest angle is now the lead image (previously the hover image).
-  images: product.images.slice(1),
+  images: [`/watches/${product.slug}.svg`],
 }))
-
-export function getProductById(id: string): Product | undefined {
-  return products.find((p) => p.id === id || p.slug === id)
-}
-
-export function getRelatedProducts(product: Product, limit = 4): Product[] {
-  return products
-    .filter((p) => p.id !== product.id)
-    .map((p) => {
-      let score = 0
-      if (p.brand === product.brand) score += 2
-      score += p.collections.filter((c) => product.collections.includes(c)).length
-      if (p.category === product.category) score += 1
-      return { p, score }
-    })
-    .sort((a, b) => b.score - a.score || b.p.rating - a.p.rating)
-    .slice(0, limit)
-    .map((x) => x.p)
-}
 
 export const PRICE_BOUNDS = {
   min: Math.min(...products.map((p) => p.price)),

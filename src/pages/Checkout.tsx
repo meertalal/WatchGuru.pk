@@ -1,25 +1,29 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  AlertTriangle,
+  Banknote,
+  Building2,
+  Landmark,
   ShieldCheck,
   ShoppingBag,
+  Smartphone,
   Tag,
 } from 'lucide-react'
-import { formatPrice } from '../lib/format'
+import { formatPrice, classNames } from '../lib/format'
 import {
   DEMO_COUPONS,
   computeTotals,
   findCoupon,
-  generateOrderNumber,
   nowIso,
   type Coupon,
 } from '../lib/cart'
+import { COD_ADVANCE_PKR, PAYMENT_METHOD_LABEL, generateOrderNumber } from '../lib/orders'
 import { COUNTRIES, checkoutSchema, type CheckoutValues } from '../lib/validation'
-import { useCart, useOrder, useToast } from '../store/contexts'
-import type { Order, ShippingDetails } from '../types'
+import { useAuth, useCart, useOrders, useToast } from '../store'
+import { useDocumentMeta } from '../hooks/useDocumentMeta'
+import type { Order, PaymentMethod, ShippingDetails } from '../types'
 import { PageBanner } from '../components/layout/PageBanner'
 import { Container } from '../components/ui/Container'
 import { Button } from '../components/ui/Button'
@@ -27,20 +31,61 @@ import { EmptyState } from '../components/ui/EmptyState'
 import { ProductImage } from '../components/ui/ProductImage'
 import { SelectField, TextField } from '../components/ui/FormControls'
 
+const PAYMENT_METHODS: {
+  value: PaymentMethod
+  label: string
+  hint: string
+  icon: typeof Banknote
+}[] = [
+  {
+    value: 'cod',
+    label: 'Cash on Delivery',
+    hint: 'Pay when your watch arrives — a Rs. 1,000 advance confirms the order and is adjusted on delivery.',
+    icon: Banknote,
+  },
+  {
+    value: 'bank-transfer',
+    label: 'Bank Transfer',
+    hint: 'We share our account details on WhatsApp; your order dispatches once the advance reflects.',
+    icon: Building2,
+  },
+  {
+    value: 'easypaisa',
+    label: 'Easypaisa',
+    hint: 'Advance via Easypaisa to the number shared after checkout; instant confirmation.',
+    icon: Smartphone,
+  },
+  {
+    value: 'jazzcash',
+    label: 'JazzCash',
+    hint: 'Advance via JazzCash to the number shared after checkout; instant confirmation.',
+    icon: Landmark,
+  },
+]
+
 export function Checkout() {
   const navigate = useNavigate()
   const { items, clear } = useCart()
-  const { placeOrder } = useOrder()
+  const { placeOrder } = useOrders()
   const { notify } = useToast()
+  const { account } = useAuth()
+
+  useDocumentMeta({
+    title: 'Secure Checkout',
+    description:
+      'Complete your WatchGuru.pk order — Cash on Delivery, bank transfer or mobile wallets. Insured nationwide delivery.',
+  })
 
   const [couponInput, setCouponInput] = useState('')
   const [coupon, setCoupon] = useState<Coupon | null>(null)
   const [couponError, setCouponError] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('cod')
   const [redirecting, setRedirecting] = useState(false)
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<CheckoutValues>({
     resolver: zodResolver(checkoutSchema),
@@ -58,6 +103,23 @@ export function Checkout() {
       country: 'Pakistan',
     },
   })
+
+  // Prefill from the signed-in account's profile — entered once, reused forever.
+  useEffect(() => {
+    if (!account) return
+    reset({
+      firstName: account.firstName,
+      lastName: account.lastName,
+      email: account.email,
+      phone: account.phone,
+      address: account.address ?? '',
+      apartment: '',
+      city: account.city ?? '',
+      state: account.state ?? '',
+      postalCode: account.postalCode ?? '',
+      country: account.country ?? 'Pakistan',
+    })
+  }, [account, reset])
 
   const totals = computeTotals(
     items.map((i) => ({ price: i.product.price, quantity: i.quantity })),
@@ -77,7 +139,7 @@ export function Checkout() {
             title="Nothing to check out yet"
             description="Add a watch to your cart and your checkout will appear here."
             action={
-              <Link to="/shop">
+              <Link to="/collections/all">
                 <Button size="lg">Browse the boutique</Button>
               </Link>
             }
@@ -123,6 +185,7 @@ export function Checkout() {
       shipping,
       lines: items.map(({ product, quantity }) => ({
         productId: product.id,
+        slug: product.slug,
         name: product.name,
         brand: product.brand,
         price: product.price,
@@ -135,20 +198,24 @@ export function Checkout() {
       tax: totals.tax,
       total: totals.total,
       couponCode: coupon?.code,
+      paymentMethod,
+      status: 'processing',
+      statusHistory: [{ status: 'processing', at: nowIso() }],
+      accountId: account?.id,
     }
 
     setRedirecting(true)
     placeOrder(order)
     clear()
-    notify('Order placed — this is a simulated checkout.')
+    notify('Order received — our team will confirm within minutes.')
     navigate('/order-confirmation')
   }
 
   return (
     <>
       <PageBanner
-        eyebrow="Demo checkout"
-        title="Checkout"
+        eyebrow={account ? `Ordering as ${account.email}` : 'Guest checkout'}
+        title="Secure Checkout"
         breadcrumbs={[
           { label: 'Home', to: '/' },
           { label: 'Cart', to: '/cart' },
@@ -157,10 +224,11 @@ export function Checkout() {
       />
 
       <Container className="py-12 lg:py-16">
-        <div className="mb-8 flex items-start gap-3 border border-gold/40 bg-gold/10 px-4 py-3 text-sm text-charcoal">
-          <AlertTriangle className="mt-0.5 size-4 shrink-0 text-gold" />
+        <div className="mb-8 flex items-start gap-3 border border-gold/40 bg-gold/10 px-4 py-3 text-sm text-white">
+          <ShieldCheck className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden="true" />
           <p>
-            This is a demonstration checkout. Your details are used to create a demo order, and no watch is shipped.
+            Every order is confirmed by phone or WhatsApp before dispatch, and your watch is
+            insured until it is in your hands. No card data is ever collected on this site.
           </p>
         </div>
 
@@ -169,7 +237,18 @@ export function Checkout() {
             <div className="flex flex-col gap-10">
               {/* Contact */}
               <section>
-                <h2 className="mb-5 text-xl">Contact details</h2>
+                <div className="mb-5 flex items-baseline justify-between gap-4">
+                  <h2 className="text-xl">Contact details</h2>
+                  {!account && (
+                    <Link
+                      to="/account/login"
+                      state={{ from: '/checkout' }}
+                      className="font-montserrat text-[10px] font-medium tracking-[0.18em] text-gold uppercase hover:opacity-75"
+                    >
+                      Sign in for faster checkout →
+                    </Link>
+                  )}
+                </div>
                 <div className="grid gap-5 sm:grid-cols-2">
                   <TextField
                     label="First name"
@@ -195,7 +274,7 @@ export function Checkout() {
                     {...register('email')}
                   />
                   <TextField
-                    label="Phone"
+                    label="Phone (WhatsApp preferred)"
                     id="phone"
                     type="tel"
                     autoComplete="tel"
@@ -257,11 +336,62 @@ export function Checkout() {
                 </div>
               </section>
 
+              {/* Payment method */}
+              <fieldset>
+                <legend className="mb-5 text-xl">Payment method</legend>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {PAYMENT_METHODS.map(({ value, label, hint, icon: Icon }) => {
+                    const selected = paymentMethod === value
+                    return (
+                      <label
+                        key={value}
+                        className={classNames(
+                          'flex cursor-pointer items-start gap-3 border p-4 transition-colors',
+                          selected
+                            ? 'border-gold bg-coal'
+                            : 'border-line bg-charcoal hover:border-gold',
+                        )}
+                      >
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value={value}
+                          checked={selected}
+                          onChange={() => setPaymentMethod(value)}
+                          className="sr-only"
+                        />
+                        <Icon
+                          className={classNames(
+                            'mt-0.5 size-5 shrink-0',
+                            selected ? 'text-gold' : 'text-ash',
+                          )}
+                          strokeWidth={1.5}
+                          aria-hidden="true"
+                        />
+                        <span>
+                          <span className="block text-sm font-medium text-white">{label}</span>
+                          <span className="mt-1 block text-[11px] leading-snug text-ash">
+                            {hint}
+                          </span>
+                        </span>
+                      </label>
+                    )
+                  })}
+                </div>
+
+                {paymentMethod === 'cod' && (
+                  <p className="mt-4 border-l-2 border-gold bg-gold/10 px-4 py-3 text-[12px] leading-relaxed text-white">
+                    A Rs. {COD_ADVANCE_PKR.toLocaleString('en-PK')} advance confirms your order.
+                    Our team calls or messages to verify, and the advance is adjusted against your
+                    balance — you pay the remainder in cash, on delivery.
+                  </p>
+                )}
+              </fieldset>
             </div>
 
             {/* Order summary */}
             <aside className="lg:sticky lg:top-28 lg:self-start">
-              <div className="border border-stone-200 bg-white p-6">
+              <div className="border border-line bg-charcoal p-6">
                 <h2 className="text-xl">Order summary</h2>
 
                 <ul className="mt-5 flex flex-col gap-4">
@@ -274,12 +404,17 @@ export function Checkout() {
                         className="size-16 shrink-0"
                       />
                       <div className="flex flex-1 flex-col">
-                        <span className="text-sm text-charcoal">{product.name}</span>
-                        <span className="text-xs text-stone-400">
+                        <Link
+                          to={`/products/${product.slug}`}
+                          className="text-sm text-white transition-colors hover:text-gold"
+                        >
+                          {product.name}
+                        </Link>
+                        <span className="text-xs text-ash">
                           {product.brand} · Qty {quantity}
                         </span>
                       </div>
-                      <span className="font-inter font-medium text-sm text-charcoal">
+                      <span className="font-inter font-medium text-sm text-white">
                         {formatPrice(lineTotal)}
                       </span>
                     </li>
@@ -287,10 +422,10 @@ export function Checkout() {
                 </ul>
 
                 {/* Coupon */}
-                <div className="mt-6 border-t border-stone-200 pt-5">
+                <div className="mt-6 border-t border-line pt-5">
                   <label
                     htmlFor="coupon"
-                    className="mb-2 flex items-center gap-1.5 font-montserrat text-[10px] font-medium tracking-[0.18em] text-stone-500 uppercase"
+                    className="mb-2 flex items-center gap-1.5 font-montserrat text-[10px] font-medium tracking-[0.18em] text-ash uppercase"
                   >
                     <Tag className="size-3.5" /> Coupon code
                   </label>
@@ -300,49 +435,57 @@ export function Checkout() {
                       value={couponInput}
                       onChange={(e) => setCouponInput(e.target.value)}
                       placeholder="Enter code"
-                      className="w-full border border-stone-300 bg-white px-3 py-2.5 font-lato text-sm outline-none transition-colors placeholder:text-stone-400 focus:border-charcoal"
+                      className="w-full border border-line bg-charcoal px-3 py-2.5 font-lato text-sm outline-none transition-colors placeholder:text-ash focus:border-gold"
                     />
                     <Button type="button" variant="outline" size="sm" onClick={applyCoupon}>
                       Apply
                     </Button>
                   </div>
-                  {couponError && <p className="mt-1.5 text-xs text-red-500">{couponError}</p>}
+                  {couponError && <p className="mt-1.5 text-xs text-error">{couponError}</p>}
                   {coupon && (
                     <p className="mt-2 text-xs text-gold">
                       {coupon.code} applied — {coupon.label}
                     </p>
                   )}
-                  <p className="mt-2 text-[11px] text-stone-400">
+                  <p className="mt-2 text-[11px] text-ash">
                     Demo codes:{' '}
                     {DEMO_COUPONS.map((c) => c.code).join(' · ')}
                   </p>
                 </div>
 
                 {/* Totals */}
-                <dl className="mt-5 flex flex-col gap-3 border-t border-stone-200 pt-5 text-sm">
+                <dl className="mt-5 flex flex-col gap-3 border-t border-line pt-5 text-sm">
                   <div className="flex items-center justify-between">
-                    <dt className="text-stone-500">Subtotal</dt>
-                    <dd className="text-charcoal">{formatPrice(totals.subtotal)}</dd>
+                    <dt className="text-ash">Subtotal</dt>
+                    <dd className="text-white">{formatPrice(totals.subtotal)}</dd>
                   </div>
                   {totals.discount > 0 && (
                     <div className="flex items-center justify-between">
-                      <dt className="text-stone-500">Discount</dt>
+                      <dt className="text-ash">Discount</dt>
                       <dd className="text-gold">−{formatPrice(totals.discount)}</dd>
                     </div>
                   )}
                   <div className="flex items-center justify-between">
-                    <dt className="text-stone-500">Shipping</dt>
-                    <dd className="text-charcoal">
-                      {totals.shippingCost === 0 ? 'Free' : formatPrice(totals.shippingCost)}
+                    <dt className="text-ash">Shipping</dt>
+                    <dd className="text-white">
+                      {totals.shippingCost === 0 ? 'Free · insured' : formatPrice(totals.shippingCost)}
                     </dd>
                   </div>
                   <div className="flex items-center justify-between">
-                    <dt className="text-stone-500">Estimated tax</dt>
-                    <dd className="text-charcoal">{formatPrice(totals.tax)}</dd>
+                    <dt className="text-ash">Estimated tax</dt>
+                    <dd className="text-white">{formatPrice(totals.tax)}</dd>
                   </div>
-                  <div className="flex items-center justify-between border-t border-stone-200 pt-4">
-                    <dt className="eyebrow text-charcoal">Total</dt>
-                    <dd className="font-inter font-medium text-2xl text-charcoal">{formatPrice(totals.total)}</dd>
+                  {paymentMethod === 'cod' && (
+                    <div className="flex items-center justify-between text-[12px] text-ash">
+                      <dt>Payable advance</dt>
+                      <dd>Rs. {COD_ADVANCE_PKR.toLocaleString('en-PK')}</dd>
+                    </div>
+                  )}
+                  <div className="flex items-center justify-between border-t border-line pt-4">
+                    <dt className="eyebrow text-white">Total</dt>
+                    <dd className="font-inter font-medium text-2xl text-white">
+                      {formatPrice(totals.total)}
+                    </dd>
                   </div>
                 </dl>
 
@@ -353,12 +496,14 @@ export function Checkout() {
                   disabled={isSubmitting}
                   className="mt-6 w-full"
                 >
-                  {isSubmitting ? 'Placing order…' : `Place demo order · ${formatPrice(totals.total)}`}
+                  {isSubmitting
+                    ? 'Placing order…'
+                    : `Place order · ${formatPrice(totals.total)}`}
                 </Button>
 
-                <p className="mt-4 flex items-center justify-center gap-2 text-[11px] text-stone-400">
-                  <ShieldCheck className="size-3.5 text-gold" />
-                  Demo order · no payment is collected
+                <p className="mt-4 flex items-center justify-center gap-2 text-[11px] text-ash">
+                  <ShieldCheck className="size-3.5 text-gold" aria-hidden="true" />
+                  {PAYMENT_METHOD_LABEL[paymentMethod]} · no card data collected
                 </p>
               </div>
             </aside>

@@ -89,7 +89,10 @@ export function sortProducts(source: Product[], sort: SortValue): Product[] {
   }
 }
 
-export function countActiveFilters(filters: ShopFilters): number {
+export function countActiveFilters(
+  filters: ShopFilters,
+  bounds: { min: number; max: number } = DEFAULT_FILTERS,
+): number {
   return (
     filters.brands.length +
     filters.collections.length +
@@ -98,6 +101,6 @@ export function countActiveFilters(filters: ShopFilters): number {
     filters.features.length +
     (filters.category ? 1 : 0) +
     (filters.tag ? 1 : 0) +
-    (filters.min !== DEFAULT_FILTERS.min || filters.max !== DEFAULT_FILTERS.max ? 1 : 0)
+    (filters.min !== bounds.min || filters.max !== bounds.max ? 1 : 0)
   )
 }

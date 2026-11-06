@@ -1,14 +1,14 @@
-import { Sparkles, Truck, Undo2 } from 'lucide-react'
+import { BadgeCheck, Truck, Wallet } from 'lucide-react'
 
 const MESSAGES = [
-  { icon: Truck, text: 'Complimentary insured shipping on every order' },
-  { icon: Sparkles, text: 'New arrivals from the 2026 collections' },
-  { icon: Undo2, text: '30-day returns · 5-year international warranty' },
+  { icon: Truck, text: 'Free insured delivery nationwide · 2–5 days' },
+  { icon: Wallet, text: 'Cash on Delivery available · Rs. 1,000 advance to confirm' },
+  { icon: BadgeCheck, text: '100% original watches · 1-year machine warranty' },
 ]
 
 export function AnnouncementBar() {
   return (
-    <div className="bg-charcoal text-ivory">
+    <div className="bg-ink text-ash">
       <div className="mx-auto hidden w-full max-w-[1280px] items-center justify-center gap-10 px-8 py-2.5 lg:flex">
         {MESSAGES.map(({ icon: Icon, text }) => (
           <span

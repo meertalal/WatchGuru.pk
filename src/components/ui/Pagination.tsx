@@ -31,7 +31,7 @@ export function Pagination({ page, totalPages, onChange, className }: Pagination
   const pages = buildPages(page, totalPages)
 
   const navButton =
-    'flex size-10 items-center justify-center border border-stone-300 text-stone-600 transition-colors hover:border-charcoal hover:text-charcoal disabled:opacity-40 disabled:hover:border-stone-300 disabled:hover:text-stone-600'
+    'flex size-10 items-center justify-center border border-line text-ash transition-colors hover:border-gold hover:text-white disabled:opacity-40 disabled:hover:border-gold disabled:hover:text-ash'
 
   return (
     <nav
@@ -50,7 +50,7 @@ export function Pagination({ page, totalPages, onChange, className }: Pagination
 
       {pages.map((item, index) =>
         item === 'ellipsis' ? (
-          <span key={`ellipsis-${index}`} className="px-1 text-stone-400">
+          <span key={`ellipsis-${index}`} className="px-1 text-ash">
             …
           </span>
         ) : (
@@ -62,8 +62,8 @@ export function Pagination({ page, totalPages, onChange, className }: Pagination
             className={classNames(
               'size-10 text-xs font-medium transition-colors',
               item === page
-                ? 'bg-charcoal text-ivory'
-                : 'border border-stone-300 text-stone-600 hover:border-charcoal hover:text-charcoal',
+                ? 'bg-gold-bright text-obsidian'
+                : 'border border-line text-ash hover:border-gold hover:text-white',
             )}
           >
             {item}

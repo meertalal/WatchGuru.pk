@@ -5,18 +5,18 @@ import { Container } from '../ui/Container'
 import { Reveal } from '../ui/Reveal'
 
 const PROMO_IMAGE =
-  'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=1400&q=80'
+  '/watches/meridian-heritage-classic-38.svg'
 
 export function PromoBanner() {
   return (
-    <section className="bg-stone-100 py-16 sm:py-24">
+    <section className="bg-coal py-16 sm:py-24">
       <Container>
         <Reveal>
           <div className="grid overflow-hidden lg:grid-cols-2">
             <div className="relative min-h-[320px]">
               <img
                 src={PROMO_IMAGE}
-                alt="A hand-finished automatic watch"
+                alt="Meridian Heritage Classic 38 — original artwork"
                 loading="lazy"
                 className="absolute inset-0 size-full object-cover"
               />
@@ -30,19 +30,18 @@ export function PromoBanner() {
               <h2 className="font-lora font-normal text-3xl leading-tight text-ivory sm:text-4xl lg:text-[2.6rem]">
                 Heirlooms, in the making.
               </h2>
-              <p className="max-w-md text-sm leading-relaxed text-stone-400">
+              <p className="max-w-md text-sm leading-relaxed text-ash">
                 Hand-finished movements, sapphire crystal and case backs engraved by our
-                in-house atelier. Beginning at PKR 547,525 — designed to be passed down, not
-                replaced.
+                in-house atelier. Designed to be passed down, not replaced.
               </p>
               <div className="mt-2 flex flex-wrap items-center gap-4">
-                <Link to="/shop?collection=Heritage" className={buttonClass('gold', 'md')}>
+                <Link to="/collections/all?collection=Heritage" className={buttonClass('gold', 'md')}>
                   Explore Heritage
                   <ArrowRight className="size-4" />
                 </Link>
                 <Link
                   to="/about"
-                  className={buttonClass('ghost', 'md', 'text-stone-300 hover:text-gold')}
+                  className={buttonClass('ghost', 'md', 'text-ash hover:text-gold')}
                 >
                   Our craftsmanship
                 </Link>

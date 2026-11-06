@@ -10,4 +10,16 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Stable vendor chunks — cached aggressively between deploys.
+          if (/node_modules[\\/](react|react-dom|scheduler|react-router-dom|react-router)[\\/]/.test(id))
+            return 'react'
+          if (/node_modules[\\/](react-hook-form|zod|@hookform)[\\/]/.test(id)) return 'forms'
+        },
+      },
+    },
+  },
 })

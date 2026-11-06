@@ -27,7 +27,7 @@ export function QuantityStepper({
   return (
     <div
       className={classNames(
-        'inline-flex items-center border border-stone-300 bg-white',
+        'inline-flex items-center border border-line bg-charcoal',
         className,
       )}
     >
@@ -38,7 +38,7 @@ export function QuantityStepper({
         aria-label={`Decrease ${label.toLowerCase()}`}
         className={classNames(
           buttonSize,
-          'flex items-center justify-center text-stone-600 transition-colors hover:bg-stone-100 disabled:opacity-40',
+          'flex items-center justify-center text-ash transition-colors hover:bg-lift disabled:opacity-40',
         )}
       >
         <Minus className="size-3.5" />
@@ -53,7 +53,7 @@ export function QuantityStepper({
         aria-label={`Increase ${label.toLowerCase()}`}
         className={classNames(
           buttonSize,
-          'flex items-center justify-center text-stone-600 transition-colors hover:bg-stone-100 disabled:opacity-40',
+          'flex items-center justify-center text-ash transition-colors hover:bg-lift disabled:opacity-40',
         )}
       >
         <Plus className="size-3.5" />

@@ -1,32 +1,36 @@
 @import 'tailwindcss';
 
 /* ============================================================
-   WatchGuru.pk — Luxury Minimalist Design System
+   WatchGuru.pk — Black & Gold Luxury Design System
+   Deep black surfaces, warm gold accents, ivory serif type.
    ============================================================ */
 
 @theme {
-  /* Brand palette */
-  --color-charcoal: #171717;
-  --color-ink: #0d0d0d;
-  --color-ivory: #f7f6f3;
-  --color-gold: #b58a62;
-  --color-gold-dark: #9c7350;
-  --color-gold-light: #d8bc9c;
-  --color-muted: #777777;
+  /* Core palette — black & gold */
+  --color-obsidian: #080808;   /* page background */
+  --color-coal: #111111;       /* primary sections */
+  --color-charcoal: #171717;   /* cards & panels */
+  --color-ink: #050505;        /* deepest overlay */
 
-  /* Neutral ramp tuned warm to sit beside the ivory background */
-  --color-stone-50: #fafaf9;
-  --color-stone-100: #f7f6f3;
-  --color-stone-200: #ecebe7;
-  --color-stone-300: #dedcd6;
-  --color-stone-400: #b6b3ab;
-  --color-stone-500: #8a8780;
-  --color-stone-600: #6b6862;
-  --color-stone-700: #4a4844;
-  --color-stone-800: #2b2a28;
-  --color-stone-900: #171717;
+  /* Gold accents */
+  --color-gold: #c69a52;       /* luxury gold — accents, eyebrows, prices */
+  --color-gold-bright: #d6a66b;/* button gold */
+  --color-gold-dark: #8f6b3e;  /* muted gold accents */
+  --color-gold-light: #d6a66b; /* kept for token compatibility */
 
-  /* Typography — WatchGuru.pk editorial system */
+  /* Text */
+  --color-ivory: #f5ebdd;      /* warm ivory text on dark */
+  --color-ash: #a6a09a;        /* secondary text */
+  --color-muted: #a6a09a;
+
+  /* Borders & dividers */
+  --color-line: #39332b;
+  /* Lifted panel (hover states) */
+  --color-lift: #1d1b19;
+  /* Muted terracotta — errors & destructive actions (warm, never bright) */
+  --color-error: #a8563e;
+
+  /* Typography — editorial system */
   --font-playfair: 'Playfair Display', ui-serif, Georgia, 'Times New Roman', serif;
   --font-cormorant: 'Cormorant Garamond', ui-serif, Georgia, 'Times New Roman', serif;
   --font-dmserif: 'DM Serif Display', ui-serif, Georgia, serif;
@@ -41,7 +45,7 @@
 
 @layer base {
   * {
-    border-color: var(--color-stone-200);
+    border-color: var(--color-line);
   }
 
   html {
@@ -50,8 +54,8 @@
   }
 
   body {
-    background-color: var(--color-ivory);
-    color: var(--color-charcoal);
+    background-color: var(--color-obsidian);
+    color: var(--color-ivory);
     font-family: var(--font-inter);
     font-weight: 400;
     letter-spacing: 0.01em;
@@ -65,30 +69,35 @@
   h4 {
     font-family: var(--font-cormorant);
     font-weight: 500;
-    color: var(--color-charcoal);
+    color: #ffffff;
     letter-spacing: 0.005em;
   }
 
   ::selection {
     background: var(--color-gold);
-    color: #fff;
+    color: #080808;
   }
 
-  /* Refined scrollbar */
+  /* Refined dark scrollbar */
   ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--color-stone-100);
+    background: #111111;
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--color-stone-300);
+    background: #39332b;
     border-radius: 999px;
-    border: 2px solid var(--color-stone-100);
+    border: 2px solid #111111;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-stone-400);
+    background: #8f6b3e;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
   }
 }
 

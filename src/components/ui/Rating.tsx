@@ -24,17 +24,17 @@ export function Rating({ value, reviewCount, size = 'sm', className }: RatingPro
               key={star}
               className={classNames(
                 starSize,
-                filled ? 'fill-gold text-gold' : 'fill-transparent text-stone-300',
+                filled ? 'fill-gold text-gold' : 'fill-transparent text-ash',
               )}
               strokeWidth={1.5}
             />
           )
         })}
       </div>
-      <span className="text-[11px] tracking-wide text-stone-500">
+      <span className="text-[11px] tracking-wide text-ash">
         {value.toFixed(1)}
         {typeof reviewCount === 'number' && (
-          <span className="text-stone-400"> ({formatNumber(reviewCount)})</span>
+          <span className="text-ash"> ({formatNumber(reviewCount)})</span>
         )}
       </span>
     </div>

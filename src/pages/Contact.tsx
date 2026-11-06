@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Clock, Mail, MapPin, MessageSquare, Phone, Send } from 'lucide-react'
 import { contactSchema, type ContactValues } from '../lib/validation'
-import { useToast } from '../store/contexts'
+import { useToast } from '../store'
+import { useDocumentMeta } from '../hooks/useDocumentMeta'
 import { PageBanner } from '../components/layout/PageBanner'
 import { Container } from '../components/ui/Container'
 import { Button } from '../components/ui/Button'
@@ -14,12 +15,12 @@ const DETAILS = [
   {
     icon: MapPin,
     title: 'Visit the boutique',
-    lines: ['12 Marlborough Lane', 'Mayfair, London W1S 4PP'],
+    lines: ['WatchGuru.pk Flagship', 'Phase 6, DHA, Karachi 75500'],
   },
   {
     icon: Phone,
-    title: 'Call us',
-    lines: ['+44 20 7946 0012', 'Mon–Sat, 9am–6pm GMT'],
+    title: 'Call or WhatsApp',
+    lines: ['+92 322 2242389', 'Daily, 9am–9pm PKT'],
   },
   {
     icon: Mail,
@@ -29,15 +30,20 @@ const DETAILS = [
 ]
 
 const HOURS = [
-  { day: 'Monday – Friday', time: '9:00 – 18:00' },
-  { day: 'Saturday', time: '10:00 – 17:00' },
-  { day: 'Sunday', time: 'By appointment' },
-  { day: 'Public holidays', time: 'Closed' },
+  { day: 'Monday – Saturday', time: '9:00 – 21:00' },
+  { day: 'Sunday', time: '11:00 – 20:00' },
+  { day: 'Public holidays', time: 'By appointment' },
 ]
 
 export function Contact() {
   const { notify } = useToast()
   const [sent, setSent] = useState(false)
+
+  useDocumentMeta({
+    title: 'Contact Us — WatchGuru Concierge',
+    description:
+      'Questions about a watch, servicing or a private viewing? WhatsApp +92 322 2242389, daily 9am–9pm PKT, or visit our Karachi boutique.',
+  })
 
   const {
     register,
@@ -71,7 +77,7 @@ export function Contact() {
           {/* Details */}
           <div>
             <h2 className="text-2xl">Speak with a specialist</h2>
-            <p className="mt-4 text-sm leading-relaxed text-stone-500">
+            <p className="mt-4 text-sm leading-relaxed text-ash">
               Whether you are choosing your first mechanical watch or adding to a collection, we are
               happy to guide you personally.
             </p>
@@ -79,15 +85,15 @@ export function Contact() {
             <ul className="mt-8 flex flex-col gap-6">
               {DETAILS.map(({ icon: Icon, title, lines }) => (
                 <li key={title} className="flex gap-4">
-                  <span className="flex size-11 shrink-0 items-center justify-center border border-stone-300 bg-white text-gold">
+                  <span className="flex size-11 shrink-0 items-center justify-center border border-line bg-charcoal text-gold">
                     <Icon className="size-5" strokeWidth={1.5} />
                   </span>
                   <div>
-                    <p className="font-montserrat text-[11px] font-medium tracking-[0.16em] text-charcoal uppercase">
+                    <p className="font-montserrat text-[11px] font-medium tracking-[0.16em] text-white uppercase">
                       {title}
                     </p>
                     {lines.map((line) => (
-                      <p key={line} className="mt-1 text-sm text-stone-500">
+                      <p key={line} className="mt-1 text-sm text-ash">
                         {line}
                       </p>
                     ))}
@@ -96,16 +102,16 @@ export function Contact() {
               ))}
             </ul>
 
-            <div className="mt-10 border border-stone-200 bg-white p-6">
-              <h3 className="flex items-center gap-2 text-sm font-medium tracking-[0.14em] text-charcoal uppercase">
+            <div className="mt-10 border border-line bg-charcoal p-6">
+              <h3 className="flex items-center gap-2 text-sm font-medium tracking-[0.14em] text-white uppercase">
                 <Clock className="size-4 text-gold" strokeWidth={1.6} />
                 Opening hours
               </h3>
               <dl className="mt-4 flex flex-col gap-3">
                 {HOURS.map((row) => (
                   <div key={row.day} className="flex items-center justify-between text-sm">
-                    <dt className="text-stone-500">{row.day}</dt>
-                    <dd className="text-charcoal">{row.time}</dd>
+                    <dt className="text-ash">{row.day}</dt>
+                    <dd className="text-white">{row.time}</dd>
                   </div>
                 ))}
               </dl>
@@ -114,17 +120,16 @@ export function Contact() {
 
           {/* Form */}
           <Reveal>
-            <div className="border border-stone-200 bg-white p-6 sm:p-8">
+            <div className="border border-line bg-charcoal p-6 sm:p-8">
               {sent ? (
                 <div className="flex flex-col items-center py-12 text-center">
                   <span className="flex size-14 items-center justify-center rounded-full bg-gold/15 text-gold">
                     <Send className="size-6" strokeWidth={1.5} />
                   </span>
                   <h2 className="mt-5 text-2xl">Message sent</h2>
-                  <p className="mt-3 max-w-sm text-sm text-stone-500">
-                    Thank you for getting in touch. This is a demo form, so no message was actually
-                    delivered — but in a live boutique a specialist would reply within one business
-                    day.
+                  <p className="mt-3 max-w-sm text-sm text-ash">
+                    Thank you for getting in touch. A member of our concierge team will reply
+                    within one business day — usually much sooner on WhatsApp.
                   </p>
                   <Button variant="outline" className="mt-6" onClick={() => setSent(false)}>
                     Send another message
@@ -170,7 +175,7 @@ export function Contact() {
                       <Send className="size-4" />
                       {isSubmitting ? 'Sending…' : 'Send message'}
                     </Button>
-                    <p className="text-[11px] text-stone-400">
+                    <p className="text-[11px] text-ash">
                       Demo form — submissions are not stored or sent anywhere.
                     </p>
                   </form>
