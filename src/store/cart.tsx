@@ -83,7 +83,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     () =>
       lines.flatMap((line) => {
         const product = getById(line.productId)
-        if (!product) return [] // stale line — product was removed from the catalogue
+        if (!product) return [] // stale line: product was removed from the catalogue
         return [{ product, quantity: line.quantity, lineTotal: product.price * line.quantity }]
       }),
     [lines, getById],

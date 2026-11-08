@@ -13,7 +13,7 @@ import { CollectionsShowcase } from '../components/home/CollectionsShowcase'
 import { BenefitsGrid } from '../components/home/BenefitsGrid'
 import { AdvanceExplainer } from '../components/home/AdvanceExplainer'
 import { Testimonials } from '../components/home/Testimonials'
-import { NewsletterBand } from '../components/home/NewsletterBand'
+import { ContactSection } from '../components/home/ContactSection'
 import { EditorialQuote } from '../components/home/EditorialQuote'
 
 export function Home() {
@@ -22,7 +22,7 @@ export function Home() {
   useDocumentMeta({
     title: 'Buy 100% Original Luxury Watches Online in Pakistan',
     description:
-      'WatchGuru.pk — Pakistan’s home for 100% original luxury watches. Authorised maisons, insured nationwide delivery, Cash on Delivery, 1-year machine warranty.',
+      'WatchGuru.pk, Pakistan’s home for 100% original luxury watches. Authorised maisons, insured nationwide delivery, Cash on Delivery, 1-year machine warranty.',
   })
 
   const premium = useMemo(() => selectPremium(products, 12), [products])
@@ -45,9 +45,9 @@ export function Home() {
       <ProductRail
         eyebrow="The Icons"
         title="Premium Collection"
-        description="Our most coveted references — hand-selected for finish, movement and rarity."
+        description="Our most coveted references, hand-selected for finish, movement and rarity."
         products={premium}
-        viewAllTo="/collections/all?sort=rating"
+        viewAllTo="/collections/all?sort=price-desc"
       />
 
       <ShopByBrand />
@@ -55,7 +55,7 @@ export function Home() {
       <ProductRail
         eyebrow="The Fashion Edit"
         title="Fashion Collection"
-        description="Statement pieces for the bold — jewellery-grade glamour from the world’s fashion ateliers."
+        description="Statement pieces for the bold, jewellery-grade glamour from the world’s fashion ateliers."
         products={fashion}
         viewAllTo="/collections/fashion"
       />
@@ -65,15 +65,15 @@ export function Home() {
       <ProductRail
         eyebrow="For the Connoisseur"
         title="Executive Watches"
-        description="Specially imported for clients who demand the extraordinary — perpetuals, tourbillons and numbered editions."
+        description="Specially imported for clients who demand the extraordinary: perpetuals, tourbillons and numbered editions."
         products={executive}
         viewAllTo="/collections/executive"
       />
 
       <ProductRail
-        eyebrow="Est. 2026 · Geneva"
-        title="Our Own Brand — WatchGuru Atelier"
-        description="The WatchGuru Atelier — in-house movements, hand-finished cases and a five-year atelier warranty."
+        eyebrow="Est. 2026, Geneva"
+        title="Our Own Brand: WatchGuru Atelier"
+        description="The WatchGuru Atelier, with in-house movements, hand-finished cases and a one-year machine warranty."
         products={ownBrand}
         viewAllTo="/collections/brand/watchguru-atelier"
         viewAllLabel="Discover the Atelier"
@@ -83,7 +83,7 @@ export function Home() {
       <BenefitsGrid />
       <AdvanceExplainer />
       <Testimonials />
-      <NewsletterBand />
+      <ContactSection />
       <EditorialQuote />
     </>
   )

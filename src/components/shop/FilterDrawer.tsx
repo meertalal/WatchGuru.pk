@@ -50,7 +50,7 @@ export function FilterDrawer({
     <div className={classNames('fixed inset-0 z-[95] lg:hidden', open ? '' : 'pointer-events-none')}>
       <div
         className={classNames(
-          'absolute inset-0 bg-black/40 transition-opacity duration-500',
+          'absolute inset-0 bg-ink/80 backdrop-blur-[2px] transition-opacity duration-500',
           open ? 'opacity-100' : 'opacity-0',
         )}
         onClick={onClose}
@@ -61,15 +61,15 @@ export function FilterDrawer({
           open ? 'translate-x-0' : '-translate-x-full',
         )}
       >
-        <div className="flex items-center justify-between border-b border-line px-6 py-5">
-          <h2 className="text-xl">Filters</h2>
+        <div className="flex items-center justify-between px-6 py-5">
+          <h2 className="font-cormorant text-2xl text-ivory">Filters</h2>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close filters"
-            className="text-ash transition-colors hover:text-white"
+            className="flex size-8 items-center justify-center text-ash transition-colors hover:text-gold"
           >
-            <X className="size-5" />
+            <X className="size-4" strokeWidth={1.5} />
           </button>
         </div>
         <div className="flex-1 overflow-y-auto px-6">
@@ -83,7 +83,7 @@ export function FilterDrawer({
             onClearAll={onClearAll}
           />
         </div>
-        <div className="border-t border-line px-6 py-4">
+        <div className="px-6 py-4">
           <Button className="w-full" onClick={onClose}>
             Show {resultCount} results
           </Button>

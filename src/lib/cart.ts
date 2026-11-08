@@ -17,7 +17,7 @@ export interface Coupon {
 export const COUPONS: Record<string, Coupon> = {
   WATCHGURU10: { code: 'WATCHGURU10', type: 'percent', value: 10, label: '10% off your order' },
   WELCOME50: { code: 'WELCOME50', type: 'fixed', value: FIXED_USD50_PKR, label: 'PKR 13,826 off your order' },
-  NOUVEAU: { code: 'NOUVEAU', type: 'percent', value: 15, label: '15% off — new client offer' },
+  NOUVEAU: { code: 'NOUVEAU', type: 'percent', value: 15, label: '15% off, new client offer' },
 }
 
 export function findCoupon(code: string): Coupon | null {

@@ -9,7 +9,7 @@ export function Layout() {
     <div className="flex min-h-svh flex-col">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:bg-gold-bright focus:px-4 focus:py-2 focus:text-obsidian"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:bg-button focus:px-4 focus:py-2 focus:text-button-text"
       >
         Skip to content
       </a>

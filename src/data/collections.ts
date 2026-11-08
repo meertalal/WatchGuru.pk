@@ -27,7 +27,7 @@ export const COLLECTION_DEFS: readonly CollectionDef[] = [
     title: 'All Watches',
     eyebrow: 'The Boutique',
     description:
-      'Every watch in the WatchGuru.pk boutique — authenticated, serviced and prepared by hand before dispatch.',
+      'Every watch in the WatchGuru.pk boutique, authenticated, serviced and prepared by hand before dispatch.',
     match: () => true,
   },
   {
@@ -35,7 +35,7 @@ export const COLLECTION_DEFS: readonly CollectionDef[] = [
     title: 'Men’s Watches',
     eyebrow: 'Gentlemen',
     description:
-      'Dress pieces, tool watches and grand complications — built for the boardroom, the runway and everywhere in between.',
+      'Dress pieces, tool watches and grand complications, built for the boardroom, the runway and everywhere in between.',
     match: (product) => product.category === 'men',
   },
   {
@@ -43,7 +43,7 @@ export const COLLECTION_DEFS: readonly CollectionDef[] = [
     title: 'Women’s Watches',
     eyebrow: 'Hers',
     description:
-      'High jewellery and quiet dials — pieces designed to be kept, worn and passed on.',
+      'High jewellery and quiet dials, pieces designed to be kept, worn and passed on.',
     match: (product) => product.category === 'women',
   },
   {
@@ -51,7 +51,7 @@ export const COLLECTION_DEFS: readonly CollectionDef[] = [
     title: 'Executive Watches',
     eyebrow: 'The Executive Edit',
     description:
-      'Specially imported for clients who want the extraordinary — perpetual calendars, tourbillons and numbered editions.',
+      'Specially imported for clients who want the extraordinary: perpetual calendars, tourbillons and numbered editions.',
     match: hasTag('Executive'),
   },
   {
@@ -59,7 +59,7 @@ export const COLLECTION_DEFS: readonly CollectionDef[] = [
     title: 'Original Watches',
     eyebrow: '100% Authentic',
     description:
-      'Only 100% original watches from our authorised partner maisons — each piece verified, warrantied and sealed.',
+      'Only 100% original watches from our authorised partner maisons, each piece verified, warrantied and sealed.',
     match: (product) => product.brand !== OWN_BRAND,
   },
   {
@@ -67,7 +67,7 @@ export const COLLECTION_DEFS: readonly CollectionDef[] = [
     title: 'Fashion Collection',
     eyebrow: 'The Fashion Edit',
     description:
-      'Statement pieces from Parisian and Milanese ateliers — where design leads and horology follows.',
+      'Statement pieces from Parisian and Milanese ateliers, where design leads and horology follows.',
     match: hasTag('Fashion'),
   },
 ] as const

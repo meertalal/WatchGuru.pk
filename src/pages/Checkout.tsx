@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -21,7 +21,7 @@ import {
 } from '../lib/cart'
 import { COD_ADVANCE_PKR, PAYMENT_METHOD_LABEL, generateOrderNumber } from '../lib/orders'
 import { COUNTRIES, checkoutSchema, type CheckoutValues } from '../lib/validation'
-import { useAuth, useCart, useOrders, useToast } from '../store'
+import { useCart, useOrders, useToast } from '../store'
 import { useDocumentMeta } from '../hooks/useDocumentMeta'
 import type { Order, PaymentMethod, ShippingDetails } from '../types'
 import { PageBanner } from '../components/layout/PageBanner'
@@ -40,7 +40,7 @@ const PAYMENT_METHODS: {
   {
     value: 'cod',
     label: 'Cash on Delivery',
-    hint: 'Pay when your watch arrives — a Rs. 1,000 advance confirms the order and is adjusted on delivery.',
+    hint: 'Pay when your watch arrives. A Rs. 1,000 advance confirms the order and is adjusted on delivery.',
     icon: Banknote,
   },
   {
@@ -68,12 +68,12 @@ export function Checkout() {
   const { items, clear } = useCart()
   const { placeOrder } = useOrders()
   const { notify } = useToast()
-  const { account } = useAuth()
 
   useDocumentMeta({
     title: 'Secure Checkout',
     description:
-      'Complete your WatchGuru.pk order — Cash on Delivery, bank transfer or mobile wallets. Insured nationwide delivery.',
+      'Complete your WatchGuru.pk order with Cash on Delivery, bank transfer or mobile wallets. Insured nationwide delivery.',
+    noindex: true,
   })
 
   const [couponInput, setCouponInput] = useState('')
@@ -85,7 +85,6 @@ export function Checkout() {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm<CheckoutValues>({
     resolver: zodResolver(checkoutSchema),
@@ -103,23 +102,6 @@ export function Checkout() {
       country: 'Pakistan',
     },
   })
-
-  // Prefill from the signed-in account's profile — entered once, reused forever.
-  useEffect(() => {
-    if (!account) return
-    reset({
-      firstName: account.firstName,
-      lastName: account.lastName,
-      email: account.email,
-      phone: account.phone,
-      address: account.address ?? '',
-      apartment: '',
-      city: account.city ?? '',
-      state: account.state ?? '',
-      postalCode: account.postalCode ?? '',
-      country: account.country ?? 'Pakistan',
-    })
-  }, [account, reset])
 
   const totals = computeTotals(
     items.map((i) => ({ price: i.product.price, quantity: i.quantity })),
@@ -158,7 +140,7 @@ export function Checkout() {
     }
     setCoupon(found)
     setCouponError('')
-    notify(`Coupon ${found.code} applied — ${found.label}`, 'success')
+    notify(`Coupon ${found.code} applied: ${found.label}`, 'success')
   }
 
   const onSubmit = async (values: CheckoutValues) => {
@@ -201,20 +183,19 @@ export function Checkout() {
       paymentMethod,
       status: 'processing',
       statusHistory: [{ status: 'processing', at: nowIso() }],
-      accountId: account?.id,
     }
 
     setRedirecting(true)
     placeOrder(order)
     clear()
-    notify('Order received — our team will confirm within minutes.')
+    notify('Order received. Our team will confirm within minutes.')
     navigate('/order-confirmation')
   }
 
   return (
     <>
       <PageBanner
-        eyebrow={account ? `Ordering as ${account.email}` : 'Guest checkout'}
+        eyebrow="Guest checkout"
         title="Secure Checkout"
         breadcrumbs={[
           { label: 'Home', to: '/' },
@@ -224,8 +205,8 @@ export function Checkout() {
       />
 
       <Container className="py-12 lg:py-16">
-        <div className="mb-8 flex items-start gap-3 border border-gold/40 bg-gold/10 px-4 py-3 text-sm text-white">
-          <ShieldCheck className="mt-0.5 size-4 shrink-0 text-gold" aria-hidden="true" />
+        <div className="mb-8 flex items-start gap-3 bg-charcoal px-4 py-3 text-[12px] font-light leading-relaxed text-ash">
+          <ShieldCheck className="mt-0.5 size-4 shrink-0 text-gold" strokeWidth={1.4} aria-hidden="true" />
           <p>
             Every order is confirmed by phone or WhatsApp before dispatch, and your watch is
             insured until it is in your hands. No card data is ever collected on this site.
@@ -237,17 +218,8 @@ export function Checkout() {
             <div className="flex flex-col gap-10">
               {/* Contact */}
               <section>
-                <div className="mb-5 flex items-baseline justify-between gap-4">
-                  <h2 className="text-xl">Contact details</h2>
-                  {!account && (
-                    <Link
-                      to="/account/login"
-                      state={{ from: '/checkout' }}
-                      className="font-montserrat text-[10px] font-medium tracking-[0.18em] text-gold uppercase hover:opacity-75"
-                    >
-                      Sign in for faster checkout →
-                    </Link>
-                  )}
+                <div className="mb-5">
+                  <h2 className="font-cormorant text-2xl text-ivory">Contact details</h2>
                 </div>
                 <div className="grid gap-5 sm:grid-cols-2">
                   <TextField
@@ -287,7 +259,7 @@ export function Checkout() {
 
               {/* Shipping address */}
               <section>
-                <h2 className="mb-5 text-xl">Shipping address</h2>
+                <h2 className="mb-5 font-cormorant text-2xl text-ivory">Shipping address</h2>
                 <div className="grid gap-5 sm:grid-cols-2">
                   <TextField
                     label="Street address"
@@ -338,7 +310,7 @@ export function Checkout() {
 
               {/* Payment method */}
               <fieldset>
-                <legend className="mb-5 text-xl">Payment method</legend>
+                <legend className="mb-5 font-cormorant text-2xl text-ivory">Payment method</legend>
                 <div className="grid gap-3 sm:grid-cols-2">
                   {PAYMENT_METHODS.map(({ value, label, hint, icon: Icon }) => {
                     const selected = paymentMethod === value
@@ -348,8 +320,8 @@ export function Checkout() {
                         className={classNames(
                           'flex cursor-pointer items-start gap-3 border p-4 transition-colors',
                           selected
-                            ? 'border-gold bg-coal'
-                            : 'border-line bg-charcoal hover:border-gold',
+                            ? 'border-gold/70 bg-charcoal'
+                            : 'border-line bg-charcoal hover:border-gold/50',
                         )}
                       >
                         <input
@@ -369,8 +341,8 @@ export function Checkout() {
                           aria-hidden="true"
                         />
                         <span>
-                          <span className="block text-sm font-medium text-white">{label}</span>
-                          <span className="mt-1 block text-[11px] leading-snug text-ash">
+                          <span className="block font-akkurat text-[9px] font-medium tracking-[0.16em] text-ivory uppercase">{label}</span>
+                          <span className="mt-1.5 block text-[11px] font-light leading-relaxed text-ash">
                             {hint}
                           </span>
                         </span>
@@ -380,10 +352,10 @@ export function Checkout() {
                 </div>
 
                 {paymentMethod === 'cod' && (
-                  <p className="mt-4 border-l-2 border-gold bg-gold/10 px-4 py-3 text-[12px] leading-relaxed text-white">
+                  <p className="mt-4 border-l-2 border-gold bg-coal px-4 py-3 text-[11.5px] font-light leading-relaxed text-ash">
                     A Rs. {COD_ADVANCE_PKR.toLocaleString('en-PK')} advance confirms your order.
                     Our team calls or messages to verify, and the advance is adjusted against your
-                    balance — you pay the remainder in cash, on delivery.
+                    balance. You pay the remainder in cash, on delivery.
                   </p>
                 )}
               </fieldset>
@@ -391,8 +363,8 @@ export function Checkout() {
 
             {/* Order summary */}
             <aside className="lg:sticky lg:top-28 lg:self-start">
-              <div className="border border-line bg-charcoal p-6">
-                <h2 className="text-xl">Order summary</h2>
+              <div className="bg-charcoal p-6">
+                <h2 className="font-cormorant text-2xl text-ivory">Order summary</h2>
 
                 <ul className="mt-5 flex flex-col gap-4">
                   {items.map(({ product, quantity, lineTotal }) => (
@@ -406,15 +378,15 @@ export function Checkout() {
                       <div className="flex flex-1 flex-col">
                         <Link
                           to={`/products/${product.slug}`}
-                          className="text-sm text-white transition-colors hover:text-gold"
+                          className="font-cormorant text-base leading-snug text-ivory transition-colors hover:text-gold"
                         >
                           {product.name}
                         </Link>
-                        <span className="text-xs text-ash">
-                          {product.brand} · Qty {quantity}
+                        <span className="text-[10.5px] text-muted">
+                          {product.brand}, Qty {quantity}
                         </span>
                       </div>
-                      <span className="font-inter font-medium text-sm text-white">
+                      <span className="font-inter text-[12px] font-normal text-ivory">
                         {formatPrice(lineTotal)}
                       </span>
                     </li>
@@ -422,10 +394,10 @@ export function Checkout() {
                 </ul>
 
                 {/* Coupon */}
-                <div className="mt-6 border-t border-line pt-5">
+                <div className="mt-6 pt-5">
                   <label
                     htmlFor="coupon"
-                    className="mb-2 flex items-center gap-1.5 font-montserrat text-[10px] font-medium tracking-[0.18em] text-ash uppercase"
+                    className="mb-2 flex items-center gap-1.5 font-akkurat text-[10px] font-medium tracking-[0.18em] text-ash uppercase"
                   >
                     <Tag className="size-3.5" /> Coupon code
                   </label>
@@ -435,7 +407,7 @@ export function Checkout() {
                       value={couponInput}
                       onChange={(e) => setCouponInput(e.target.value)}
                       placeholder="Enter code"
-                      className="w-full border border-line bg-charcoal px-3 py-2.5 font-lato text-sm outline-none transition-colors placeholder:text-ash focus:border-gold"
+                      className="w-full border border-line bg-charcoal px-3 py-2.5 font-inter text-[13px] font-light text-ivory outline-none transition-colors placeholder:text-muted focus:border-gold"
                     />
                     <Button type="button" variant="outline" size="sm" onClick={applyCoupon}>
                       Apply
@@ -444,20 +416,20 @@ export function Checkout() {
                   {couponError && <p className="mt-1.5 text-xs text-error">{couponError}</p>}
                   {coupon && (
                     <p className="mt-2 text-xs text-gold">
-                      {coupon.code} applied — {coupon.label}
+                      {coupon.code} applied: {coupon.label}
                     </p>
                   )}
                   <p className="mt-2 text-[11px] text-ash">
                     Demo codes:{' '}
-                    {DEMO_COUPONS.map((c) => c.code).join(' · ')}
+                    {DEMO_COUPONS.map((c) => c.code).join(', ')}
                   </p>
                 </div>
 
                 {/* Totals */}
-                <dl className="mt-5 flex flex-col gap-3 border-t border-line pt-5 text-sm">
+                <dl className="mt-5 flex flex-col gap-3 pt-5 text-sm">
                   <div className="flex items-center justify-between">
                     <dt className="text-ash">Subtotal</dt>
-                    <dd className="text-white">{formatPrice(totals.subtotal)}</dd>
+                    <dd className="text-ivory">{formatPrice(totals.subtotal)}</dd>
                   </div>
                   {totals.discount > 0 && (
                     <div className="flex items-center justify-between">
@@ -467,13 +439,13 @@ export function Checkout() {
                   )}
                   <div className="flex items-center justify-between">
                     <dt className="text-ash">Shipping</dt>
-                    <dd className="text-white">
-                      {totals.shippingCost === 0 ? 'Free · insured' : formatPrice(totals.shippingCost)}
+                    <dd className="text-ivory">
+                      {totals.shippingCost === 0 ? 'Free, insured' : formatPrice(totals.shippingCost)}
                     </dd>
                   </div>
                   <div className="flex items-center justify-between">
                     <dt className="text-ash">Estimated tax</dt>
-                    <dd className="text-white">{formatPrice(totals.tax)}</dd>
+                    <dd className="text-ivory">{formatPrice(totals.tax)}</dd>
                   </div>
                   {paymentMethod === 'cod' && (
                     <div className="flex items-center justify-between text-[12px] text-ash">
@@ -481,9 +453,9 @@ export function Checkout() {
                       <dd>Rs. {COD_ADVANCE_PKR.toLocaleString('en-PK')}</dd>
                     </div>
                   )}
-                  <div className="flex items-center justify-between border-t border-line pt-4">
-                    <dt className="eyebrow text-white">Total</dt>
-                    <dd className="font-inter font-medium text-2xl text-white">
+                  <div className="flex items-center justify-between pt-4">
+                    <dt className="eyebrow text-ivory">Total</dt>
+                    <dd className="font-inter text-2xl font-normal text-ivory">
                       {formatPrice(totals.total)}
                     </dd>
                   </div>
@@ -492,18 +464,18 @@ export function Checkout() {
                 <Button
                   type="submit"
                   size="lg"
-                  variant="gold"
+                  variant="primary"
                   disabled={isSubmitting}
                   className="mt-6 w-full"
                 >
                   {isSubmitting
                     ? 'Placing order…'
-                    : `Place order · ${formatPrice(totals.total)}`}
+                    : `Place order, ${formatPrice(totals.total)}`}
                 </Button>
 
                 <p className="mt-4 flex items-center justify-center gap-2 text-[11px] text-ash">
                   <ShieldCheck className="size-3.5 text-gold" aria-hidden="true" />
-                  {PAYMENT_METHOD_LABEL[paymentMethod]} · no card data collected
+                  {PAYMENT_METHOD_LABEL[paymentMethod]}, no card data collected
                 </p>
               </div>
             </aside>

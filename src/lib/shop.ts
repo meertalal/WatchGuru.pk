@@ -6,7 +6,6 @@ export const SORT_OPTIONS = [
   { value: 'newest', label: 'Newest arrivals' },
   { value: 'price-asc', label: 'Price: low to high' },
   { value: 'price-desc', label: 'Price: high to low' },
-  { value: 'rating', label: 'Top rated' },
 ] as const
 
 export type SortValue = (typeof SORT_OPTIONS)[number]['value']
@@ -76,15 +75,12 @@ export function sortProducts(source: Product[], sort: SortValue): Product[] {
       return list.sort((a, b) => a.price - b.price)
     case 'price-desc':
       return list.sort((a, b) => b.price - a.price)
-    case 'rating':
-      return list.sort((a, b) => b.rating - a.rating || b.reviewCount - a.reviewCount)
     case 'featured':
     default:
       return list.sort(
         (a, b) =>
           Number(Boolean(b.badge)) - Number(Boolean(a.badge)) ||
-          b.rating - a.rating ||
-          b.reviewCount - a.reviewCount,
+          Date.parse(b.addedAt) - Date.parse(a.addedAt),
       )
   }
 }

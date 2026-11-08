@@ -43,16 +43,17 @@ function FilterSection({
 }) {
   const [open, setOpen] = useState(defaultOpen)
   return (
-    <div className="border-b border-line py-5">
+    <div className="py-5">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         className="flex w-full items-center justify-between"
       >
-        <span className="eyebrow text-white">{title}</span>
+        <span className="eyebrow text-ivory">{title}</span>
         <ChevronDown
-          className={classNames('size-4 text-ash transition-transform', open && 'rotate-180')}
+          className={classNames('size-4 text-muted transition-transform', open && 'rotate-180')}
+          strokeWidth={1.4}
         />
       </button>
       {open && <div className="mt-4">{children}</div>}
@@ -77,7 +78,7 @@ function CheckboxRow({
         <span
           className={classNames(
             'flex size-4 items-center justify-center border transition-colors',
-            checked ? 'border-gold bg-gold' : 'border-line group-hover:border-gold',
+            checked ? 'border-gold bg-gold' : 'border-line group-hover:border-gold/60',
           )}
         >
           {checked && (
@@ -96,14 +97,14 @@ function CheckboxRow({
         <input type="checkbox" checked={checked} onChange={onChange} className="sr-only" />
         <span
           className={classNames(
-            'text-sm transition-colors',
-            checked ? 'text-white' : 'text-ash group-hover:text-white',
+            'text-[12.5px] font-light transition-colors',
+            checked ? 'text-ivory' : 'text-ash group-hover:text-ivory',
           )}
         >
           {label}
         </span>
       </span>
-      {typeof count === 'number' && <span className="text-xs text-ash">{count}</span>}
+      {typeof count === 'number' && <span className="text-[10px] text-muted">{count}</span>}
     </label>
   )
 }
@@ -133,10 +134,10 @@ function PriceFilter({
 
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between text-sm text-white">
-        <span className="font-inter font-medium">{formatPrice(local.min)}</span>
-        <span className="text-ash">—</span>
-        <span className="font-inter font-medium">{formatPrice(local.max)}</span>
+      <div className="mb-4 flex items-center justify-between text-[12px] text-ivory">
+        <span className="font-inter font-normal">{formatPrice(local.min)}</span>
+        <span className="text-muted">—</span>
+        <span className="font-inter font-normal">{formatPrice(local.max)}</span>
       </div>
       <div className="flex flex-col gap-3">
         <label className="flex items-center gap-3 text-[11px] tracking-wide text-ash uppercase">
@@ -205,8 +206,8 @@ export function FilterPanel({
                     onNavigate?.()
                   }}
                   className={classNames(
-                    'w-full text-left text-sm transition-colors',
-                    active ? 'text-gold' : 'text-ash hover:text-white',
+                    'w-full text-left text-[12.5px] font-light transition-colors',
+                    active ? 'text-gold' : 'text-ash hover:text-ivory',
                   )}
                 >
                   {cat.label}
@@ -289,7 +290,7 @@ export function FilterPanel({
         <button
           type="button"
           onClick={onClearAll}
-          className="font-montserrat text-[11px] font-medium tracking-[0.18em] text-ash uppercase transition-colors hover:text-gold"
+          className="font-akkurat text-[9px] font-medium tracking-[0.22em] text-muted uppercase transition-colors hover:text-gold"
         >
           Clear all filters
         </button>

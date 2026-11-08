@@ -31,7 +31,7 @@ export function Pagination({ page, totalPages, onChange, className }: Pagination
   const pages = buildPages(page, totalPages)
 
   const navButton =
-    'flex size-10 items-center justify-center border border-line text-ash transition-colors hover:border-gold hover:text-white disabled:opacity-40 disabled:hover:border-gold disabled:hover:text-ash'
+    'flex size-10 items-center justify-center border border-line text-ash transition-colors hover:border-gold hover:text-gold disabled:opacity-40 disabled:hover:border-line disabled:hover:text-ash'
 
   return (
     <nav
@@ -45,12 +45,12 @@ export function Pagination({ page, totalPages, onChange, className }: Pagination
         disabled={page === 1}
         aria-label="Previous page"
       >
-        <ChevronLeft className="size-4" />
+        <ChevronLeft className="size-4" strokeWidth={1.4} />
       </button>
 
       {pages.map((item, index) =>
         item === 'ellipsis' ? (
-          <span key={`ellipsis-${index}`} className="px-1 text-ash">
+          <span key={`ellipsis-${index}`} className="px-1 text-muted">
             …
           </span>
         ) : (
@@ -60,10 +60,10 @@ export function Pagination({ page, totalPages, onChange, className }: Pagination
             onClick={() => go(item)}
             aria-current={item === page ? 'page' : undefined}
             className={classNames(
-              'size-10 text-xs font-medium transition-colors',
+              'size-10 font-akkurat text-[10px] font-medium tracking-wide transition-colors',
               item === page
-                ? 'bg-gold-bright text-obsidian'
-                : 'border border-line text-ash hover:border-gold hover:text-white',
+                ? 'border border-button bg-button text-button-text'
+                : 'border border-line text-ash hover:border-gold hover:text-gold',
             )}
           >
             {item}
@@ -78,7 +78,7 @@ export function Pagination({ page, totalPages, onChange, className }: Pagination
         disabled={page === totalPages}
         aria-label="Next page"
       >
-        <ChevronRight className="size-4" />
+        <ChevronRight className="size-4" strokeWidth={1.4} />
       </button>
     </nav>
   )

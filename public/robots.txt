@@ -2,10 +2,14 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /admin/*
-Disallow: /account
 Disallow: /checkout
 Disallow: /cart
 Disallow: /order-confirmation
 Disallow: /search
+Disallow: /401
+Disallow: /403
+Disallow: /500
+Disallow: /503
+Disallow: /maintenance
 
 Sitemap: https://www.watchguru.pk/sitemap.xml

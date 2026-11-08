@@ -8,8 +8,8 @@ import { NotFound } from './NotFound'
 
 /**
  * Single entry point for every collection route:
- *   /collections/:slug            → all, men, women, executive, original, fashion
- *   /collections/brand/:brandSlug → per-brand collections
+ *   /collections/:slug             all, men, women, executive, original, fashion
+ *   /collections/brand/:brandSlug  per-brand collections
  */
 export function Collection() {
   const { slug, brandSlug } = useParams<{ slug?: string; brandSlug?: string }>()
@@ -21,10 +21,10 @@ export function Collection() {
   )
 
   useDocumentMeta({
-    title: def ? `${def.title} — Buy Online in Pakistan` : 'Collection Not Found',
+    title: def ? `${def.title} | Buy Online in Pakistan` : 'Collection Not Found',
     description:
       def?.description ??
-      'Browse the WatchGuru.pk boutique — 100% original luxury watches with nationwide delivery.',
+      'Browse the WatchGuru.pk boutique: 100% original luxury watches with nationwide delivery.',
   })
 
   const baseProducts = useMemo(() => (def ? products.filter(def.match) : []), [def, products])

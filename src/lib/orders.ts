@@ -1,7 +1,7 @@
 import type { OrderStatus, PaymentMethod } from '../types'
 
 /**
- * Order fulfilment vocabulary — shared by the tracking page, the account
+ * Order fulfilment vocabulary, shared by the tracking page, the account
  * dashboard, and the admin order manager so statuses never drift apart.
  */
 
@@ -24,7 +24,7 @@ export const ORDER_STATUS_LABEL: Record<OrderStatus, string> = {
 
 export const ORDER_STATUS_DESCRIPTION: Record<OrderStatus, string> = {
   processing: 'We have received your order and are preparing it.',
-  confirmed: 'Your advance is verified — your watch is being packaged.',
+  confirmed: 'Your advance is verified. Your watch is being packaged.',
   shipped: 'Your parcel is with our insured courier partner.',
   'out-for-delivery': 'Your courier is on the way to your address.',
   delivered: 'Delivered and signed for. Welcome to the club.',

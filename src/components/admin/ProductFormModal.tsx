@@ -20,8 +20,6 @@ const BLANK: AdminProductValues = {
   price: 0,
   compareAtPrice: 0,
   stock: 5,
-  rating: 4.8,
-  reviewCount: 0,
   caseMaterial: 'Stainless Steel',
   caseSize: '40mm',
   movement: 'Automatic',
@@ -54,8 +52,6 @@ const toFormValues = (product: Product): AdminProductValues => ({
   price: product.price,
   compareAtPrice: product.compareAtPrice ?? 0,
   stock: product.stock,
-  rating: product.rating,
-  reviewCount: product.reviewCount,
   caseMaterial: product.caseMaterial,
   caseSize: product.caseSize,
   movement: product.movement,
@@ -145,8 +141,6 @@ export function ProductFormModal({
       brand: values.brand,
       price: values.price,
       compareAtPrice: compareAt,
-      rating: values.rating,
-      reviewCount: values.reviewCount,
       description: values.description.trim(),
       highlights: parseLines(values.highlights),
       images: parseLines(values.images),
@@ -184,20 +178,20 @@ export function ProductFormModal({
         role="dialog"
         aria-modal="true"
         aria-label={isNew ? 'Add a product' : `Edit ${editing?.name}`}
-        className="relative flex max-h-[94vh] w-full max-w-2xl flex-col overflow-hidden border border-line bg-obsidian shadow-2xl"
+        className="relative flex max-h-[94vh] w-full max-w-2xl flex-col overflow-hidden bg-obsidian shadow-2xl"
       >
-        <header className="flex items-center justify-between border-b border-line px-6 py-4">
+        <header className="flex items-center justify-between px-6 py-4">
           <div>
             <p className="eyebrow text-gold">{isNew ? 'New piece' : 'Editing'}</p>
-            <h2 className="mt-0.5 text-lg">{isNew ? 'Add a product' : editing?.name}</h2>
+            <h2 className="mt-0.5 font-cormorant text-xl text-ivory">{isNew ? 'Add a product' : editing?.name}</h2>
           </div>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="text-ash transition-colors hover:text-white"
+            className="text-muted transition-colors hover:text-gold"
           >
-            <X className="size-5" />
+            <X className="size-5" strokeWidth={1.4} />
           </button>
         </header>
 
@@ -325,25 +319,6 @@ export function ProductFormModal({
               error={errors.strapType?.message}
               {...register('strapType')}
             />
-            <TextField
-              label="Rating (0–5)"
-              id="rating"
-              type="number"
-              min={0}
-              max={5}
-              step={0.1}
-              error={errors.rating?.message}
-              {...register('rating', { valueAsNumber: true })}
-            />
-            <TextField
-              label="Review count"
-              id="reviewCount"
-              type="number"
-              min={0}
-              step={1}
-              error={errors.reviewCount?.message}
-              {...register('reviewCount', { valueAsNumber: true })}
-            />
           </div>
 
           {/* Collections */}
@@ -363,8 +338,8 @@ export function ProductFormModal({
                     className={classNames(
                       'border px-3 py-1.5 text-[11px] tracking-wide transition-colors',
                       active
-                        ? 'border-gold bg-charcoal text-ivory'
-                        : 'border-line text-ash hover:border-gold hover:text-white',
+                        ? 'border-gold/70 bg-charcoal text-ivory'
+                        : 'border-line text-ash hover:border-gold/50 hover:text-ivory',
                     )}
                   >
                     {collection}
@@ -380,7 +355,7 @@ export function ProductFormModal({
           {/* Stock toggle */}
           <label className="mt-5 flex w-fit cursor-pointer items-center gap-3 border border-line bg-charcoal px-4 py-3">
             <input type="checkbox" className="size-4 accent-gold" {...register('inStock')} />
-            <span className="text-sm text-white">In stock and visible in the boutique</span>
+            <span className="text-[12.5px] text-ivory">In stock and visible in the boutique</span>
           </label>
 
           {/* Story content */}
@@ -419,7 +394,7 @@ export function ProductFormModal({
           </div>
 
           {/* Actions */}
-          <div className="sticky bottom-0 -mx-6 mt-6 flex items-center justify-end gap-3 border-t border-line bg-obsidian px-6 py-4">
+          <div className="sticky bottom-0 -mx-6 mt-6 flex items-center justify-end gap-3 bg-obsidian px-6 py-4">
             <Button type="button" variant="ghost" onClick={onClose}>
               Cancel
             </Button>

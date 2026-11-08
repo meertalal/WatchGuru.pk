@@ -15,22 +15,28 @@ export function Breadcrumbs({
   className?: string
 }) {
   return (
-    <nav aria-label="Breadcrumb" className={classNames('text-[11px] tracking-wide', className)}>
-      <ol className="flex flex-wrap items-center gap-2 text-ash">
+    <nav aria-label="Breadcrumb" className={classNames(className)}>
+      <ol className="flex flex-wrap items-center gap-2 font-akkurat text-[8.5px] font-medium tracking-[0.2em] uppercase">
         {items.map((item, index) => {
           const isLast = index === items.length - 1
           return (
             <li key={`${item.label}-${index}`} className="flex items-center gap-2">
               {item.to && !isLast ? (
-                <Link to={item.to} className="transition-colors hover:text-gold">
+                <Link
+                  to={item.to}
+                  className="text-muted transition-colors hover:text-gold"
+                >
                   {item.label}
                 </Link>
               ) : (
-                <span className={isLast ? 'text-white' : undefined} aria-current={isLast ? 'page' : undefined}>
+                <span
+                  className={isLast ? 'text-ivory' : 'text-muted'}
+                  aria-current={isLast ? 'page' : undefined}
+                >
                   {item.label}
                 </span>
               )}
-              {!isLast && <ChevronRight className="size-3 text-ash" />}
+              {!isLast && <ChevronRight className="size-2.5 text-line" strokeWidth={1.5} />}
             </li>
           )
         })}

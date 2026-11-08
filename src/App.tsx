@@ -9,6 +9,9 @@ import { useCatalog } from './store'
 /* Storefront pages — code-split per route for fast first paint. */
 const Home = lazy(() => import('./pages/Home').then((m) => ({ default: m.Home })))
 const Collection = lazy(() => import('./pages/Collection').then((m) => ({ default: m.Collection })))
+const Collections = lazy(() =>
+  import('./pages/Collections').then((m) => ({ default: m.Collections })),
+)
 const ProductDetails = lazy(() =>
   import('./pages/ProductDetails').then((m) => ({ default: m.ProductDetails })),
 )
@@ -21,10 +24,8 @@ const OrderConfirmation = lazy(() =>
 const TrackOrder = lazy(() => import('./pages/TrackOrder').then((m) => ({ default: m.TrackOrder })))
 const About = lazy(() => import('./pages/About').then((m) => ({ default: m.About })))
 const Contact = lazy(() => import('./pages/Contact').then((m) => ({ default: m.Contact })))
-const Account = lazy(() => import('./pages/Account').then((m) => ({ default: m.Account })))
-const AccountLogin = lazy(() => import('./pages/AccountLogin').then((m) => ({ default: m.AccountLogin })))
-const AccountRegister = lazy(() =>
-  import('./pages/AccountRegister').then((m) => ({ default: m.AccountRegister })),
+const AdminLogin = lazy(() =>
+  import('./pages/AdminLogin').then((m) => ({ default: m.AdminLogin })),
 )
 const RefundPolicy = lazy(() =>
   import('./pages/policies/RefundPolicy').then((m) => ({ default: m.RefundPolicy })),
@@ -39,6 +40,19 @@ const Warranty = lazy(() =>
   import('./pages/policies/Warranty').then((m) => ({ default: m.Warranty })),
 )
 const NotFound = lazy(() => import('./pages/NotFound').then((m) => ({ default: m.NotFound })))
+const Forbidden = lazy(() => import('./pages/Forbidden').then((m) => ({ default: m.Forbidden })))
+import { ServerError } from './pages/ServerError'
+const Unauthorized = lazy(() =>
+  import('./pages/Unauthorized').then((m) => ({ default: m.Unauthorized })),
+)
+const ServiceUnavailable = lazy(() =>
+  import('./pages/ServiceUnavailable').then((m) => ({ default: m.ServiceUnavailable })),
+)
+const Maintenance = lazy(() =>
+  import('./pages/Maintenance').then((m) => ({ default: m.Maintenance })),
+)
+import { ErrorBoundary } from './components/ui/ErrorBoundary'
+import { OfflineBanner } from './components/ui/OfflineBanner'
 const AdminOverview = lazy(() =>
   import('./pages/admin/AdminOverview').then((m) => ({ default: m.AdminOverview })),
 )
@@ -64,7 +78,7 @@ function RouteFallback() {
         <span className="flex size-14 animate-pulse items-center justify-center rounded-full border border-gold/50 font-playfair text-2xl text-gold">
           W
         </span>
-        <span className="font-montserrat text-[10px] tracking-[0.3em] text-ash uppercase">
+        <span className="font-akkurat text-[10px] tracking-[0.3em] text-ash uppercase">
           WatchGuru.pk
         </span>
       </div>
@@ -74,14 +88,16 @@ function RouteFallback() {
 
 function App() {
   return (
-    <>
+    <ErrorBoundary>
       <ScrollToTop />
+      <OfflineBanner />
       <Suspense fallback={<RouteFallback />}>
         <Routes>
           {/* Storefront */}
           <Route element={<Layout />}>
             <Route index element={<Home />} />
 
+            <Route path="collections" element={<Collections />} />
             <Route path="collections/brand/:brandSlug" element={<Collection />} />
             <Route path="collections/:slug" element={<Collection />} />
             <Route path="shop" element={<Navigate to="/collections/all" replace />} />
@@ -94,10 +110,6 @@ function App() {
             <Route path="order-confirmation" element={<OrderConfirmation />} />
             <Route path="track-order" element={<TrackOrder />} />
 
-            <Route path="account" element={<Account />} />
-            <Route path="account/login" element={<AccountLogin />} />
-            <Route path="account/register" element={<AccountRegister />} />
-
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
 
@@ -106,8 +118,18 @@ function App() {
             <Route path="policies/terms-of-service" element={<TermsOfService />} />
             <Route path="policies/warranty" element={<Warranty />} />
 
+            {/* Error and maintenance routes */}
+            <Route path="401" element={<Unauthorized />} />
+            <Route path="403" element={<Forbidden />} />
+            <Route path="500" element={<ServerError />} />
+            <Route path="503" element={<ServiceUnavailable />} />
+            <Route path="maintenance" element={<Maintenance />} />
+
             <Route path="*" element={<NotFound />} />
           </Route>
+
+          {/* Staff-only sign in — customer accounts are not offered */}
+          <Route path="admin/login" element={<AdminLogin />} />
 
           {/* Store admin — separate chrome, guarded */}
           <Route
@@ -125,7 +147,7 @@ function App() {
           </Route>
         </Routes>
       </Suspense>
-    </>
+    </ErrorBoundary>
   )
 }
 

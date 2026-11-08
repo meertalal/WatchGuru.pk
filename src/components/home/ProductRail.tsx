@@ -1,8 +1,8 @@
-import { useRef, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import type { Product } from '../../types'
-import { ProductCard } from '../product/ProductCard'
+import { ProductGrid } from '../product/ProductGrid'
 import { Container } from '../ui/Container'
 import { SectionHeading } from '../ui/SectionHeading'
 
@@ -17,8 +17,9 @@ interface ProductRailProps {
 }
 
 /**
- * Horizontal product carousel used across the homepage — native scroll
- * with snap points, arrow buttons on desktop, edge-bleed on mobile.
+ * A curated product section. On desktop it presents a calm four-column
+ * editorial grid; on mobile it becomes a balanced two-column grid so the
+ * watch photography remains the focus.
  */
 export function ProductRail({
   eyebrow,
@@ -28,74 +29,29 @@ export function ProductRail({
   viewAllTo,
   viewAllLabel = 'View all',
 }: ProductRailProps) {
-  const trackRef = useRef<HTMLDivElement>(null)
-
-  const scrollBy = (delta: number) => {
-    trackRef.current?.scrollBy({ left: delta, behavior: 'smooth' })
-  }
-
   if (products.length === 0) return null
 
-  const arrowButton =
-    'hidden size-11 items-center justify-center border border-line text-white transition-colors hover:border-gold hover:bg-charcoal hover:text-ivory sm:flex'
-
   return (
-    <section className="py-14 sm:py-20">
+    <section className="bg-obsidian py-16 sm:py-20 lg:py-24">
       <Container>
-        <div className="flex flex-wrap items-end justify-between gap-6">
+        <div className="flex flex-col gap-6 pb-7 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading
             align="left"
             eyebrow={eyebrow}
             title={title}
             description={description}
-            className="max-w-xl"
+            className="max-w-2xl"
           />
-          <div className="flex items-center gap-2">
-            <button type="button" onClick={() => scrollBy(-640)} aria-label="Scroll back" className={arrowButton}>
-              <ArrowLeft className="size-4" />
-            </button>
-            <button type="button" onClick={() => scrollBy(640)} aria-label="Scroll forward" className={arrowButton}>
-              <ArrowRight className="size-4" />
-            </button>
-            <Link
-              to={viewAllTo}
-              className="ml-2 hidden items-center gap-2 font-montserrat text-[11px] font-medium tracking-[0.2em] whitespace-nowrap text-white uppercase transition-colors hover:text-gold sm:inline-flex"
-            >
-              {viewAllLabel}
-              <ArrowRight className="size-4" />
-            </Link>
-          </div>
-        </div>
-      </Container>
-
-      {/* Track — bleeds to the viewport edge on small screens */}
-      <div
-        ref={trackRef}
-        tabIndex={0}
-        role="region"
-        aria-label={`${title} carousel`}
-        className="no-scrollbar mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-4 pb-2 sm:px-6 lg:px-10"
-      >
-        {products.map((product) => (
-          <div
-            key={product.id}
-            className="w-[240px] shrink-0 snap-start sm:w-[260px] lg:w-[280px]"
+          <Link
+            to={viewAllTo}
+            className="group inline-flex items-center gap-2.5 self-start font-akkurat text-[9px] font-medium tracking-[0.26em] text-ivory uppercase transition-colors hover:text-gold sm:self-auto"
           >
-            <ProductCard product={product} />
-          </div>
-        ))}
-        {/* End spacer lets the last card clear the edge padding */}
-        <div aria-hidden="true" className="w-1 shrink-0" />
-      </div>
+            {viewAllLabel}
+            <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
+        </div>
 
-      <Container>
-        <Link
-          to={viewAllTo}
-          className="mt-6 inline-flex items-center gap-2 font-montserrat text-[11px] font-medium tracking-[0.2em] text-white uppercase transition-colors hover:text-gold sm:hidden"
-        >
-          {viewAllLabel}
-          <ArrowRight className="size-4" />
-        </Link>
+        <ProductGrid products={products} className="mt-10 sm:mt-12" />
       </Container>
     </section>
   )
@@ -106,10 +62,10 @@ export function RailAction({ to, children }: { to: string; children: ReactNode }
   return (
     <Link
       to={to}
-      className="inline-flex items-center gap-2 font-montserrat text-[11px] font-medium tracking-[0.2em] text-white uppercase transition-colors hover:text-gold"
+      className="inline-flex items-center gap-2 font-akkurat text-[9px] font-medium tracking-[0.26em] text-ivory uppercase transition-colors hover:text-gold"
     >
       {children}
-      <ArrowRight className="size-4" />
+      <ArrowRight className="size-3.5" />
     </Link>
   )
 }

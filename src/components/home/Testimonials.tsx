@@ -1,85 +1,60 @@
-import { BadgeCheck, Star } from 'lucide-react'
+import { BadgeCheck, FileCheck2, ShieldCheck, Truck } from 'lucide-react'
 import { Container } from '../ui/Container'
 import { SectionHeading } from '../ui/SectionHeading'
 import { Reveal } from '../ui/Reveal'
 
-const TESTIMONIALS = [
+const PROMISES = [
   {
-    quote:
-      'I was nervous about a six-figure order online. WatchGuru called me within minutes, verified the advance, and the Sovereign arrived sealed with all its papers. Flawless service.',
-    name: 'Ahmed Raza',
-    location: 'Karachi',
-    product: 'Beaumont Sovereign Moonphase',
+    icon: BadgeCheck,
+    title: 'Authorised sourcing',
+    copy: 'Every watch is sourced through authorised partner maisons. No grey-market stock.',
   },
   {
-    quote:
-      'The WG-01 Atelier is genuinely on par with European pieces twice the price. The engraved case back alone makes it feel like mine.',
-    name: 'Danish Mahmood',
-    location: 'Lahore',
-    product: 'WatchGuru Atelier WG-01 Heritage Auto',
+    icon: FileCheck2,
+    title: 'Papers and seals intact',
+    copy: 'Warranty cards, manuals and serial-linked papers are delivered with each piece.',
   },
   {
-    quote:
-      'Cash on Delivery made it possible — I saw the watch, checked the clasp, inspected the dial, and only then paid. That is how trust is built.',
-    name: 'Zainab Khan',
-    location: 'Islamabad',
-    product: 'Aurelian Celestia Diamond 32',
+    icon: ShieldCheck,
+    title: 'One-year machine warranty',
+    copy: 'Movement and manufacturing faults are covered for twelve months from delivery.',
   },
   {
-    quote:
-      'Delivery to Peshawar took four days, fully insured, and the verification card let me confirm the serial online. Outstanding attention to detail.',
-    name: 'Hassan Sheikh',
-    location: 'Peshawar',
-    product: 'Nordvik Fjord Diver 42',
+    icon: Truck,
+    title: 'Insured nationwide delivery',
+    copy: 'Fully insured shipping with a signature on arrival, 2 to 5 business days after dispatch.',
   },
 ]
 
-const INITIALS = (name: string) =>
-  name.split(' ').map((part) => part.charAt(0)).slice(0, 2).join('').toUpperCase()
-
 export function Testimonials() {
   return (
-    <section className="border-b border-line bg-obsidian py-16 sm:py-20">
+    <section className="bg-coal py-16 sm:py-20 lg:py-24">
       <Container>
         <SectionHeading
-          eyebrow="Words from Our Collectors"
-          title="Trusted, sealed, delivered"
+          eyebrow="What Comes With Every Piece"
+          title="Sold with proof, not promises"
         />
-        <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {TESTIMONIALS.map((t, index) => (
-            <li key={t.name}>
-              <Reveal delay={index * 80} className="h-full">
-                <figure className="flex h-full flex-col gap-5 border border-line bg-charcoal p-6">
-                  <div className="flex items-center gap-1 text-gold" aria-label="Five star review">
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <Star key={i} className="size-4 fill-gold" strokeWidth={0} aria-hidden="true" />
-                    ))}
+        <ul className="mt-11 grid gap-8 sm:mt-14 sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-4 lg:gap-x-10">
+          {PROMISES.map((promise, index) => {
+            const Icon = promise.icon
+            return (
+              <li key={promise.title} className="pt-6">
+                <Reveal delay={index * 70} className="h-full">
+                  <div className="flex h-full flex-col">
+                    <span className="flex size-9 items-center justify-center bg-surface text-gold">
+                      <Icon className="size-4" strokeWidth={1.3} aria-hidden="true" />
+                    </span>
+                    <h3 className="mt-5 font-cormorant text-[1.25rem] font-light leading-[1.5] text-ivory">
+                      {promise.title}
+                    </h3>
+                    <p className="mt-2 text-[12px] font-light leading-[1.75] text-ash">
+                      {promise.copy}
+                    </p>
                   </div>
-                  <blockquote className="text-[13px] leading-relaxed text-ash">
-                    “{t.quote}”
-                  </blockquote>
-                  <figcaption className="mt-auto flex items-center gap-3 border-t border-line pt-4">
-                    <span
-                      aria-hidden="true"
-                      className="flex size-11 items-center justify-center rounded-full bg-charcoal font-montserrat text-[11px] font-semibold tracking-widest text-gold"
-                    >
-                      {INITIALS(t.name)}
-                    </span>
-                    <span>
-                      <span className="block text-sm font-medium text-white">{t.name}</span>
-                      <span className="block text-[10px] tracking-wide text-ash">
-                        {t.location} · <span className="text-gold">{t.product}</span>
-                      </span>
-                      <span className="mt-1 flex items-center gap-1 text-[9px] font-medium tracking-[0.18em] text-gold uppercase">
-                        <BadgeCheck className="size-3" aria-hidden="true" />
-                        Verified purchase
-                      </span>
-                    </span>
-                  </figcaption>
-                </figure>
-              </Reveal>
-            </li>
-          ))}
+                </Reveal>
+              </li>
+            )
+          })}
         </ul>
       </Container>
     </section>
