@@ -19,7 +19,7 @@ export interface OrdersContextValue {
   orders: Order[]
   placeOrder: (order: Order) => void
   clearLastOrder: () => void
-  /** Tracking lookup — order number and email must match. */
+  /** Tracking lookup: order number and email must match. */
   trackOrder: (orderNumber: string, email: string) => Order | null
   listForEmail: (email: string) => Order[]
   updateStatus: (orderNumber: string, status: OrderStatus, note?: string) => Order | null

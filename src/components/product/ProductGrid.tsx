@@ -12,8 +12,8 @@ export function ProductGrid({ products, className, columns = 4 }: ProductGridPro
   return (
     <div
       className={classNames(
-        'grid grid-cols-1 gap-x-5 gap-y-10 sm:grid-cols-2 sm:gap-x-6 lg:gap-x-7 lg:gap-y-14',
-        columns === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3',
+        'grid grid-cols-2 gap-x-4 gap-y-9 sm:gap-x-6 sm:gap-y-12 lg:gap-x-6 lg:gap-y-14',
+        columns === 4 ? 'md:grid-cols-3 lg:grid-cols-4' : 'md:grid-cols-3',
         className,
       )}
     >

@@ -114,7 +114,7 @@ export type ProfileValues = z.infer<typeof profileSchema>
 export const trackOrderSchema = z.object({
   orderNumber: z
     .string()
-    .min(6, 'Enter your order number, e.g. WG-DEMO2041')
+    .min(6, 'Enter your order number, e.g. WG-2041')
     .transform((v) => v.trim().toUpperCase()),
   email: emailField,
 })
@@ -147,8 +147,6 @@ export const adminProductSchema = z.object({
   price: z.number().int('Whole rupees only').min(1, 'Price must be at least Rs. 1'),
   compareAtPrice: z.number().int().min(0).optional(),
   stock: z.number().int().min(0, 'Stock cannot be negative'),
-  rating: z.number().min(0).max(5),
-  reviewCount: z.number().int().min(0),
   caseMaterial: z.string().min(2, 'Required'),
   caseSize: z.string().min(1, 'Required'),
   movement: z.string().min(2, 'Required'),

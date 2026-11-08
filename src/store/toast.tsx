@@ -102,7 +102,7 @@ function ToastViewport({ toasts, onDismiss }: { toasts: Toast[]; onDismiss: (id:
           <div
             key={toast.id}
             role={toast.variant === 'error' ? 'alert' : 'status'}
-            className="fade-up pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-sm border border-line bg-black/95 px-4 py-3 text-ivory shadow-[0_20px_40px_-16px_rgba(0,0,0,0.6)] backdrop-blur"
+            className="fade-up pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-sm bg-black/95 px-4 py-3 text-ivory shadow-[0_20px_40px_-16px_rgba(0,0,0,0.6)] backdrop-blur"
           >
             <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-gold/20 text-gold">
               <Icon className="size-3.5" strokeWidth={2.4} />

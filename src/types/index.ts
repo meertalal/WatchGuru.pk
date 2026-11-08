@@ -49,6 +49,16 @@ export interface ProductSpec {
   value: string
 }
 
+export interface ProductVariant {
+  id: string
+  name: string
+  /** Swatch colour representing the finish. */
+  swatch: string
+  price: number
+  /** Alternate image for this finish, when the catalogue has one. */
+  image?: string
+}
+
 export interface Product {
   id: string
   slug: string
@@ -57,8 +67,6 @@ export interface Product {
   price: number
   /** Original price when the product is discounted. */
   compareAtPrice?: number
-  rating: number
-  reviewCount: number
   description: string
   highlights: string[]
   images: string[]
@@ -71,6 +79,8 @@ export interface Product {
   movement: string
   features: Feature[]
   specs: ProductSpec[]
+  /** Optional finish variants (only where the catalogue actually offers them). */
+  variants?: ProductVariant[]
   badge?: ProductBadge
   inStock: boolean
   stock: number

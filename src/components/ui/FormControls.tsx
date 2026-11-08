@@ -2,7 +2,7 @@ import type { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes 
 import { classNames } from '../../lib/format'
 
 const CONTROL =
-  'w-full border bg-charcoal px-4 py-3 font-lato text-sm text-white outline-none transition-colors placeholder:text-ash focus:border-gold'
+  'w-full border bg-coal px-4 py-3 font-inter text-[13px] font-light text-ivory outline-none transition-colors placeholder:text-muted focus:border-gold'
 
 function FieldShell({
   label,
@@ -21,14 +21,14 @@ function FieldShell({
 }) {
   return (
     <div className={className}>
-      <label htmlFor={htmlFor} className="mb-2 block font-montserrat text-[10px] font-medium tracking-[0.18em] text-ash uppercase">
+      <label htmlFor={htmlFor} className="mb-2 block font-akkurat text-[9px] font-medium tracking-[0.2em] text-ash uppercase">
         {label}
       </label>
       {children}
       {error ? (
-        <p className="mt-1.5 text-xs text-error">{error}</p>
+        <p className="mt-1.5 text-[11px] text-error">{error}</p>
       ) : hint ? (
-        <p className="mt-1.5 text-xs text-ash">{hint}</p>
+        <p className="mt-1.5 text-[11px] text-muted">{hint}</p>
       ) : null}
     </div>
   )

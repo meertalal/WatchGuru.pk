@@ -9,12 +9,14 @@ interface DocumentMetaInput {
   image?: string
   /** Defaults to `website`. */
   type?: 'website' | 'article' | 'product'
+  /** When true, search engines will not index this page (e.g. cart, checkout, admin). */
+  noindex?: boolean
 }
 
 const SITE_NAME = 'WatchGuru.pk'
-const SITE_SUFFIX = ` — ${SITE_NAME}`
+const SITE_SUFFIX = ` | ${SITE_NAME}`
 const DEFAULT_IMAGE =
-  '/watches/watchguru-atelier-wg01-heritage-auto.svg'
+  'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80'
 
 function setMeta(selector: string, attr: 'name' | 'property', key: string, content: string) {
   let tag = document.head.querySelector<HTMLMetaElement>(selector)
@@ -37,11 +39,16 @@ function setCanonical(href: string) {
 }
 
 /**
- * Per-page SEO: title, description, canonical, Open Graph and Twitter
- * cards. Canonicals intentionally drop the query string so filtered
- * collection URLs consolidate to their parent.
+ * Per-page SEO: title, description, canonical, Open Graph, Twitter
+ * cards, and robots indexing directives.
  */
-export function useDocumentMeta({ title, description, image, type = 'website' }: DocumentMetaInput) {
+export function useDocumentMeta({
+  title,
+  description,
+  image,
+  type = 'website',
+  noindex = false,
+}: DocumentMetaInput) {
   const { pathname } = useLocation()
 
   useEffect(() => {
@@ -57,6 +64,7 @@ export function useDocumentMeta({ title, description, image, type = 'website' }:
     document.title = fullTitle
 
     setMeta('meta[name="description"]', 'name', 'description', description)
+    setMeta('meta[name="robots"]', 'name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow')
     setMeta('meta[property="og:site_name"]', 'property', 'og:site_name', SITE_NAME)
     setMeta('meta[property="og:type"]', 'property', 'og:type', type)
     setMeta('meta[property="og:title"]', 'property', 'og:title', fullTitle)
@@ -68,5 +76,5 @@ export function useDocumentMeta({ title, description, image, type = 'website' }:
     setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description)
     setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', resolvedImage)
     setCanonical(canonical)
-  }, [title, description, image, type, pathname])
+  }, [title, description, image, type, pathname, noindex])
 }

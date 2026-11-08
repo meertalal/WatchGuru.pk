@@ -34,7 +34,7 @@ export function ProductImage({
   }
 
   return (
-    <div className={classNames('relative overflow-hidden bg-coal', className)}>
+    <div className={classNames('relative overflow-hidden bg-surface', className)}>
       {!hasError && (
         <img
           src={src}
@@ -47,15 +47,15 @@ export function ProductImage({
       )}
 
       {hasError && (
-        <div className="flex size-full flex-col items-center justify-center gap-3 bg-gradient-to-br from-charcoal via-coal to-charcoal text-ash">
+        <div className="flex size-full flex-col items-center justify-center gap-4 bg-gradient-to-br from-charcoal via-surface to-coal text-gold/70">
           <svg viewBox="0 0 48 48" className="size-12" aria-hidden="true">
-            <circle cx="24" cy="24" r="15" fill="none" stroke="currentColor" strokeWidth="1.5" />
+            <circle cx="24" cy="24" r="15" fill="none" stroke="currentColor" strokeWidth="1.2" />
             <circle cx="24" cy="24" r="2" fill="currentColor" />
             <path
               d="M24 14v10l7 4"
               fill="none"
               stroke="currentColor"
-              strokeWidth="1.5"
+              strokeWidth="1.2"
               strokeLinecap="round"
               strokeLinejoin="round"
             />

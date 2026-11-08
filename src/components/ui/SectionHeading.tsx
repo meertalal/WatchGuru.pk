@@ -25,19 +25,35 @@ export function SectionHeading({
   return (
     <div
       className={classNames(
-        'flex flex-col gap-4',
+        'flex flex-col gap-5',
         centered ? 'items-center text-center' : 'items-start text-left',
         action && !centered ? 'sm:flex-row sm:items-end sm:justify-between' : '',
         className,
       )}
     >
       <div className={classNames('max-w-2xl', centered ? 'mx-auto' : '')}>
-        {eyebrow && <p className="eyebrow mb-3 text-gold">{eyebrow}</p>}
-        <h2 className={classNames('text-3xl leading-tight sm:text-4xl lg:text-[2.75rem]', titleClassName)}>
+        {eyebrow && (
+          <p
+            className={classNames(
+              'eyebrow mb-4 flex items-center gap-3 text-gold',
+              centered && 'justify-center',
+            )}
+          >
+            <span className="gold-rule" aria-hidden="true" />
+            {eyebrow}
+            {centered && <span className="gold-rule" aria-hidden="true" />}
+          </p>
+        )}
+        <h2
+          className={classNames(
+            'font-cormorant font-normal text-[2.1rem] leading-[1.08] tracking-[-0.015em] text-ivory sm:text-[2.6rem] lg:text-[3rem]',
+            titleClassName,
+          )}
+        >
           {title}
         </h2>
         {description && (
-          <p className="mt-4 text-sm leading-relaxed text-ash sm:text-[15px]">
+          <p className="mx-auto mt-5 max-w-xl text-[13.5px] font-light leading-[1.8] text-ash sm:text-sm">
             {description}
           </p>
         )}

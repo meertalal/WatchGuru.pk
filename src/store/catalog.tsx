@@ -12,7 +12,7 @@ import { priceBounds, searchCatalog, type PriceBounds } from '../lib/catalog'
 import { slugify } from '../lib/format'
 
 /**
- * Live catalogue — the single source of truth for products on screen.
+ * Live catalogue: the single source of truth for products on screen.
  *
  * Wraps the ProductRepository implementation (default: localStorage seeded
  * from the factory catalogue). Admins mutate the catalogue through this

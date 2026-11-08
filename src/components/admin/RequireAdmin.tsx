@@ -18,7 +18,7 @@ export function RequireAdmin({ children }: { children: ReactNode }) {
     )
   }
   if (!isAdmin) {
-    return <Navigate to="/account/login" state={{ from: location.pathname }} replace />
+    return <Navigate to="/admin/login" state={{ from: location.pathname }} replace />
   }
   return <>{children}</>
 }

@@ -1,5 +1,5 @@
 /**
- * Single source of truth for site navigation — header, mobile menu and
+ * Single source of truth for site navigation: header, mobile menu and
  * footer all derive from these groups, so links never drift apart.
  */
 
@@ -18,6 +18,7 @@ export const PRIMARY_NAV: NavLink[] = [
 ]
 
 export const COLLECTION_LINKS: NavLink[] = [
+  { label: 'Collections', to: '/collections' },
   { label: 'All Watches', to: '/collections/all' },
   { label: 'Men’s Watches', to: '/collections/men' },
   { label: 'Women’s Watches', to: '/collections/women' },
