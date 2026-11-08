@@ -39,7 +39,7 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
         type="button"
         aria-label="Close cart"
         onClick={onClose}
-        className={`absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-opacity duration-500 ${
+        className={`absolute inset-0 bg-ink/80 backdrop-blur-[2px] transition-opacity duration-500 ${
           open ? 'opacity-100' : 'opacity-0'
         }`}
       />
@@ -48,31 +48,31 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
         role="dialog"
         aria-modal="true"
         aria-label="Shopping cart"
-        className={`absolute inset-y-0 right-0 flex w-full max-w-md flex-col bg-obsidian shadow-[-30px_0_60px_-30px_rgba(0,0,0,0.4)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        className={`absolute inset-y-0 right-0 flex w-full max-w-md flex-col bg-obsidian shadow-[-40px_0_80px_-30px_rgba(0,0,0,0.9)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <header className="flex items-center justify-between border-b border-line px-6 py-5">
-          <div className="flex items-center gap-3">
-            <ShoppingBag className="size-4 text-gold" />
-            <h2 className="text-xl">Your Cart</h2>
-            <span className="text-xs text-ash">({count})</span>
+        <header className="flex items-center justify-between px-6 py-5">
+          <div className="flex items-baseline gap-3">
+            <ShoppingBag className="size-4 text-gold" strokeWidth={1.4} />
+            <h2 className="font-cormorant text-2xl text-ivory">Your Cart</h2>
+            <span className="font-inter text-[11px] text-muted">({count})</span>
           </div>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close cart"
-            className="text-ash transition-colors hover:text-white"
+            className="flex size-8 items-center justify-center text-ash transition-colors hover:text-gold"
           >
-            <X className="size-5" />
+            <X className="size-4" strokeWidth={1.5} />
           </button>
         </header>
 
         {items.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-4 px-8 text-center">
-            <ShoppingBag className="size-10 text-ash" strokeWidth={1.2} />
-            <p className="text-lg">Your cart is empty</p>
-            <p className="text-sm text-ash">
+            <ShoppingBag className="size-10 text-gold/60" strokeWidth={1} />
+            <p className="font-cormorant text-2xl text-ivory">Your cart is empty</p>
+            <p className="text-[13px] font-light leading-relaxed text-ash">
               Explore the boutique and find the piece that keeps your time.
             </p>
             <Link to="/collections/all" onClick={onClose} className="mt-2">
@@ -83,7 +83,7 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
           </div>
         ) : (
           <>
-            <ul className="flex-1 divide-y divide-line overflow-y-auto px-6">
+            <ul className="flex-1 overflow-y-auto px-6">
               {items.map(({ product, quantity, lineTotal }) => (
                 <li key={product.id} className="flex gap-4 py-5">
                   <Link
@@ -100,11 +100,11 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
                     />
                   </Link>
                   <div className="flex flex-1 flex-col">
-                    <p className="eyebrow text-ash">{product.brand}</p>
+                    <p className="eyebrow text-gold">{product.brand}</p>
                     <Link
                       to={`/products/${product.slug}`}
                       onClick={onClose}
-                      className="text-base leading-snug transition-colors hover:text-gold"
+                      className="mt-1 font-cormorant text-lg leading-snug text-ivory transition-colors hover:text-gold"
                     >
                       {product.name}
                     </Link>
@@ -118,11 +118,11 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
                         label="Quantity"
                       />
                       <div className="text-right">
-                        <p className="font-inter font-medium text-sm text-white">
+                        <p className="font-inter text-[13px] font-normal text-ivory">
                           {formatPrice(lineTotal)}
                         </p>
                         {product.stock <= 5 && (
-                          <p className="mt-0.5 text-[10px] tracking-wide text-gold uppercase">
+                          <p className="mt-0.5 font-akkurat text-[8px] tracking-[0.18em] text-gold uppercase">
                             Only {product.stock} left
                           </p>
                         )}
@@ -132,30 +132,30 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
                       type="button"
                       onClick={() => removeItem(product.id)}
                       aria-label={`Remove ${product.name} from cart`}
-                      className="mt-2 flex w-fit items-center gap-1.5 font-montserrat text-[10px] font-medium tracking-[0.18em] text-ash uppercase transition-colors hover:text-white"
+                      className="mt-2.5 flex w-fit items-center gap-1.5 font-akkurat text-[9px] font-medium tracking-[0.2em] text-muted uppercase transition-colors hover:text-gold"
                     >
-                      <Trash2 className="size-3.5" /> Remove
+                      <Trash2 className="size-3.5" strokeWidth={1.4} /> Remove
                     </button>
                   </div>
                 </li>
               ))}
             </ul>
 
-            <footer className="border-t border-line px-6 py-5">
+            <footer className="px-6 py-5">
               <div className="flex items-baseline justify-between">
-                <span className="text-sm text-ash">Subtotal</span>
-                <span className="font-inter font-medium text-xl text-white">
+                <span className="text-[12px] tracking-wide text-ash">Subtotal</span>
+                <span className="font-inter text-xl font-normal text-ivory">
                   {formatPrice(subtotal)}
                 </span>
               </div>
-              <p className="mt-1 text-[11px] text-ash">
+              <p className="mt-1 text-[10.5px] text-muted">
                 {SHIPPING_COST === 0
-                  ? 'Free insured delivery nationwide · duties included'
+                  ? 'Free insured delivery nationwide, duties included'
                   : 'Shipping calculated at checkout'}
               </p>
-              <p className="mt-2 flex items-center gap-1.5 text-[11px] tracking-wide text-ash">
-                <ShieldCheck className="size-3.5 text-gold" />
-                Cash on Delivery available · 1-year machine warranty
+              <p className="mt-2 flex items-center gap-1.5 text-[10.5px] tracking-wide text-muted">
+                <ShieldCheck className="size-3.5 text-gold" strokeWidth={1.4} />
+                Cash on Delivery available, 1-year machine warranty
               </p>
               <div className="mt-4 flex flex-col gap-2">
                 <Button size="lg" className="w-full" onClick={goTo('/checkout')}>
@@ -164,7 +164,7 @@ export function CartDrawer({ open, onClose }: { open: boolean; onClose: () => vo
                 <button
                   type="button"
                   onClick={goTo('/cart')}
-                  className="w-full py-3 font-montserrat text-[11px] font-medium tracking-[0.2em] text-ash uppercase transition-colors hover:text-white"
+                  className="w-full py-3 font-akkurat text-[9px] font-medium tracking-[0.24em] text-ash uppercase transition-colors hover:text-gold"
                 >
                   View full cart
                 </button>

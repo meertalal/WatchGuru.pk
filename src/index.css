@@ -1,41 +1,54 @@
 @import 'tailwindcss';
 
 /* ============================================================
-   WatchGuru.pk — Black & Gold Luxury Design System
-   Deep black surfaces, warm gold accents, ivory serif type.
+   WatchGuru.pk — Editorial Black & Gold Luxury Design System
+   Deep near-black surfaces, warm restrained gold, ivory serif type.
    ============================================================ */
 
 @theme {
-  /* Core palette — black & gold */
-  --color-obsidian: #080808;   /* page background */
-  --color-coal: #111111;       /* primary sections */
-  --color-charcoal: #171717;   /* cards & panels */
-  --color-ink: #050505;        /* deepest overlay */
+  /* Core palette — four values only.
+     1. primary background  #050708  (obsidian — the page)
+     2. secondary background #0A0D0E (coal/surface — sections)
+     3. card surface        #151718  (charcoal — cards & panels)
+     4. champagne accent    #C9BBA5  (gold/button — highlights & CTAs) */
+  --color-obsidian: #050708;   /* primary background */
+  --color-coal: #0a0d0e;       /* secondary background — sections */
+  --color-surface: #0a0d0e;    /* product sections — secondary background */
+  --color-charcoal: #151718;   /* card surface — product cards & panels */
+  --color-ink: #050708;        /* deepest overlay (drawers/modals only) */
 
-  /* Gold accents */
-  --color-gold: #c69a52;       /* luxury gold — accents, eyebrows, prices */
-  --color-gold-bright: #d6a66b;/* button gold */
-  --color-gold-dark: #8f6b3e;  /* muted gold accents */
-  --color-gold-light: #d6a66b; /* kept for token compatibility */
+  /* Luxury champagne accents, derived from #C9BBA5 */
+  --color-gold: #c9bba5;       /* champagne — accents, eyebrows, prices */
+  --color-gold-bright: #dbd1c2;/* lighter champagne for hover states */
+  --color-gold-dark: #a8977f;  /* muted champagne */
+  --color-gold-light: #e5ded1; /* lightest champagne */
 
   /* Text */
-  --color-ivory: #f5ebdd;      /* warm ivory text on dark */
-  --color-ash: #a6a09a;        /* secondary text */
-  --color-muted: #a6a09a;
+  --color-ivory: #f5f2ec;      /* primary text on dark */
+  --color-ash: #a5a5a1;        /* secondary text */
+  --color-muted: #777773;      /* muted text */
 
   /* Borders & dividers */
-  --color-line: #39332b;
+  --color-line: #232628;
   /* Lifted panel (hover states) */
-  --color-lift: #1d1b19;
-  /* Muted terracotta — errors & destructive actions (warm, never bright) */
+  --color-lift: #1b1e1f;
+  /* Muted terracotta — errors & destructive actions */
   --color-error: #a8563e;
+
+  /* Buttons — champagne fill with near-black text */
+  --color-button: #c9bba5;
+  --color-button-text: #050708;
 
   /* Typography — editorial system */
   --font-playfair: 'Playfair Display', ui-serif, Georgia, 'Times New Roman', serif;
   --font-cormorant: 'Cormorant Garamond', ui-serif, Georgia, 'Times New Roman', serif;
   --font-dmserif: 'DM Serif Display', ui-serif, Georgia, serif;
   --font-inter: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-montserrat: 'Montserrat', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Akkurat is a licensed Lineto typeface. It is used when installed
+     locally (or when licensed webfont files are added); otherwise the
+     stack falls back to the loaded Inter, which shares its neo-grotesque
+     proportions. No unlicensed font files are bundled. */
+  --font-akkurat: 'Akkurat', 'Akkurat Pro', 'Akkurat Standard', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-lora: 'Lora', ui-serif, Georgia, 'Times New Roman', serif;
   --font-lato: 'Lato', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 
@@ -57,10 +70,11 @@
     background-color: var(--color-obsidian);
     color: var(--color-ivory);
     font-family: var(--font-inter);
-    font-weight: 400;
+    font-weight: 300;
     letter-spacing: 0.01em;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   h1,
@@ -68,14 +82,15 @@
   h3,
   h4 {
     font-family: var(--font-cormorant);
-    font-weight: 500;
-    color: #ffffff;
-    letter-spacing: 0.005em;
+    font-weight: 400;
+    color: var(--color-ivory);
+    letter-spacing: -0.005em;
+    text-wrap: balance;
   }
 
   ::selection {
     background: var(--color-gold);
-    color: #080808;
+    color: var(--color-obsidian);
   }
 
   /* Refined dark scrollbar */
@@ -84,44 +99,88 @@
     height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: #111111;
+    background: var(--color-coal);
   }
   ::-webkit-scrollbar-thumb {
-    background: #39332b;
+    background: var(--color-line);
     border-radius: 999px;
-    border: 2px solid #111111;
+    border: 2px solid var(--color-coal);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #8f6b3e;
+    background: var(--color-gold-dark);
   }
 
   :focus-visible {
     outline: 2px solid var(--color-gold);
-    outline-offset: 2px;
+    outline-offset: 3px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-family: var(--font-inter);
+  }
+
+  img {
+    color: var(--color-ash);
   }
 }
 
 @layer components {
   /* Small uppercase label used across the storefront */
   .eyebrow {
-    font-family: var(--font-montserrat);
-    font-size: 0.6875rem;
+    font-family: var(--font-akkurat);
+    font-size: 0.625rem;
     letter-spacing: 0.28em;
     text-transform: uppercase;
     font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* Editorial serif display used for hero and section headlines */
+  .display {
+    font-family: var(--font-cormorant);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 0.98;
+    color: var(--color-ivory);
+  }
+
+  /* Thin gold rule used beside eyebrows and editorial details */
+  .gold-rule {
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--color-gold);
+    vertical-align: middle;
+  }
+
+  /* The signature light CTA from the reference */
+  .btn-ivory {
+    background: var(--color-button);
+    color: var(--color-button-text);
+    border: 1px solid var(--color-button);
+    transition:
+      background-color 0.3s var(--ease-luxe),
+      color 0.3s var(--ease-luxe),
+      border-color 0.3s var(--ease-luxe);
+  }
+  .btn-ivory:hover {
+    background: var(--color-gold-bright);
+    border-color: var(--color-gold-bright);
   }
 }
 
 @layer utilities {
   .fade-up {
-    animation: fadeUp 0.7s var(--ease-luxe) both;
+    animation: fadeUp 0.8s var(--ease-luxe) both;
   }
   .reveal {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(22px);
     transition:
-      opacity 0.8s var(--ease-luxe),
-      transform 0.8s var(--ease-luxe);
+      opacity 0.9s var(--ease-luxe),
+      transform 0.9s var(--ease-luxe);
   }
   .reveal.is-visible {
     opacity: 1;
@@ -133,12 +192,18 @@
   .no-scrollbar {
     scrollbar-width: none;
   }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
 }
 
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -167,6 +232,9 @@
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  .fade-up {
+    animation: none;
   }
   .animate-marquee {
     animation: none;

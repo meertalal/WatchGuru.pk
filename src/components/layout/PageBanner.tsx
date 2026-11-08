@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import type { BreadcrumbItem } from '../ui/Breadcrumbs'
 import { Breadcrumbs } from '../ui/Breadcrumbs'
 import { Container } from '../ui/Container'
+import { BreadcrumbJsonLd } from '../seo/BreadcrumbJsonLd'
 
 interface PageBannerProps {
   eyebrow?: string
@@ -14,14 +15,22 @@ interface PageBannerProps {
 /** A restrained interior-page header used across Shop, Cart, About, etc. */
 export function PageBanner({ eyebrow, title, description, breadcrumbs, children }: PageBannerProps) {
   return (
-    <section className="border-b border-line bg-coal">
+    <section className="bg-coal">
+      {breadcrumbs && <BreadcrumbJsonLd items={breadcrumbs} />}
       <Container>
-        <div className="py-10 sm:py-16">
-          {breadcrumbs && <Breadcrumbs items={breadcrumbs} className="mb-5 sm:mb-6" />}
-          {eyebrow && <p className="eyebrow mb-3 text-gold">{eyebrow}</p>}
-          <h1 className="text-3xl leading-tight sm:text-4xl lg:text-5xl">{title}</h1>
+        <div className="py-12 sm:py-16 lg:py-20">
+          {breadcrumbs && <Breadcrumbs items={breadcrumbs} className="mb-6" />}
+          {eyebrow && (
+            <p className="eyebrow flex items-center gap-3 text-gold">
+              <span className="gold-rule" aria-hidden="true" />
+              {eyebrow}
+            </p>
+          )}
+          <h1 className="display mt-4 text-[2.4rem] sm:text-5xl lg:text-[3.5rem]">{title}</h1>
           {description && (
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-ash">{description}</p>
+            <p className="mt-5 max-w-2xl text-[13.5px] font-light leading-[1.9] text-ash">
+              {description}
+            </p>
           )}
           {children}
         </div>

@@ -121,8 +121,6 @@ src/
 ├─ components/             layout (Header/Footer/drawers) · collection · home ·
 │                          product · shop · order · policies · admin · ui
 └─ pages/                  Route components (lazy-loaded) + /admin/*
-scripts/
-└─ generate-watch-art.cjs  Procedural, on-palette SVG artwork (23 originals)
 public/
 └─ watches/                The generated originals served as product images
 ```
@@ -144,18 +142,10 @@ public/
 - Orders, accounts, cart, wishlist and the admin-edited catalogue persist in
   `localStorage` under `watchguru-pk:*` keys — clear via DevTools (Application →
   Local Storage) or the admin “Reset catalogue” button.
-- Product imagery is 100% original — every image is generated artwork authored by
-  `scripts/generate-watch-art.cjs` from each product's own spec (case material, dial,
-  strap, complication) and saved to `public/watches/<slug>.svg`. No stock photos, no
-  third-party brand logos. Re-run the generator after changing the catalogue:
-
-  ```cmd
-  node scripts/generate-watch-art.cjs
-  node scripts/generate-hero-art.cjs
-  ```
-
-  The hero artwork (`public/heroes/*.svg`) is produced by the second script
-  from the same renderer, and `public/og.png` is the social share image.
+- Product imagery is 100% original — every image is generated artwork stored as
+  `public/watches/<slug>.svg`, per the product spec (case material, dial, strap,
+  complication). No stock photos, no third-party brand logos. Hero artwork lives in
+  `public/heroes/*.svg`, and `public/og.png` is the social share image.
 
 ---
 

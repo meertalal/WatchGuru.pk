@@ -22,11 +22,9 @@ export function priceBounds(source: Product[]): PriceBounds {
   return { min, max }
 }
 
-/** Highest-rated pieces — the "Premium Collection" edit. */
+/** The "Premium Collection" edit: the most valuable references first. */
 export function selectPremium(source: Product[], limit = 12): Product[] {
-  return [...source]
-    .sort((a, b) => b.rating - a.rating || b.reviewCount - a.reviewCount)
-    .slice(0, limit)
+  return [...source].sort((a, b) => b.price - a.price).slice(0, limit)
 }
 
 export function selectNewArrivals(source: Product[], limit = 12): Product[] {
@@ -67,7 +65,7 @@ export function relatedProducts(
       if (candidate.category === product.category) score += 1
       return { candidate, score }
     })
-    .sort((a, b) => b.score - a.score || b.candidate.rating - a.candidate.rating)
+    .sort((a, b) => b.score - a.score || a.candidate.name.localeCompare(b.candidate.name))
     .slice(0, limit)
     .map((entry) => entry.candidate)
 }

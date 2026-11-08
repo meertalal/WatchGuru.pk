@@ -22,7 +22,7 @@ export function QuantityStepper({
 }: QuantityStepperProps) {
   const clamp = (next: number) => Math.min(max, Math.max(min, next))
   const buttonSize = size === 'sm' ? 'size-8' : 'size-10'
-  const valueSize = size === 'sm' ? 'w-8 text-sm' : 'w-10 text-sm'
+  const valueSize = size === 'sm' ? 'w-8 text-[12px]' : 'w-10 text-[13px]'
 
   return (
     <div
@@ -38,12 +38,12 @@ export function QuantityStepper({
         aria-label={`Decrease ${label.toLowerCase()}`}
         className={classNames(
           buttonSize,
-          'flex items-center justify-center text-ash transition-colors hover:bg-lift disabled:opacity-40',
+          'flex items-center justify-center text-ash transition-colors hover:bg-lift hover:text-gold disabled:opacity-40',
         )}
       >
-        <Minus className="size-3.5" />
+        <Minus className="size-3.5" strokeWidth={1.4} />
       </button>
-      <span className={classNames(valueSize, 'text-center font-medium tabular-nums')}>
+      <span className={classNames(valueSize, 'text-center font-inter tabular-nums text-ivory')}>
         {value}
       </span>
       <button
@@ -53,10 +53,10 @@ export function QuantityStepper({
         aria-label={`Increase ${label.toLowerCase()}`}
         className={classNames(
           buttonSize,
-          'flex items-center justify-center text-ash transition-colors hover:bg-lift disabled:opacity-40',
+          'flex items-center justify-center text-ash transition-colors hover:bg-lift hover:text-gold disabled:opacity-40',
         )}
       >
-        <Plus className="size-3.5" />
+        <Plus className="size-3.5" strokeWidth={1.4} />
       </button>
     </div>
   )

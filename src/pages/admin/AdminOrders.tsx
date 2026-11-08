@@ -28,8 +28,8 @@ export function AdminOrders() {
   const [expanded, setExpanded] = useState<string | null>(null)
 
   useDocumentMeta({
-    title: 'Admin — Orders',
-    description: 'WatchGuru.pk order manager — confirm, ship and track every order.',
+    title: 'Admin | Orders',
+    description: 'WatchGuru.pk order manager. Confirm, ship and track every order.',
   })
 
   const filtered = useMemo(() => {
@@ -57,8 +57,8 @@ export function AdminOrders() {
     <div className="mx-auto max-w-6xl p-5 sm:p-8">
       <header>
         <p className="eyebrow text-gold">Fulfilment</p>
-        <h1 className="mt-1 text-2xl sm:text-3xl">Orders</h1>
-        <p className="mt-1 text-sm text-ash">
+        <h1 className="mt-1 font-cormorant text-2xl text-ivory sm:text-3xl">Orders</h1>
+        <p className="mt-1 text-[12.5px] font-light leading-relaxed text-ash">
           Confirm advances, advance statuses and keep customers in the loop. Every change is
           recorded in the order’s history.
         </p>
@@ -78,10 +78,10 @@ export function AdminOrders() {
                 aria-selected={active}
                 onClick={() => setTab(value)}
                 className={classNames(
-                  'border px-3 py-1.5 font-montserrat text-[10px] font-medium tracking-[0.14em] uppercase transition-colors',
+                  'border px-3 py-1.5 font-akkurat text-[10px] font-medium tracking-[0.14em] uppercase transition-colors',
                   active
-                    ? 'border-gold bg-charcoal text-ivory'
-                    : 'border-line text-ash hover:border-gold hover:text-white',
+                    ? 'border-gold/70 bg-charcoal text-ivory'
+                    : 'border-line text-ash hover:border-gold/50 hover:text-ivory',
                 )}
               >
                 {label} <span className="opacity-60">({count})</span>
@@ -90,13 +90,13 @@ export function AdminOrders() {
           })}
         </div>
         <label className="flex items-center gap-2 border border-line bg-charcoal px-3 py-2.5 lg:w-72">
-          <Search className="size-4 text-ash" aria-hidden="true" />
+          <Search className="size-4 text-muted" strokeWidth={1.4} aria-hidden="true" />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search number, name or email…"
             aria-label="Search orders"
-            className="w-full bg-transparent text-sm outline-none placeholder:text-ash"
+            className="w-full bg-transparent font-inter text-[12.5px] font-light text-ivory outline-none placeholder:text-muted"
           />
         </label>
       </div>
@@ -104,7 +104,7 @@ export function AdminOrders() {
       {/* Orders list */}
       <ul className="mt-6 flex flex-col gap-4">
         {filtered.length === 0 && (
-          <li className="border border-dashed border-line bg-charcoal/60 px-6 py-12 text-center text-sm text-ash">
+          <li className="bg-coal/60 px-6 py-12 text-center text-[12.5px] font-light text-ash">
             No orders match that filter.
           </li>
         )}
@@ -112,7 +112,7 @@ export function AdminOrders() {
         {filtered.map((order) => {
           const isOpen = expanded === order.orderNumber
           return (
-            <li key={order.orderNumber} className="border border-line bg-charcoal">
+            <li key={order.orderNumber} className="bg-charcoal">
               <button
                 type="button"
                 onClick={() => setExpanded(isOpen ? null : order.orderNumber)}
@@ -120,28 +120,29 @@ export function AdminOrders() {
                 className="flex w-full flex-wrap items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-lift"
               >
                 <div className="min-w-0">
-                  <p className="font-inter font-medium text-white">{order.orderNumber}</p>
-                  <p className="mt-0.5 text-[11px] text-ash">
-                    {formatDate(order.placedAt)} · {order.customerName} ·{' '}
+                  <p className="font-inter text-[13px] font-normal text-ivory">{order.orderNumber}</p>
+                  <p className="mt-0.5 text-[10.5px] text-muted">
+                    {formatDate(order.placedAt)}, {order.customerName},{' '}
                     {PAYMENT_METHOD_LABEL[order.paymentMethod]}
                   </p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <p className="text-sm text-white">{formatPriceExact(order.total)}</p>
+                  <p className="font-inter text-[13px] font-normal text-ivory">{formatPriceExact(order.total)}</p>
                   <span
-                    className="hidden rounded-full bg-coal px-3 py-1 text-[9px] font-semibold tracking-[0.18em] text-ash uppercase sm:inline-block"
+                    className="hidden rounded-full bg-coal px-3 py-1 font-akkurat text-[8.5px] font-medium tracking-[0.18em] text-ash uppercase sm:inline-block"
                   >
                     {ORDER_STATUS_LABEL[order.status]}
                   </span>
                   <ChevronDown
-                    className={classNames('size-4 text-ash transition-transform', isOpen && 'rotate-180')}
+                    className={classNames('size-4 text-muted transition-transform', isOpen && 'rotate-180')}
+                    strokeWidth={1.4}
                     aria-hidden="true"
                   />
                 </div>
               </button>
 
               {isOpen && (
-                <div className="border-t border-line px-5 py-5">
+                <div className="px-5 py-5">
                   <div className="grid gap-6 lg:grid-cols-5">
                     {/* Items + address */}
                     <div className="lg:col-span-3">
@@ -155,25 +156,25 @@ export function AdminOrders() {
                               className="size-14 shrink-0"
                             />
                             <div className="min-w-0">
-                              <p className="eyebrow text-[9px] text-ash">{line.brand}</p>
-                              <p className="truncate text-sm text-white">{line.name}</p>
-                              <p className="text-[11px] text-ash">
-                                Qty {line.quantity} · {formatPriceExact(line.price * line.quantity)}
+                              <p className="eyebrow text-[9px] text-gold">{line.brand}</p>
+                              <p className="truncate font-cormorant text-base text-ivory">{line.name}</p>
+                              <p className="text-[10.5px] text-muted">
+                                Qty {line.quantity}, {formatPriceExact(line.price * line.quantity)}
                               </p>
                             </div>
                           </li>
                         ))}
                       </ul>
-                      <address className="mt-4 border-t border-line pt-4 text-[12px] leading-relaxed text-ash not-italic">
-                        <strong className="text-white">{order.shipping.firstName} {order.shipping.lastName}</strong>
+                      <address className="mt-4 pt-4 text-[11.5px] font-light leading-relaxed text-ash not-italic">
+                        <strong className="font-normal text-ivory">{order.shipping.firstName} {order.shipping.lastName}</strong>
                         <br />
                         {order.shipping.address}
                         {order.shipping.apartment ? `, ${order.shipping.apartment}` : ''}
                         <br />
-                        {order.shipping.city}, {order.shipping.state} {order.shipping.postalCode} ·{' '}
+                        {order.shipping.city}, {order.shipping.state} {order.shipping.postalCode}, {' '}
                         {order.shipping.country}
                         <br />
-                        {order.shipping.phone} · {order.email}
+                        {order.shipping.phone}, {order.email}
                       </address>
 
                       <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -188,7 +189,7 @@ export function AdminOrders() {
                             updateStatus(order.orderNumber, next)
                             notify(`${order.orderNumber} marked ${ORDER_STATUS_LABEL[next].toLowerCase()}.`)
                           }}
-                          className="border border-line bg-charcoal px-3 py-2 text-[11px] text-white outline-none focus:border-gold"
+                          className="border border-line bg-charcoal px-3 py-2 font-inter text-[11px] text-ivory outline-none focus:border-gold"
                         >
                           {SELECTABLE_STATUSES.map((status) => (
                             <option key={status} value={status}>

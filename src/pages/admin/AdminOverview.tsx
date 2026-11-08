@@ -20,8 +20,8 @@ export function AdminOverview() {
   const { orders, updateStatus } = useOrders()
 
   useDocumentMeta({
-    title: 'Admin — Overview',
-    description: 'WatchGuru.pk store admin — orders, revenue and catalogue health at a glance.',
+    title: 'Admin | Overview',
+    description: 'WatchGuru.pk store admin. Orders, revenue and catalogue health at a glance.',
   })
 
   const activeOrders = orders.filter((o) => o.status !== 'cancelled')
@@ -46,11 +46,11 @@ export function AdminOverview() {
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow text-gold">Dashboard</p>
-          <h1 className="mt-1 text-2xl sm:text-3xl">Store overview</h1>
+          <h1 className="mt-1 font-cormorant text-2xl text-ivory sm:text-3xl">Store overview</h1>
         </div>
         <Link
           to="/admin/products"
-          className="border px-5 py-3 font-montserrat text-[10px] font-medium tracking-[0.2em] uppercase transition-colors bg-gold-bright text-obsidian border-gold-bright hover:bg-gold hover:border-gold"
+          className="border border-button bg-button px-5 py-3 font-akkurat text-[10px] font-medium tracking-[0.2em] text-button-text uppercase transition-colors hover:border-gold-bright hover:bg-gold-bright"
         >
           Manage products
         </Link>
@@ -59,12 +59,12 @@ export function AdminOverview() {
       {/* Stats */}
       <ul className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
         {stats.map(({ label, value, icon: Icon, accent }) => (
-          <li key={label} className="border border-line bg-charcoal p-4 sm:p-5">
-            <Icon className={classNames('size-5', accent ? 'text-gold' : 'text-ash')} strokeWidth={1.6} aria-hidden="true" />
-            <p className="mt-3 font-inter font-medium text-lg leading-tight text-white sm:text-xl">
+          <li key={label} className="bg-charcoal p-4 sm:p-5">
+            <Icon className={classNames('size-5', accent ? 'text-gold' : 'text-muted')} strokeWidth={1.4} aria-hidden="true" />
+            <p className="mt-3 font-inter text-lg font-normal leading-tight text-ivory sm:text-xl">
               {value}
             </p>
-            <p className="mt-1 text-[10px] leading-snug tracking-wide text-ash uppercase">
+            <p className="mt-1 font-akkurat text-[9px] leading-snug tracking-[0.16em] text-muted uppercase">
               {label}
             </p>
           </li>
@@ -73,23 +73,23 @@ export function AdminOverview() {
 
       <div className="mt-6 grid gap-6 xl:grid-cols-5">
         {/* Recent orders */}
-        <section className="border border-line bg-charcoal xl:col-span-3" aria-labelledby="recent-orders">
-          <div className="flex items-center justify-between border-b border-line px-5 py-4">
-            <h2 id="recent-orders" className="text-base font-medium">Recent orders</h2>
+        <section className="bg-charcoal xl:col-span-3" aria-labelledby="recent-orders">
+          <div className="flex items-center justify-between px-5 py-4">
+            <h2 id="recent-orders" className="font-cormorant text-xl text-ivory">Recent orders</h2>
             <Link to="/admin/orders" className="text-[10px] font-medium tracking-[0.2em] text-gold uppercase hover:opacity-75">
-              View all →
+              View all
             </Link>
           </div>
-          <ul className="divide-y divide-line">
+          <ul>
             {recentOrders.length === 0 && (
               <li className="px-5 py-8 text-center text-sm text-ash">No orders yet.</li>
             )}
             {recentOrders.map((order) => (
               <li key={order.orderNumber} className="flex flex-wrap items-center justify-between gap-3 px-5 py-4">
                 <div className="min-w-0">
-                  <p className="font-inter font-medium text-sm text-white">{order.orderNumber}</p>
-                  <p className="mt-0.5 text-[11px] text-ash">
-                    {formatDate(order.placedAt)} · {order.customerName} · {formatPriceExact(order.total)}
+                  <p className="font-inter text-[13px] font-normal text-ivory">{order.orderNumber}</p>
+                  <p className="mt-0.5 text-[10.5px] text-muted">
+                    {formatDate(order.placedAt)}, {order.customerName}, {formatPriceExact(order.total)}
                   </p>
                 </div>
                 <label className="flex items-center gap-2">
@@ -97,7 +97,7 @@ export function AdminOverview() {
                   <select
                     value={order.status}
                     onChange={(e) => updateStatus(order.orderNumber, e.target.value as OrderStatus)}
-                    className="border border-line bg-charcoal px-2 py-1.5 text-[11px] text-white outline-none focus:border-gold"
+                    className="border border-line bg-charcoal px-2 py-1.5 font-inter text-[11px] text-ivory outline-none focus:border-gold"
                   >
                     {SELECTABLE_STATUSES.map((status) => (
                       <option key={status} value={status}>
@@ -112,12 +112,12 @@ export function AdminOverview() {
         </section>
 
         {/* Stock alerts */}
-        <section className="border border-line bg-charcoal xl:col-span-2" aria-labelledby="stock-alerts">
-          <div className="flex items-center justify-between border-b border-line px-5 py-4">
-            <h2 id="stock-alerts" className="text-base font-medium">Stock alerts</h2>
-            <Wallet className="size-4 text-ash" aria-hidden="true" />
+        <section className="bg-charcoal xl:col-span-2" aria-labelledby="stock-alerts">
+          <div className="flex items-center justify-between px-5 py-4">
+            <h2 id="stock-alerts" className="font-cormorant text-xl text-ivory">Stock alerts</h2>
+            <Wallet className="size-4 text-muted" strokeWidth={1.4} aria-hidden="true" />
           </div>
-          <ul className="divide-y divide-line">
+          <ul>
             {lowStock.length === 0 && soldOut.length === 0 && (
               <li className="px-5 py-8 text-center text-sm text-ash">
                 Everything is comfortably stocked.
@@ -128,8 +128,8 @@ export function AdminOverview() {
               .map((p) => (
                 <li key={p.id} className="flex items-center justify-between gap-3 px-5 py-3">
                   <div className="min-w-0">
-                    <p className="truncate text-sm text-white">{p.name}</p>
-                    <p className="text-[11px] text-ash">{p.brand}</p>
+                    <p className="truncate text-[12.5px] text-ivory">{p.name}</p>
+                    <p className="text-[10.5px] text-muted">{p.brand}</p>
                   </div>
                   <span
                     className={classNames(
@@ -142,10 +142,10 @@ export function AdminOverview() {
                 </li>
               ))}
           </ul>
-          <div className="border-t border-line px-5 py-4">
-            <Link to="/admin/products" className="flex items-center gap-2 text-[10px] font-medium tracking-[0.2em] text-white uppercase hover:text-gold">
-              <Package className="size-4" aria-hidden="true" />
-              Restock &amp; edit catalogue →
+          <div className="px-5 py-4">
+            <Link to="/admin/products" className="flex items-center gap-2 font-akkurat text-[9px] font-medium tracking-[0.2em] text-ivory uppercase hover:text-gold">
+              <Package className="size-4" strokeWidth={1.4} aria-hidden="true" />
+              Restock &amp; edit catalogue
             </Link>
           </div>
         </section>
@@ -153,7 +153,7 @@ export function AdminOverview() {
 
       <p className="mt-6 flex items-center gap-2 text-[11px] text-ash">
         <span className="inline-block size-2 rounded-full bg-gold" aria-hidden="true" />
-        Live view — every change here is stored on this device (demo fulfilment; no courier is booked).
+        Live view. Every change here is stored on this device (demo fulfilment; no courier is booked).
       </p>
     </div>
   )

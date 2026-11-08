@@ -45,7 +45,26 @@ export class LocalStorageProductRepository implements ProductRepository {
       return clone(this.seed)
     }
     if (!Array.isArray(stored)) return clone(this.seed)
-    return stored
+
+    // Seamlessly upgrade any stored products that had older SVG single image
+    const upgraded = stored.map((item) => {
+      const match = this.seed.find((s) => s.id === item.id)
+      if (
+        match &&
+        (item.images.some((img) => img.endsWith('.svg')) ||
+          item.images.length === 1 ||
+          !item.variants ||
+          item.variants.length === 0)
+      ) {
+        return {
+          ...item,
+          images: match.images,
+          variants: match.variants,
+        }
+      }
+      return item
+    })
+    return upgraded
   }
 
   getById(id: string): Product | undefined {

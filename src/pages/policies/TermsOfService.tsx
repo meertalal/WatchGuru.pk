@@ -5,13 +5,13 @@ export function TermsOfService() {
   useDocumentMeta({
     title: 'Terms of Service',
     description:
-      'The terms governing WatchGuru.pk — authenticity guarantee, orders and confirmation, COD advance, warranty exclusions and governing law.',
+      'The terms governing WatchGuru.pk: authenticity guarantee, orders and confirmation, COD advance, warranty exclusions and governing law.',
   })
 
   return (
     <PolicyLayout
       title="Terms of Service"
-      description="The fine print, written plainly — what we promise you, and what we ask of you."
+      description="The fine print, written plainly. What we promise you, and what we ask of you."
       lastUpdated="4 November 2026"
     >
       <PolicySection title="1. About this store">
@@ -29,7 +29,7 @@ export function TermsOfService() {
           Every watch we sell is 100% original, sourced through authorised distributors or
           direct from maisons, and verified in-house before dispatch. Each piece ships with its
           papers, warranty card, seals and packaging intact. If a watch we sell is ever found to
-          be non-genuine, we will refund double your purchase price — unconditionally.
+          be non-genuine, we will refund double your purchase price, unconditionally.
         </p>
         <p>
           Maison names and logos are trademarks of their respective owners. WatchGuru.pk is an
@@ -48,7 +48,7 @@ export function TermsOfService() {
         <p>
           Order numbers are issued instantly at checkout and are valid for 48 hours unconfirmed.
           Prices are listed in Pakistani rupees, include all duties and taxes, and may change
-          without notice — the price confirmed on the call is the price you pay.
+          without notice. The price confirmed on the call is the price you pay.
         </p>
       </PolicySection>
 
@@ -80,7 +80,7 @@ export function TermsOfService() {
 
       <PolicySection title="7. Website use">
         <p>
-          Content on this site — photography, copy, guides and the WatchGuru Atelier identity —
+          Content on this site, including photography, copy, guides and the WatchGuru Atelier identity,
           is owned by WatchGuru. You may not scrape, reproduce or resell any of it. Product
           imagery is illustrative; minor cosmetic variance between the photograph and the
           finished piece is a characteristic of hand-assembly, not a defect.
@@ -100,7 +100,7 @@ export function TermsOfService() {
       <PolicySection title="9. Contact">
         <p>
           Questions about these terms? Email legal@watchguru.pk or WhatsApp +92 322 2242389,
-          9am–9pm PKT. Continued use of the site after changes take effect constitutes
+          9am to 9pm PKT. Continued use of the site after changes take effect constitutes
           acceptance.
         </p>
       </PolicySection>

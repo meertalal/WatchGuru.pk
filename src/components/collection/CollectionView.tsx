@@ -88,7 +88,7 @@ export function CollectionView({
     if (filters.min !== defaults.min || filters.max !== defaults.max)
       list.push({
         key: 'price',
-        label: `${formatPrice(filters.min)} – ${formatPrice(filters.max)}`,
+        label: `${formatPrice(filters.min)} to ${formatPrice(filters.max)}`,
         clear: () => setPriceRange(defaults.min, defaults.max),
       })
     const groups: { key: ArrayFilterKey; values: string[]; param: string }[] = [
@@ -135,30 +135,30 @@ export function CollectionView({
 
           {/* Results */}
           <div>
-            <div className="flex flex-col gap-4 border-b border-line pb-5 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm text-ash">
-                <span className="text-white">{result.length}</span>{' '}
+            <div className="flex flex-col gap-4 pb-5 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-[12px] font-light text-ash">
+                <span className="text-ivory">{result.length}</span>{' '}
                 {result.length === 1 ? 'watch' : 'watches'}
-                {activeCount > 0 && <span className="text-ash"> · {activeCount} filters</span>}
+                {activeCount > 0 && <span className="text-muted"> ({activeCount} filters)</span>}
               </p>
 
               <div className="flex items-center gap-3">
                 <button
                   type="button"
                   onClick={() => setDrawerOpen(true)}
-                  className="flex items-center gap-2 border border-line px-4 py-2.5 font-montserrat text-[11px] font-medium tracking-[0.18em] uppercase transition-colors hover:border-gold lg:hidden"
+                  className="flex items-center gap-2 border border-line px-4 py-2.5 font-akkurat text-[9px] font-medium tracking-[0.2em] uppercase transition-colors hover:border-gold hover:text-gold lg:hidden"
                 >
-                  <SlidersHorizontal className="size-4" />
+                  <SlidersHorizontal className="size-4" strokeWidth={1.4} />
                   Filters{activeCount > 0 ? ` (${activeCount})` : ''}
                 </button>
 
-                <label className="flex items-center gap-2 font-montserrat text-[11px] tracking-[0.18em] text-ash uppercase">
-                  <Filter className="size-3.5" />
+                <label className="flex items-center gap-2 font-akkurat text-[9px] tracking-[0.2em] text-muted uppercase">
+                  <Filter className="size-3.5" strokeWidth={1.4} />
                   <span className="sr-only sm:not-sr-only">Sort</span>
                   <select
                     value={filters.sort}
                     onChange={(e) => setSort(e.target.value as SortValue)}
-                    className="border border-line bg-charcoal px-3 py-2.5 text-[11px] tracking-[0.12em] text-white uppercase outline-none transition-colors hover:border-gold focus:border-gold"
+                    className="border border-line bg-charcoal px-3 py-2.5 font-akkurat text-[9px] tracking-[0.14em] text-ivory uppercase outline-none transition-colors hover:border-gold focus:border-gold"
                   >
                     {SORT_OPTIONS.map((option) => (
                       <option key={option.value} value={option.value}>
@@ -177,16 +177,16 @@ export function CollectionView({
                     key={chip.key}
                     type="button"
                     onClick={chip.clear}
-                    className="group flex items-center gap-2 border border-line bg-charcoal px-3 py-1.5 text-[11px] tracking-wide text-ash transition-colors hover:border-gold hover:text-white"
+                    className="group flex items-center gap-2 border border-line bg-charcoal px-3 py-1.5 font-inter text-[10.5px] font-light tracking-wide text-ash transition-colors hover:border-gold/60 hover:text-ivory"
                   >
                     <span className="capitalize">{chip.label}</span>
-                    <X className="size-3 text-ash transition-colors group-hover:text-white" />
+                    <X className="size-3 text-muted transition-colors group-hover:text-gold" strokeWidth={1.5} />
                   </button>
                 ))}
                 <button
                   type="button"
                   onClick={clearAll}
-                  className="px-2 font-montserrat text-[11px] tracking-[0.16em] text-gold uppercase transition-opacity hover:opacity-70"
+                  className="px-2 font-akkurat text-[9px] tracking-[0.2em] text-gold uppercase transition-opacity hover:opacity-70"
                 >
                   Clear all
                 </button>

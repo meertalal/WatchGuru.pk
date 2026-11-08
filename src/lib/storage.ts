@@ -62,6 +62,6 @@ export function removeKey(storage: StorageLike | null, key: string): void {
   try {
     storage.removeItem(key)
   } catch {
-    /* storage unavailable — nothing to remove */
+    /* storage unavailable, nothing to remove */
   }
 }

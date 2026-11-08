@@ -8,10 +8,9 @@ export const USD_TO_PKR = 276.5278
 const toPkr = (value: number): number => Math.round(value * USD_TO_PKR)
 
 /**
- * Product imagery is 100% original - generated artwork authored by
- * `scripts/generate-watch-art.cjs` from each product's own spec, saved to
+ * Product imagery is 100% original - generated artwork authored
+ * from each product's own spec, saved to
  * `public/watches/<slug>.svg`. No stock photography, no third-party brands.
- * Re-run the generator after editing the catalogue spec fields.
  */
 
 export interface BrandInfo {
@@ -83,7 +82,7 @@ export const BRANDS: BrandInfo[] = [
     tagline: 'Our own maison',
     country: 'Switzerland',
     blurb:
-      'WatchGuru--------s in-house label  -  Swiss assemblage, sapphire crystals and an atelier-backed five-year warranty.',
+      'Our in-house label  -  Swiss assemblage, sapphire crystals and an atelier-backed one-year machine warranty.',
     own: true,
   },
 ]
@@ -146,8 +145,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Heritage Classic 38',
     brand: 'Meridian',
     price: 4850,
-    rating: 4.8,
-    reviewCount: 214,
     description:
       'The Heritage Classic 38 distils more than a century of Swiss watchmaking into a restrained three-hand dress watch. Its ivory lacquer dial is applied by hand, and the in-house automatic calibre is finished with Côtes de Genève visible through the sapphire case back.',
     highlights: [
@@ -182,10 +179,8 @@ const rawProducts: Omit<Product, 'images'>[] = [
     brand: 'Meridian',
     price: 6200,
     compareAtPrice: 7400,
-    rating: 4.9,
-    reviewCount: 168,
     description:
-      'A column-wheel chronograph with an unmistakable architectural dial. Two tone-on-tone sub-dials and a tachymeter scale frame a movement that beats at 28,800 vibrations per hour — measured, precise, and quietly confident.',
+      'A column-wheel chronograph with an unmistakable architectural dial. Two tone-on-tone sub-dials and a tachymeter scale frame a movement that beats at 28,800 vibrations per hour. Measured, precise and quietly confident.',
     highlights: [
       'Column-wheel chronograph movement',
       'Tone-on-tone tri-compax dial',
@@ -217,8 +212,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Marina Diver 300',
     brand: 'Meridian',
     price: 3950,
-    rating: 4.7,
-    reviewCount: 302,
     description:
       'Engineered for the deep and refined for the desk. A 300-metre diver with a ceramic bezel, screw-down crown and a lumed dial that stays legible in the murkiest water.',
     highlights: [
@@ -251,8 +244,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Sovereign Moonphase',
     brand: 'Beaumont',
     price: 12400,
-    rating: 4.9,
-    reviewCount: 96,
     description:
       'A moonphase complication rendered in enamel and gold. The Sovereign pairs an astronomical display with a hand-guilloché dial, a quietly extraordinary piece for those who read the sky as well as the time.',
     highlights: [
@@ -286,10 +277,8 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Aurelia Rosé 34',
     brand: 'Beaumont',
     price: 8900,
-    rating: 4.8,
-    reviewCount: 142,
     description:
-      'Feminine, luminous and precise. The Aurelia Rosé pairs a mother-of-pearl dial with a rose gold case and a slender leather strap — a watch designed to be worn close and noticed quietly.',
+      'Feminine, luminous and precise. The Aurelia Rosé pairs a mother-of-pearl dial with a rose gold case and a slender leather strap. A watch designed to be worn close and noticed quietly.',
     highlights: [
       'Natural mother-of-pearl dial',
       'Slim 8.4mm rose gold case',
@@ -321,8 +310,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Regent Chronograph',
     brand: 'Beaumont',
     price: 7650,
-    rating: 4.6,
-    reviewCount: 118,
     description:
       'An English sporting chronograph with a warm champagne dial and vintage-inspired proportions. Understated hardware, an oversized crown, and a case profile that slips beneath a cuff.',
     highlights: [
@@ -355,8 +342,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Celestia Diamond 32',
     brand: 'Aurelian',
     price: 11200,
-    rating: 4.9,
-    reviewCount: 74,
     description:
       'The Celestia sets sixty brilliant-cut diamonds into a snow-set bezel that catches every flicker of light. Beneath it, a silvered dial and a whisper-thin automatic movement keep time with equal grace.',
     highlights: [
@@ -390,8 +375,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Nocturne Skeleton',
     brand: 'Aurelian',
     price: 9750,
-    rating: 4.7,
-    reviewCount: 88,
     description:
       'Every bridge is chamfered by hand and every wheel left exposed. The Nocturne is an open-worked automatic that turns a movement into architecture, presented behind sapphire on both sides.',
     highlights: [
@@ -425,8 +408,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     brand: 'Aurelian',
     price: 5400,
     compareAtPrice: 6100,
-    rating: 4.6,
-    reviewCount: 156,
     description:
       'A traveller’s companion with a second time zone and a 24-hour chapter ring in sapphire blue. The jumping local hour makes resetting the time across borders effortless.',
     highlights: [
@@ -460,8 +441,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Aeris Aviator',
     brand: 'Halcyon',
     price: 3200,
-    rating: 4.5,
-    reviewCount: 201,
     description:
       'A cockpit instrument reimagined for the wrist. High-contrast Arabic numerals, an oversize onion crown and an anti-magnetic movement keep the Aeris legible and reliable at altitude.',
     highlights: [
@@ -494,8 +473,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Lumen Slim Dress',
     brand: 'Halcyon',
     price: 2890,
-    rating: 4.6,
-    reviewCount: 133,
     description:
       'A slim, Bauhaus-inspired dress watch with a matte midnight dial and a single, perfect date window. At 8.2mm it disappears under a shirt cuff and reappears only when you need it.',
     highlights: [
@@ -528,8 +505,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Tide Diver GMT',
     brand: 'Halcyon',
     price: 4100,
-    rating: 4.7,
-    reviewCount: 177,
     description:
       'A dive watch that also keeps a second time zone. The ceramic bezel and 300-metre rating handle the water; the GMT hand handles the itinerary.',
     highlights: [
@@ -563,8 +538,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     brand: 'Nordvik',
     price: 2650,
     compareAtPrice: 3100,
-    rating: 4.5,
-    reviewCount: 244,
     description:
       'Built for cold water and long days. The Fjord pairs a brushed steel case with a glacier dial and a rubber strap engineered to stay supple in sub-zero conditions.',
     highlights: [
@@ -598,8 +571,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Glacier Sport Chrono',
     brand: 'Nordvik',
     price: 3480,
-    rating: 4.4,
-    reviewCount: 129,
     description:
       'A quartz-accurate sports chronograph with a high-contrast panda dial and a tachymeter scale. Rugged, readable, and ready for the weekend.',
     highlights: [
@@ -632,8 +603,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Aurora Automatic 39',
     brand: 'Nordvik',
     price: 1980,
-    rating: 4.6,
-    reviewCount: 268,
     description:
       'An entry into mechanical watchmaking that compromises nothing on finish. A green sunray dial, applied numerals, and a reliable automatic movement at an honest price.',
     highlights: [
@@ -667,10 +636,8 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Parisian Rosé 30',
     brand: 'Delacroix',
     price: 6750,
-    rating: 4.8,
-    reviewCount: 101,
     description:
-      'A jewel of a watch from the Paris atelier. The Parisian Rosé fits a rose-gold case, a guilloché dial and a cabochon crown onto a 30mm canvas — pure, precise, and unmistakably French.',
+      'A jewel of a watch from the Paris atelier. The Parisian Rosé fits a rose-gold case, a guilloché dial and a cabochon crown onto a 30mm canvas. Pure, precise and unmistakably French.',
     highlights: [
       'Guilloché rose-gold dial',
       'Cabochon-set crown',
@@ -702,8 +669,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Grand Complication',
     brand: 'Delacroix',
     price: 27500,
-    rating: 5,
-    reviewCount: 41,
     description:
       'The atelier’s masterwork: a perpetual calendar, minute repeater and tourbillon united in a single movement, cased in platinum and limited to twenty-five pieces worldwide. A collector’s horological statement.',
     highlights: [
@@ -742,8 +707,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Étoile Diamond',
     brand: 'Delacroix',
     price: 14300,
-    rating: 4.9,
-    reviewCount: 63,
     description:
       'A constellation set in diamonds around a deep midnight dial. The Étoile scatters brilliant-cut stones across the bezel and lugs, mirroring a clear winter sky.',
     highlights: [
@@ -777,8 +740,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Ivory Dress 36',
     brand: 'Meridian',
     price: 3600,
-    rating: 4.6,
-    reviewCount: 152,
     description:
       'A softly rounded dress watch with an ivory lacquer dial and a warm gold-tone case. The Ivory Dress 36 is the quiet answer to everyday elegance.',
     highlights: [
@@ -811,8 +772,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'Monarch Perpetual',
     brand: 'Beaumont',
     price: 18900,
-    rating: 4.9,
-    reviewCount: 52,
     description:
       'A perpetual calendar that will not need a correction until the year 2100. The Monarch displays day, date, month and moonphase with English restraint and Swiss precision.',
     highlights: [
@@ -853,8 +812,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     brand: 'WatchGuru Atelier',
     price: 2450,
     compareAtPrice: 2900,
-    rating: 4.9,
-    reviewCount: 38,
     description:
       'The first piece from our own maison. The WG-01 pairs a hand-grained silver sunray dial with the in-house WG-2101 automatic calibre, finished with perlage and assembled in Geneva. Every case back is individually engraved with its edition number.',
     highlights: [
@@ -876,7 +833,13 @@ const rawProducts: Omit<Product, 'images'>[] = [
       { label: 'Crystal', value: 'Box sapphire, anti-reflective underside' },
       { label: 'Water Resistance', value: '50m / 5 ATM' },
       { label: 'Strap', value: 'Caramel calf leather, quick-release' },
-      { label: 'Warranty', value: '5-year WatchGuru Atelier warranty' },
+      { label: 'Warranty', value: '1-year WatchGuru Atelier warranty' },
+    ],
+    variants: [
+      { id: 'wg-001-silver', name: 'Classic Silver', swatch: '#cfc9c0', price: 2450 },
+      { id: 'wg-001-champagne', name: 'Champagne Gold', swatch: '#d8bb8a', price: 2450 },
+      { id: 'wg-001-slate', name: 'Slate Black', swatch: '#33343a', price: 2450 },
+      { id: 'wg-001-rose', name: 'Rose Gold', swatch: '#c9948a', price: 2450 },
     ],
     badge: 'new',
     inStock: true,
@@ -889,8 +852,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     name: 'WG-02 Chronosport 42',
     brand: 'WatchGuru Atelier',
     price: 3150,
-    rating: 4.8,
-    reviewCount: 27,
     description:
       'Our sports chronograph, built around a column-wheel WG-440 calibre with a vertical clutch. The matte ceramic bezel, waffle-style pushers and tachymeter scale make it the sharpest tool we have ever cased.',
     highlights: [
@@ -912,7 +873,12 @@ const rawProducts: Omit<Product, 'images'>[] = [
       { label: 'Crystal', value: 'Sapphire, double anti-reflective coating' },
       { label: 'Water Resistance', value: '100m / 10 ATM' },
       { label: 'Strap', value: 'Brushed steel bracelet, tool-free micro-adjust' },
-      { label: 'Warranty', value: '5-year WatchGuru Atelier warranty' },
+      { label: 'Warranty', value: '1-year WatchGuru Atelier warranty' },
+    ],
+    variants: [
+      { id: 'wg-002-matte', name: 'Matte Black', swatch: '#2b2c2f', price: 3150 },
+      { id: 'wg-002-steel', name: 'Classic Silver', swatch: '#c9c7c2', price: 3150 },
+      { id: 'wg-002-champagne', name: 'Champagne Gold', swatch: '#d8bb8a', price: 3150 },
     ],
     badge: 'bestseller',
     inStock: true,
@@ -926,8 +892,6 @@ const rawProducts: Omit<Product, 'images'>[] = [
     brand: 'WatchGuru Atelier',
     price: 1890,
     compareAtPrice: 2250,
-    rating: 4.9,
-    reviewCount: 44,
     description:
       'A dress watch for her, in our own atelier. The WG-03 sets a mother-of-pearl dial beneath slender dauphine hands, carried on a Milanese mesh bracelet woven in Italy. Quietly radiant, every single day.',
     highlights: [
@@ -949,7 +913,12 @@ const rawProducts: Omit<Product, 'images'>[] = [
       { label: 'Crystal', value: 'Double-domed sapphire' },
       { label: 'Water Resistance', value: '30m / 3 ATM' },
       { label: 'Strap', value: 'Italian Milanese mesh, adjustable clasp' },
-      { label: 'Warranty', value: '5-year WatchGuru Atelier warranty' },
+      { label: 'Warranty', value: '1-year WatchGuru Atelier warranty' },
+    ],
+    variants: [
+      { id: 'wg-003-silver', name: 'Classic Silver', swatch: '#d5d2cc', price: 1890 },
+      { id: 'wg-003-rose', name: 'Rose Gold', swatch: '#c9948a', price: 1890 },
+      { id: 'wg-003-pearl', name: 'Mother of Pearl', swatch: '#eadfd4', price: 1890 },
     ],
     badge: 'sale',
     inStock: true,
@@ -958,20 +927,215 @@ const rawProducts: Omit<Product, 'images'>[] = [
   },
 ]
 
+export const VARIANT_FINISH_IMAGES: Record<string, string> = {
+  matte: 'https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80',
+  black: 'https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80',
+  silver: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80',
+  steel: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80',
+  champagne: 'https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80',
+  gold: 'https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80',
+  rose: 'https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80',
+  pearl: 'https://images.unsplash.com/photo-1513094735237-8f2714d57c13?auto=format&fit=crop&w=1200&q=80',
+}
+
+export const WATCH_IMAGES: Record<string, string[]> = {
+  'meridian-heritage-classic-38': [
+    'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1518131672697-613becd4fab5?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'meridian-chronomaster-automatic': [
+    'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'meridian-marina-diver-300': [
+    'https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1547996160-71dfabbce5fa?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'meridian-ivory-dress-36': [
+    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'beaumont-monarch-perpetual': [
+    'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'beaumont-regent-chronograph': [
+    'https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'beaumont-sovereign-moonphase': [
+    'https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'beaumont-aurelia-rose-34': [
+    'https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1513094735237-8f2714d57c13?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'aurelian-celestia-diamond-32': [
+    'https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1513094735237-8f2714d57c13?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'aurelian-nocturne-skeleton': [
+    'https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1622434641406-a158123450f9?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1518131672697-613becd4fab5?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'aurelian-solstice-gmt': [
+    'https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'halcyon-aeris-aviator': [
+    'https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'halcyon-lumen-slim-dress': [
+    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'halcyon-tide-diver-gmt': [
+    'https://images.unsplash.com/photo-1547996160-71dfabbce5fa?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'nordvik-aurora-automatic-39': [
+    'https://images.unsplash.com/photo-1609587312208-cad544e31466?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'nordvik-fjord-diver-42': [
+    'https://images.unsplash.com/photo-1547996160-71dfabbce5fa?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'nordvik-glacier-sport-chrono': [
+    'https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'delacroix-grand-complication': [
+    'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'delacroix-etoile-diamond': [
+    'https://images.unsplash.com/photo-1513094735237-8f2714d57c13?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'delacroix-parisian-rose-30': [
+    'https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1513094735237-8f2714d57c13?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'watchguru-atelier-wg01-heritage-auto': [
+    'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1518131672697-613becd4fab5?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'watchguru-atelier-wg02-chronosport-42': [
+    'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1200&q=80',
+  ],
+  'watchguru-atelier-wg03-luna-34': [
+    'https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1200&q=80',
+    'https://images.unsplash.com/photo-1513094735237-8f2714d57c13?auto=format&fit=crop&w=1200&q=80',
+  ],
+}
+
+function resolveVariantImage(id: string, name: string, fallback: string): string {
+  const lower = `${id} ${name}`.toLowerCase()
+  if (lower.includes('black') || lower.includes('matte') || lower.includes('slate')) {
+    return VARIANT_FINISH_IMAGES.matte
+  }
+  if (lower.includes('gold') && lower.includes('rose')) {
+    return VARIANT_FINISH_IMAGES.rose
+  }
+  if (lower.includes('gold') || lower.includes('champagne')) {
+    return VARIANT_FINISH_IMAGES.champagne
+  }
+  if (lower.includes('silver') || lower.includes('steel') || lower.includes('white')) {
+    return VARIANT_FINISH_IMAGES.silver
+  }
+  if (lower.includes('pearl')) {
+    return VARIANT_FINISH_IMAGES.pearl
+  }
+  return fallback
+}
+
+function createDefaultVariants(product: Omit<Product, 'images'>) {
+  const p = product.price
+  return [
+    {
+      id: `${product.id}-silver`,
+      name: 'Classic Silver',
+      swatch: '#cfc9c0',
+      price: p,
+      image: VARIANT_FINISH_IMAGES.silver,
+    },
+    {
+      id: `${product.id}-champagne`,
+      name: 'Champagne Gold',
+      swatch: '#d8bb8a',
+      price: Math.round(p * 1.05),
+      image: VARIANT_FINISH_IMAGES.champagne,
+    },
+    {
+      id: `${product.id}-matte`,
+      name: 'Matte Black',
+      swatch: '#2b2c2f',
+      price: p,
+      image: VARIANT_FINISH_IMAGES.matte,
+    },
+    {
+      id: `${product.id}-rose`,
+      name: 'Rose Gold',
+      swatch: '#c9948a',
+      price: Math.round(p * 1.08),
+      image: VARIANT_FINISH_IMAGES.rose,
+    },
+  ]
+}
+
 /**
  * Catalogue presented in Pakistani rupees. This module is the *seed* for the
- * catalogue repository  -  admins can add, edit and remove products at runtime;
+ * catalogue repository - admins can add, edit and remove products at runtime;
  * those edits live in localStorage and are merged over this seed.
- *
- * Product images are original, generated artwork in /public/watches/<slug>.svg
- * (run scripts/generate-watch-art.cjs to regenerate after spec edits).
  */
-export const products: Product[] = rawProducts.map((product) => ({
-  ...product,
-  price: toPkr(product.price),
-  compareAtPrice: product.compareAtPrice ? toPkr(product.compareAtPrice) : undefined,
-  images: [`/watches/${product.slug}.svg`],
-}))
+export const products: Product[] = rawProducts.map((product) => {
+  const images = WATCH_IMAGES[product.slug] ?? [`/watches/${product.slug}.svg`]
+  const variants = product.variants
+    ? product.variants.map((v) => ({
+        ...v,
+        price: toPkr(v.price),
+        image: v.image ?? resolveVariantImage(v.id, v.name, images[0]),
+      }))
+    : createDefaultVariants(product).map((v) => ({
+        ...v,
+        price: toPkr(v.price),
+      }))
+
+  return {
+    ...product,
+    price: toPkr(product.price),
+    compareAtPrice: product.compareAtPrice ? toPkr(product.compareAtPrice) : undefined,
+    images,
+    variants,
+  }
+})
 
 export const PRICE_BOUNDS = {
   min: Math.min(...products.map((p) => p.price)),

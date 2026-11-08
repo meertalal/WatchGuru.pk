@@ -56,7 +56,7 @@ export function OrderTimeline({
                 aria-hidden="true"
                 className={classNames(
                   'absolute left-[15px] top-8 h-[calc(100%-16px)] w-px',
-                  index < currentStep ? 'bg-gold' : 'bg-charcoal',
+                  index < currentStep ? 'bg-gold' : 'bg-line',
                 )}
               />
             )}
@@ -65,7 +65,7 @@ export function OrderTimeline({
                 'relative z-10 flex size-8 shrink-0 items-center justify-center rounded-full border transition-colors duration-500',
                 reached
                   ? 'border-gold bg-gold text-obsidian'
-                  : 'border-line bg-charcoal text-ash',
+                  : 'border-line bg-coal text-muted',
                 isCurrent && 'ring-4 ring-gold/20',
               )}
             >
@@ -74,13 +74,13 @@ export function OrderTimeline({
             <span className="pt-1">
               <span
                 className={classNames(
-                  'block text-[12px] font-medium tracking-[0.14em] uppercase',
-                  reached ? 'text-white' : 'text-ash',
+                  'block font-akkurat text-[9px] font-medium tracking-[0.18em] uppercase',
+                  reached ? 'text-ivory' : 'text-muted',
                 )}
               >
                 {ORDER_STATUS_LABEL[stepStatus]}
               </span>
-              <span className="mt-0.5 block text-[11px] text-ash">
+              <span className="mt-0.5 block text-[10.5px] text-muted">
                 {stamp ?? (reached ? 'Completed' : 'Pending')}
               </span>
             </span>

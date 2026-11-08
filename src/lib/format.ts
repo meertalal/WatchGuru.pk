@@ -24,10 +24,6 @@ export function formatPriceExact(value: number): string {
   return pkrExact.format(value)
 }
 
-export function formatNumber(value: number): string {
-  return new Intl.NumberFormat('en-US').format(value)
-}
-
 export function formatDate(iso: string): string {
   return new Intl.DateTimeFormat('en-US', {
     month: 'long',

@@ -17,7 +17,8 @@ export function Cart() {
 
   useDocumentMeta({
     title: 'Shopping Cart',
-    description: 'Review the pieces in your WatchGuru.pk cart — free insured delivery nationwide, COD available.',
+    description: 'Review the pieces in your WatchGuru.pk cart. Free insured delivery nationwide, COD available.',
+    noindex: true,
   })
 
   const totals = computeTotals(items.map((i) => ({ price: i.product.price, quantity: i.quantity })))
@@ -33,7 +34,7 @@ export function Cart() {
       <Container className="py-12 lg:py-16">
         {items.length === 0 ? (
           <EmptyState
-            icon={<ShoppingBag className="size-12" strokeWidth={1.1} />}
+            icon={<ShoppingBag className="size-12" strokeWidth={1} />}
             title="Your cart is empty"
             description="Every great collection starts with a single piece. Explore the boutique to begin."
             action={
@@ -46,14 +47,14 @@ export function Cart() {
           <div className="grid gap-10 lg:grid-cols-[1fr_380px] lg:gap-14">
             {/* Lines */}
             <div>
-              <div className="hidden border-b border-line pb-3 font-montserrat text-[10px] tracking-[0.2em] text-ash uppercase sm:grid sm:grid-cols-[1fr_120px_140px_100px]">
+              <div className="hidden pb-3 font-akkurat text-[8.5px] tracking-[0.22em] text-muted uppercase sm:grid sm:grid-cols-[1fr_120px_140px_100px]">
                 <span>Product</span>
                 <span className="text-center">Price</span>
                 <span className="text-center">Quantity</span>
                 <span className="text-right">Total</span>
               </div>
 
-              <ul className="divide-y divide-line">
+              <ul>
                 {items.map(({ product, quantity, lineTotal }) => (
                   <li
                     key={product.id}
@@ -69,28 +70,28 @@ export function Cart() {
                         />
                       </Link>
                       <div className="flex flex-col">
-                        <p className="eyebrow text-ash">{product.brand}</p>
+                        <p className="eyebrow text-gold">{product.brand}</p>
                         <Link
                           to={`/products/${product.slug}`}
-                          className="text-base leading-snug transition-colors hover:text-gold"
+                          className="mt-1 font-cormorant text-lg leading-snug text-ivory transition-colors hover:text-gold"
                         >
                           {product.name}
                         </Link>
-                        <p className="mt-1 text-xs text-ash">
-                          {product.caseMaterial} · {product.dialColor} dial
+                        <p className="mt-1 text-[10.5px] text-muted">
+                          {product.caseMaterial}, {product.dialColor} dial
                         </p>
                         <button
                           type="button"
                           onClick={() => removeItem(product.id)}
-                          className="mt-2 flex items-center gap-1.5 font-montserrat text-[10px] tracking-[0.16em] text-ash uppercase transition-colors hover:text-white sm:hidden"
+                          className="mt-2 flex items-center gap-1.5 font-akkurat text-[9px] tracking-[0.18em] text-muted uppercase transition-colors hover:text-gold sm:hidden"
                         >
-                          <Trash2 className="size-3.5" /> Remove
+                          <Trash2 className="size-3.5" strokeWidth={1.4} /> Remove
                         </button>
                       </div>
                     </div>
 
-                    <div className="text-sm text-ash sm:text-center">
-                      <span className="sm:hidden text-ash">Price: </span>
+                    <div className="text-[12.5px] text-ash sm:text-center">
+                      <span className="text-muted sm:hidden">Price: </span>
                       {formatPrice(product.price)}
                     </div>
 
@@ -105,16 +106,16 @@ export function Cart() {
                     </div>
 
                     <div className="flex items-center justify-between sm:block sm:text-right">
-                      <span className="font-inter font-medium text-base text-white">
+                      <span className="font-inter text-[13px] font-normal text-ivory">
                         {formatPrice(lineTotal)}
                       </span>
                       <button
                         type="button"
                         onClick={() => removeItem(product.id)}
                         aria-label={`Remove ${product.name}`}
-                        className="hidden text-ash transition-colors hover:text-white sm:inline-flex"
+                        className="hidden text-muted transition-colors hover:text-gold sm:inline-flex"
                       >
-                        <Trash2 className="size-4" />
+                        <Trash2 className="size-4" strokeWidth={1.4} />
                       </button>
                     </div>
                   </li>
@@ -124,15 +125,15 @@ export function Cart() {
               <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
                 <Link
                   to="/collections/all"
-                  className="flex items-center gap-2 font-montserrat text-[11px] font-medium tracking-[0.18em] text-white uppercase transition-colors hover:text-gold"
+                  className="flex items-center gap-2 font-akkurat text-[9px] font-medium tracking-[0.22em] text-ivory uppercase transition-colors hover:text-gold"
                 >
-                  <ArrowRight className="size-4 rotate-180" />
+                  <ArrowRight className="size-4 rotate-180" strokeWidth={1.4} />
                   Continue shopping
                 </Link>
                 <button
                   type="button"
                   onClick={clear}
-                  className="font-montserrat text-[11px] tracking-[0.16em] text-ash uppercase transition-colors hover:text-white"
+                  className="font-akkurat text-[9px] tracking-[0.2em] text-muted uppercase transition-colors hover:text-gold"
                 >
                   Clear cart
                 </button>
@@ -141,25 +142,25 @@ export function Cart() {
 
             {/* Summary */}
             <aside className="lg:sticky lg:top-28 lg:self-start">
-              <div className="border border-line bg-charcoal p-6">
-                <h2 className="text-xl">Order Summary</h2>
+              <div className="bg-charcoal p-6">
+                <h2 className="font-cormorant text-2xl text-ivory">Order Summary</h2>
 
-                <dl className="mt-6 flex flex-col gap-4 text-sm">
+                <dl className="mt-6 flex flex-col gap-4 text-[12.5px]">
                   <div className="flex items-center justify-between">
                     <dt className="text-ash">Subtotal</dt>
-                    <dd className="text-white">{formatPrice(totals.subtotal)}</dd>
+                    <dd className="text-ivory">{formatPrice(totals.subtotal)}</dd>
                   </div>
                   <div className="flex items-center justify-between">
                     <dt className="text-ash">Shipping</dt>
                     <dd className="text-gold">Free</dd>
                   </div>
-                  <div className="flex items-center justify-between border-t border-line pt-4">
-                    <dt className="eyebrow text-white">Total</dt>
-                    <dd className="font-inter font-medium text-2xl text-white">{formatPrice(totals.total)}</dd>
+                  <div className="flex items-center justify-between pt-4">
+                    <dt className="eyebrow text-ivory">Total</dt>
+                    <dd className="font-inter text-2xl font-normal text-ivory">{formatPrice(totals.total)}</dd>
                   </div>
                 </dl>
 
-                <p className="mt-3 text-[11px] text-ash">
+                <p className="mt-3 text-[10.5px] text-muted">
                   Taxes and any coupon are applied at checkout.
                 </p>
 
@@ -169,11 +170,11 @@ export function Cart() {
                   onClick={() => navigate('/checkout')}
                 >
                   Proceed to checkout
-                  <ArrowRight className="size-4" />
+                  <ArrowRight className="size-4" strokeWidth={1.6} />
                 </Button>
 
-                <div className="mt-6 flex items-center gap-2 border-t border-line pt-5 text-[11px] text-ash">
-                  <Truck className="size-4 text-gold" strokeWidth={1.6} />
+                <div className="mt-6 flex items-center gap-2 pt-5 text-[10.5px] text-ash">
+                  <Truck className="size-4 text-gold" strokeWidth={1.4} />
                   Complimentary insured shipping on every order
                 </div>
               </div>

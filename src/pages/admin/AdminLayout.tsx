@@ -9,6 +9,7 @@ import {
 } from 'lucide-react'
 import { classNames } from '../../lib/format'
 import { useAuth, useOrders } from '../../store'
+import { useDocumentMeta } from '../../hooks/useDocumentMeta'
 
 const TABS = [
   { to: '/admin', label: 'Overview', icon: LayoutDashboard, end: true },
@@ -17,33 +18,39 @@ const TABS = [
 ]
 
 /**
- * Store admin chrome — sidebar on desktop, scrollable tabs on mobile.
+ * Store admin chrome: sidebar on desktop, scrollable tabs on mobile.
  * Completely separate from the storefront header/footer.
  */
 export function AdminLayout() {
   const { account, logout } = useAuth()
   const { orders } = useOrders()
   const navigate = useNavigate()
+
+  useDocumentMeta({
+    title: 'Store Admin',
+    description: 'Internal store administration panel.',
+    noindex: true,
+  })
   const pendingCount = orders.filter((o) => o.status === 'processing' || o.status === 'confirmed').length
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     classNames(
-      'flex items-center gap-3 border-l-2 px-4 py-3 font-montserrat text-[11px] font-medium tracking-[0.18em] uppercase transition-colors',
+      'flex items-center gap-3 border-l-2 px-4 py-3 font-akkurat text-[11px] font-medium tracking-[0.18em] uppercase transition-colors',
       isActive
-        ? 'border-gold bg-charcoal text-white'
-        : 'border-transparent text-ash hover:text-white',
+        ? 'border-gold bg-charcoal text-ivory'
+        : 'border-transparent text-ash hover:text-ivory',
     )
 
   return (
     <div className="flex min-h-svh flex-col bg-coal lg:flex-row">
       {/* Sidebar */}
-      <aside className="border-b border-line bg-obsidian lg:w-64 lg:border-b-0 lg:border-r">
+      <aside className="bg-obsidian lg:w-64">
         <div className="flex items-center justify-between gap-4 px-5 py-4 lg:block">
           <div>
-            <Link to="/admin" className="font-playfair text-xl tracking-[0.18em] text-white">
+            <Link to="/admin" className="font-playfair text-xl tracking-[0.18em] text-ivory">
               WatchGuru<span className="text-gold">.pk</span>
             </Link>
-            <p className="eyebrow mt-1 text-[9px] text-ash">Store Admin</p>
+            <p className="eyebrow mt-1 text-[9px] text-muted">Store Admin</p>
           </div>
           <Link
             to="/"
@@ -60,7 +67,7 @@ export function AdminLayout() {
               <Icon className="size-4" strokeWidth={1.7} aria-hidden="true" />
               {label}
               {label === 'Orders' && pendingCount > 0 && (
-                <span className="ml-auto rounded-full bg-gold-bright px-2 py-0.5 text-[9px] font-semibold text-obsidian">
+                <span className="ml-auto rounded-full bg-gold px-2 py-0.5 text-[9px] font-semibold text-obsidian">
                   {pendingCount}
                 </span>
               )}
@@ -68,7 +75,7 @@ export function AdminLayout() {
           ))}
         </nav>
 
-        <div className="hidden border-t border-line p-4 lg:block">
+        <div className="hidden p-4 lg:block">
           <Link
             to="/"
             className="mb-3 flex items-center gap-2 text-[10px] font-medium tracking-[0.18em] text-ash uppercase transition-colors hover:text-gold"
@@ -76,21 +83,21 @@ export function AdminLayout() {
             <Store className="size-4" aria-hidden="true" />
             View storefront
           </Link>
-          <div className="border border-line bg-charcoal p-3">
+          <div className="bg-charcoal p-3">
             <p className="text-[11px] text-ash">Signed in as</p>
-            <p className="mt-0.5 truncate text-sm font-medium text-white">
+            <p className="mt-0.5 truncate text-[13px] font-normal text-ivory">
               {account?.firstName} {account?.lastName}
             </p>
-            <p className="truncate text-[11px] text-ash">{account?.email}</p>
+            <p className="truncate text-[11px] text-muted">{account?.email}</p>
             <button
               type="button"
               onClick={() => {
                 logout()
                 navigate('/')
               }}
-              className="mt-2 flex items-center gap-2 text-[10px] font-medium tracking-[0.18em] text-ash uppercase transition-colors hover:text-white"
+              className="mt-2 flex items-center gap-2 font-akkurat text-[9px] font-medium tracking-[0.18em] text-ash uppercase transition-colors hover:text-gold"
             >
-              <LogOut className="size-3.5" aria-hidden="true" />
+              <LogOut className="size-3.5" strokeWidth={1.4} aria-hidden="true" />
               Sign out
             </button>
           </div>
