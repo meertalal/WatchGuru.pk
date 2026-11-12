@@ -24,6 +24,7 @@ use App\Repository\StockMovementRepository;
 use App\Repository\WarrantyRepository;
 use App\Support\Doctrine;
 use App\Support\Env;
+use App\Support\RepositoryFactory;
 use DI\ContainerBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -33,22 +34,6 @@ use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
 return static function (ContainerBuilder $builder): void {
-    /**
-     * Doctrine's EntityRepository needs both the entity manager and the class metadata.
-     *
-     * @param class-string $entityClass
-     * @param class-string $repositoryClass
-     */
-    $repository = static function (
-        ContainerInterface $container,
-        string $entityClass,
-        string $repositoryClass,
-    ): EntityRepository {
-        $em = $container->get(EntityManagerInterface::class);
-
-        return new $repositoryClass($em, $em->getClassMetadata($entityClass));
-    };
-
     $builder->addDefinitions([
         LoggerInterface::class => static function (): LoggerInterface {
             $logDir = dirname(__DIR__) . '/logs';
@@ -64,47 +49,47 @@ return static function (ContainerBuilder $builder): void {
 
         EntityManagerInterface::class => static fn (): EntityManagerInterface => Doctrine::createEntityManager(),
 
-        ProductRepository::class => static fn (ContainerInterface $c): EntityRepository => $repository(
+        ProductRepository::class => static fn (ContainerInterface $c): EntityRepository => RepositoryFactory::make(
             $c,
             Product::class,
             ProductRepository::class,
         ),
-        AccountRepository::class => static fn (ContainerInterface $c): EntityRepository => $repository(
+        AccountRepository::class => static fn (ContainerInterface $c): EntityRepository => RepositoryFactory::make(
             $c,
             Account::class,
             AccountRepository::class,
         ),
-        AdminTokenRepository::class => static fn (ContainerInterface $c): EntityRepository => $repository(
+        AdminTokenRepository::class => static fn (ContainerInterface $c): EntityRepository => RepositoryFactory::make(
             $c,
             AdminToken::class,
             AdminTokenRepository::class,
         ),
-        OrderRepository::class => static fn (ContainerInterface $c): EntityRepository => $repository(
+        OrderRepository::class => static fn (ContainerInterface $c): EntityRepository => RepositoryFactory::make(
             $c,
             Order::class,
             OrderRepository::class,
         ),
-        CouponRepository::class => static fn (ContainerInterface $c): EntityRepository => $repository(
+        CouponRepository::class => static fn (ContainerInterface $c): EntityRepository => RepositoryFactory::make(
             $c,
             Coupon::class,
             CouponRepository::class,
         ),
-        NewsletterRepository::class => static fn (ContainerInterface $c): EntityRepository => $repository(
+        NewsletterRepository::class => static fn (ContainerInterface $c): EntityRepository => RepositoryFactory::make(
             $c,
             NewsletterSubscriber::class,
             NewsletterRepository::class,
         ),
-        ContactRepository::class => static fn (ContainerInterface $c): EntityRepository => $repository(
+        ContactRepository::class => static fn (ContainerInterface $c): EntityRepository => RepositoryFactory::make(
             $c,
             ContactMessage::class,
             ContactRepository::class,
         ),
-        WarrantyRepository::class => static fn (ContainerInterface $c): EntityRepository => $repository(
+        WarrantyRepository::class => static fn (ContainerInterface $c): EntityRepository => RepositoryFactory::make(
             $c,
             WarrantySerial::class,
             WarrantyRepository::class,
         ),
-        StockMovementRepository::class => static fn (ContainerInterface $c): EntityRepository => $repository(
+        StockMovementRepository::class => static fn (ContainerInterface $c): EntityRepository => RepositoryFactory::make(
             $c,
             StockMovement::class,
             StockMovementRepository::class,

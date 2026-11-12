@@ -116,7 +116,7 @@ export function AdminLogin() {
             <div className="mt-6 pt-5">
               <p className="flex items-center justify-center gap-2 text-center text-[10.5px] text-muted">
                 <ShieldCheck className="size-3.5 text-gold" strokeWidth={1.4} aria-hidden="true" />
-                Demo admin: admin@watchguru.pk / admin123
+                Authorised boutique staff only
               </p>
             </div>
           </form>

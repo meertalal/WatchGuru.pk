@@ -8,6 +8,7 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMSetup;
+use Doctrine\ORM\Proxy\ProxyFactory;
 
 final class Doctrine
 {
@@ -27,6 +28,14 @@ final class Doctrine
 
         $config->setProxyDir($proxyDir);
         $config->setProxyNamespace('App\\Proxies');
+
+        // Production containers ship without pre-generated proxies, and dev
+        // mode is off there, so generate each proxy the first time it is needed.
+        $config->setAutoGenerateProxyClasses(
+            $isDev
+                ? ProxyFactory::AUTOGENERATE_ALWAYS
+                : ProxyFactory::AUTOGENERATE_FILE_NOT_EXISTS,
+        );
 
         $connection = DriverManager::getConnection([
             'driver' => 'pdo_mysql',

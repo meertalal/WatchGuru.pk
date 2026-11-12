@@ -4,34 +4,34 @@
 
 ## Store
 
-- [Home](https://warchgurupk.vercel.app/): WatchGuru.pk storefront and current featured collections.
-- [All Watches](https://warchgurupk.vercel.app/collections/all): The full catalogue.
-- [Men's Watches](https://warchgurupk.vercel.app/collections/men)
-- [Women's Watches](https://warchgurupk.vercel.app/collections/women)
-- [Executive Edit](https://warchgurupk.vercel.app/collections/executive)
-- [Original Watches](https://warchgurupk.vercel.app/collections/original)
-- [Fashion Collection](https://warchgurupk.vercel.app/collections/fashion)
-- [About Us](https://warchgurupk.vercel.app/about)
+- [Home](https://watchgurupk.vercel.app/): WatchGuru.pk storefront and current featured collections.
+- [All Watches](https://watchgurupk.vercel.app/collections/all): The full catalogue.
+- [Men's Watches](https://watchgurupk.vercel.app/collections/men)
+- [Women's Watches](https://watchgurupk.vercel.app/collections/women)
+- [Executive Edit](https://watchgurupk.vercel.app/collections/executive)
+- [Original Watches](https://watchgurupk.vercel.app/collections/original)
+- [Fashion Collection](https://watchgurupk.vercel.app/collections/fashion)
+- [About Us](https://watchgurupk.vercel.app/about)
 
-Product pages follow `https://warchgurupk.vercel.app/products/{slug}` and list brand, model, price, availability, specifications and images.
+Product pages follow `https://watchgurupk.vercel.app/products/{slug}` and list brand, model, price, availability, specifications and images.
 
 ## Shopping
 
-- [Cart](https://warchgurupk.vercel.app/cart)
-- [Checkout](https://warchgurupk.vercel.app/checkout): Guest checkout. Payment by Cash on Delivery, bank transfer, Easypaisa or JazzCash. No card data is collected on the site.
-- [Track Your Order](https://warchgurupk.vercel.app/track-order): Requires the order number and the email used at checkout.
-- [Order Confirmation](https://warchgurupk.vercel.app/order-confirmation)
+- [Cart](https://watchgurupk.vercel.app/cart)
+- [Checkout](https://watchgurupk.vercel.app/checkout): Guest checkout. Payment by Cash on Delivery, bank transfer, Easypaisa or JazzCash. No card data is collected on the site.
+- [Track Your Order](https://watchgurupk.vercel.app/track-order): Requires the order number and the email used at checkout.
+- [Order Confirmation](https://watchgurupk.vercel.app/order-confirmation)
 
 Orders are confirmed by phone or WhatsApp before dispatch. Insured delivery normally takes 2 to 5 business days and requires a signature.
 
 ## Support and policies
 
-- [Contact Us](https://warchgurupk.vercel.app/contact)
-- [Shipping Policy](https://warchgurupk.vercel.app/policies/shipping-policy)
-- [Refund and Exchange](https://warchgurupk.vercel.app/policies/refund-policy)
-- [Warranty and Verification](https://warchgurupk.vercel.app/policies/warranty)
-- [Terms of Service](https://warchgurupk.vercel.app/policies/terms-of-service)
-- [Unsubscribe from The Dispatch](https://warchgurupk.vercel.app/unsubscribe)
+- [Contact Us](https://watchgurupk.vercel.app/contact)
+- [Shipping Policy](https://watchgurupk.vercel.app/policies/shipping-policy)
+- [Refund and Exchange](https://watchgurupk.vercel.app/policies/refund-policy)
+- [Warranty and Verification](https://watchgurupk.vercel.app/policies/warranty)
+- [Terms of Service](https://watchgurupk.vercel.app/policies/terms-of-service)
+- [Unsubscribe from The Dispatch](https://watchgurupk.vercel.app/unsubscribe)
 
 ## Contact
 

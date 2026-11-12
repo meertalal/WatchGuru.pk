@@ -9,7 +9,7 @@ interface BreadcrumbItem {
  * Schema.org BreadcrumbList structured data for rich breadcrumbs in search results.
  */
 export function BreadcrumbJsonLd({ items }: { items: BreadcrumbItem[] }) {
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://warchgurupk.vercel.app'
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://watchgurupk.vercel.app'
 
   const data = {
     '@context': 'https://schema.org',

@@ -12,4 +12,4 @@ Disallow: /500
 Disallow: /503
 Disallow: /maintenance
 
-Sitemap: https://warchgurupk.vercel.app/sitemap.xml
+Sitemap: https://watchgurupk.vercel.app/sitemap.xml
