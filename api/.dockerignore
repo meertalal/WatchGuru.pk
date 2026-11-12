@@ -1,6 +1,11 @@
 .git
+.gitignore
 .env
+.env.*
 vendor
-node_modules
+var
+logs
+tests
+.phpunit.cache
 .DS_Store
 *.log
