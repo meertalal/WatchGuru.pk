@@ -3,8 +3,8 @@ import { Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../store'
 
 /**
- * Route guard for the store admin. Redirects anonymous visitors and
- * non-admin customers to sign in, remembering where they were headed.
+ * Route guard for the store admin. Redirects anonymous visitors to sign in,
+ * remembering where they were headed.
  */
 export function RequireAdmin({ children }: { children: ReactNode }) {
   const { isAdmin, loading } = useAuth()

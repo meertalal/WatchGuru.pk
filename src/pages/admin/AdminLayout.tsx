@@ -1,26 +1,76 @@
 import { NavLink, Link, Outlet, useNavigate } from 'react-router-dom'
 import {
+  Boxes,
   ExternalLink,
+  Layers,
   LayoutDashboard,
   ListOrdered,
   LogOut,
+  MessageSquare,
   Package,
+  PlusCircle,
+  ShieldCheck,
   Store,
+  Tag,
+  Users,
 } from 'lucide-react'
 import { classNames } from '../../lib/format'
 import { useAuth, useOrders } from '../../store'
 import { useDocumentMeta } from '../../hooks/useDocumentMeta'
 
-const TABS = [
-  { to: '/admin', label: 'Overview', icon: LayoutDashboard, end: true },
-  { to: '/admin/orders', label: 'Orders', icon: ListOrdered, end: false },
-  { to: '/admin/products', label: 'Products', icon: Package, end: false },
-]
+interface NavItem {
+  to: string
+  label: string
+  icon: typeof LayoutDashboard
+  end?: boolean
+  badge?: 'pending-orders'
+}
+
+interface NavSection {
+  label: string
+  items: NavItem[]
+}
 
 /**
- * Store admin chrome: sidebar on desktop, scrollable tabs on mobile.
- * Completely separate from the storefront header/footer.
+ * Every operational area is its own module with its own route. The sidebar
+ * groups those modules but never merges their screens.
  */
+const SECTIONS: NavSection[] = [
+  {
+    label: 'Overview',
+    items: [{ to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true }],
+  },
+  {
+    label: 'Fulfilment',
+    items: [
+      { to: '/admin/orders', label: 'Orders', icon: ListOrdered, badge: 'pending-orders' },
+      { to: '/admin/orders/new', label: 'New order', icon: PlusCircle },
+    ],
+  },
+  {
+    label: 'Catalogue',
+    items: [
+      { to: '/admin/products', label: 'Products', icon: Package, end: true },
+      { to: '/admin/collections', label: 'Collections', icon: Layers },
+      { to: '/admin/stock', label: 'Stock', icon: Boxes },
+    ],
+  },
+  {
+    label: 'Merchandising',
+    items: [
+      { to: '/admin/discounts', label: 'Discounts', icon: Tag },
+      { to: '/admin/customers', label: 'Customers', icon: Users },
+    ],
+  },
+  {
+    label: 'Support',
+    items: [
+      { to: '/admin/warranty', label: 'Warranty', icon: ShieldCheck },
+      { to: '/admin/inbox', label: 'Inbox', icon: MessageSquare },
+    ],
+  },
+]
+
 export function AdminLayout() {
   const { account, logout } = useAuth()
   const { orders } = useOrders()
@@ -31,11 +81,14 @@ export function AdminLayout() {
     description: 'Internal store administration panel.',
     noindex: true,
   })
-  const pendingCount = orders.filter((o) => o.status === 'processing' || o.status === 'confirmed').length
+
+  const pendingCount = orders.filter(
+    (order) => order.status === 'processing' || order.status === 'confirmed',
+  ).length
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     classNames(
-      'flex items-center gap-3 border-l-2 px-4 py-3 font-akkurat text-[11px] font-medium tracking-[0.18em] uppercase transition-colors',
+      'flex items-center gap-3 border-l-2 px-4 py-2.5 font-akkurat text-[11px] font-medium tracking-[0.18em] uppercase transition-colors',
       isActive
         ? 'border-gold bg-charcoal text-ivory'
         : 'border-transparent text-ash hover:text-ivory',
@@ -44,7 +97,7 @@ export function AdminLayout() {
   return (
     <div className="flex min-h-svh flex-col bg-coal lg:flex-row">
       {/* Sidebar */}
-      <aside className="bg-obsidian lg:w-64">
+      <aside className="shrink-0 bg-obsidian lg:w-64">
         <div className="flex items-center justify-between gap-4 px-5 py-4 lg:block">
           <div>
             <Link to="/admin" className="font-playfair text-xl tracking-[0.18em] text-ivory">
@@ -61,17 +114,27 @@ export function AdminLayout() {
           </Link>
         </div>
 
-        <nav aria-label="Admin sections" className="flex gap-1 overflow-x-auto px-3 pb-2 lg:flex-col lg:gap-0 lg:px-3 lg:pb-6">
-          {TABS.map(({ to, label, icon: Icon, end }) => (
-            <NavLink key={to} to={to} end={end} className={linkClass}>
-              <Icon className="size-4" strokeWidth={1.7} aria-hidden="true" />
-              {label}
-              {label === 'Orders' && pendingCount > 0 && (
-                <span className="ml-auto rounded-full bg-gold px-2 py-0.5 text-[9px] font-semibold text-obsidian">
-                  {pendingCount}
-                </span>
-              )}
-            </NavLink>
+        <nav
+          aria-label="Admin modules"
+          className="flex gap-1 overflow-x-auto px-3 pb-2 lg:block lg:gap-0 lg:px-3 lg:pb-6"
+        >
+          {SECTIONS.map((section) => (
+            <div key={section.label} className="contents lg:block lg:pb-3">
+              <p className="hidden px-4 pb-1 pt-3 font-akkurat text-[8px] tracking-[0.22em] text-muted uppercase lg:block">
+                {section.label}
+              </p>
+              {section.items.map(({ to, label, icon: Icon, end, badge }) => (
+                <NavLink key={to} to={to} end={end} className={linkClass}>
+                  <Icon className="size-4 shrink-0" strokeWidth={1.7} aria-hidden="true" />
+                  <span className="whitespace-nowrap">{label}</span>
+                  {badge === 'pending-orders' && pendingCount > 0 && (
+                    <span className="ml-auto rounded-full bg-gold px-2 py-0.5 text-[9px] font-semibold text-obsidian">
+                      {pendingCount}
+                    </span>
+                  )}
+                </NavLink>
+              ))}
+            </div>
           ))}
         </nav>
 
@@ -105,7 +168,7 @@ export function AdminLayout() {
       </aside>
 
       {/* Content */}
-      <main className="flex-1">
+      <main className="min-w-0 flex-1">
         <Outlet />
       </main>
     </div>

@@ -1,11 +1,12 @@
 import type { Product } from '../../types'
+import { serializeJsonLd } from '../../lib/jsonLd'
 
 /**
  * Schema.org Product/Offer JSON-LD for a product page. Only facts already in
  * the catalogue are emitted — no reviews, ratings or stock claims are invented.
  */
 export function ProductJsonLd({ product }: { product: Product }) {
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://www.watchguru.pk'
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://warchgurupk.vercel.app'
   const url = `${origin}/products/${product.slug}`
 
   const data = {
@@ -36,7 +37,7 @@ export function ProductJsonLd({ product }: { product: Product }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }}
     />
   )
 }

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   AlertTriangle,
@@ -7,22 +8,35 @@ import {
   Receipt,
   Wallet,
 } from 'lucide-react'
-import { useCatalog, useOrders } from '../../store'
+import { useCatalog, useOrders, useToast } from '../../store'
 import { useDocumentMeta } from '../../hooks/useDocumentMeta'
 import { formatDate, formatPriceExact, classNames } from '../../lib/format'
-import { ORDER_STATUS_FLOW, ORDER_STATUS_LABEL } from '../../lib/orders'
+import { errorMessage } from '../../lib/api'
+import { ORDER_STATUS_LABEL, selectableStatuses } from '../../lib/orders'
 import type { OrderStatus } from '../../types'
-
-const SELECTABLE_STATUSES: OrderStatus[] = [...ORDER_STATUS_FLOW, 'cancelled']
 
 export function AdminOverview() {
   const { products } = useCatalog()
   const { orders, updateStatus } = useOrders()
+  const { notify } = useToast()
+  const [updating, setUpdating] = useState<string | null>(null)
 
   useDocumentMeta({
     title: 'Admin | Overview',
     description: 'WatchGuru.pk store admin. Orders, revenue and catalogue health at a glance.',
   })
+
+  const changeStatus = async (orderNumber: string, next: OrderStatus) => {
+    setUpdating(orderNumber)
+    try {
+      await updateStatus(orderNumber, next)
+      notify(`${orderNumber} marked ${ORDER_STATUS_LABEL[next].toLowerCase()}.`)
+    } catch (error) {
+      notify(errorMessage(error, 'The order status could not be updated.'), 'error')
+    } finally {
+      setUpdating(null)
+    }
+  }
 
   const activeOrders = orders.filter((o) => o.status !== 'cancelled')
   const revenue = activeOrders.reduce((sum, o) => sum + o.total, 0)
@@ -96,10 +110,13 @@ export function AdminOverview() {
                   <span className="sr-only">Update status for {order.orderNumber}</span>
                   <select
                     value={order.status}
-                    onChange={(e) => updateStatus(order.orderNumber, e.target.value as OrderStatus)}
-                    className="border border-line bg-charcoal px-2 py-1.5 font-inter text-[11px] text-ivory outline-none focus:border-gold"
+                    disabled={updating === order.orderNumber}
+                    onChange={(e) => {
+                      void changeStatus(order.orderNumber, e.target.value as OrderStatus)
+                    }}
+                    className="border border-line bg-charcoal px-2 py-1.5 font-inter text-[11px] text-ivory outline-none focus:border-gold disabled:opacity-60"
                   >
-                    {SELECTABLE_STATUSES.map((status) => (
+                    {selectableStatuses(order.status).map((status) => (
                       <option key={status} value={status}>
                         {ORDER_STATUS_LABEL[status]}
                       </option>
@@ -143,9 +160,9 @@ export function AdminOverview() {
               ))}
           </ul>
           <div className="px-5 py-4">
-            <Link to="/admin/products" className="flex items-center gap-2 font-akkurat text-[9px] font-medium tracking-[0.2em] text-ivory uppercase hover:text-gold">
+            <Link to="/admin/stock" className="flex items-center gap-2 font-akkurat text-[9px] font-medium tracking-[0.2em] text-ivory uppercase hover:text-gold">
               <Package className="size-4" strokeWidth={1.4} aria-hidden="true" />
-              Restock &amp; edit catalogue
+              Restock in the stock module
             </Link>
           </div>
         </section>
@@ -153,7 +170,8 @@ export function AdminOverview() {
 
       <p className="mt-6 flex items-center gap-2 text-[11px] text-ash">
         <span className="inline-block size-2 rounded-full bg-gold" aria-hidden="true" />
-        Live view. Every change here is stored on this device (demo fulfilment; no courier is booked).
+        Live view. Every change here is saved to the store database (demo fulfilment; no courier is
+        booked).
       </p>
     </div>
   )

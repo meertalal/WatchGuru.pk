@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { Clock, Mail, MapPin, Phone } from 'lucide-react'
 import { COLLECTION_LINKS, SUPPORT_LINKS } from '../../lib/navigation'
 import { Container } from '../ui/Container'
-import { NewsletterForm } from '../newsletter/NewsletterForm'
 import {
   FacebookIcon,
   InstagramIcon,
@@ -57,7 +56,7 @@ const linkClass =
   'text-[12.5px] font-light text-ash transition-colors duration-300 hover:text-gold'
 
 /**
- * Site footer — a curved, watchmakers' skyline over four columns: newsletter,
+ * Site footer — a curved, watchmakers' skyline over four columns: brand,
  * important links, information and contact details, followed by social links,
  * copyright and the payment methods already supported by the store.
  */
@@ -68,7 +67,7 @@ export function Footer() {
 
       <Container>
         <div className="grid grid-cols-1 gap-x-10 gap-y-12 pt-10 pb-14 sm:grid-cols-2 lg:grid-cols-[1.5fr_0.9fr_1fr_1fr] lg:gap-x-12 lg:pt-12 lg:pb-20">
-          {/* Newsletter */}
+          {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Link
               to="/"
@@ -80,21 +79,6 @@ export function Footer() {
               Pakistan’s home for 100% original luxury watches, sourced from authorised maisons,
               verified in-house, and delivered to your door with a one-year machine warranty.
             </p>
-
-            <div className="mt-8 max-w-md">
-              <h3 className="font-playfair text-[1.35rem] font-normal tracking-[0.06em] text-ivory">
-                The Dispatch
-              </h3>
-              <p className="mt-2 text-[12.5px] font-light leading-[1.9] text-ash">
-                New arrivals, private events and atelier stories. A short letter, once a month.
-              </p>
-              <div className="mt-4">
-                <NewsletterForm />
-              </div>
-              <p className="mt-3 text-[10px] font-light text-muted">
-                No spam, ever. Unsubscribe any time.
-              </p>
-            </div>
           </div>
 
           {/* Important links */}

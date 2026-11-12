@@ -2,28 +2,34 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
 } from 'react'
 import type { Order, OrderStatus } from '../types'
-import { orderRepository, type OrderRepository } from '../data/repositories/orderRepository'
+import {
+  orderRepository,
+  type OrderRepository,
+  type PlaceOrderInput,
+} from '../data/repositories/orderRepository'
 import { useLocalStorage } from '../hooks/useLocalStorage'
+import { useAuth } from './auth'
 
 const LAST_ORDER_STORAGE_KEY = 'watchguru-pk:last-order:v1'
 
 export interface OrdersContextValue {
   /** The order most recently placed in this browser (drives the confirmation page). */
   lastOrder: Order | null
-  /** Every order currently in the store (admin view). */
+  /** Every order in the store (admin view). Empty for guests. */
   orders: Order[]
-  placeOrder: (order: Order) => void
+  loading: boolean
+  placeOrder: (input: PlaceOrderInput) => Promise<Order>
   clearLastOrder: () => void
   /** Tracking lookup: order number and email must match. */
-  trackOrder: (orderNumber: string, email: string) => Order | null
-  listForEmail: (email: string) => Order[]
-  updateStatus: (orderNumber: string, status: OrderStatus, note?: string) => Order | null
-  refresh: () => void
+  trackOrder: (orderNumber: string, email: string) => Promise<Order>
+  updateStatus: (orderNumber: string, status: OrderStatus, note?: string) => Promise<Order>
+  refresh: () => Promise<void>
 }
 
 export const OrdersContext = createContext<OrdersContextValue | null>(null)
@@ -41,18 +47,60 @@ export function OrdersProvider({
   children: ReactNode
   repository?: OrderRepository
 }) {
+  const { isAdmin } = useAuth()
   const [lastOrder, setLastOrder] = useLocalStorage<Order | null>(LAST_ORDER_STORAGE_KEY, null)
-  const [orders, setOrders] = useState<Order[]>(() => repository.list())
+  const [orders, setOrders] = useState<Order[]>([])
+  const [loading, setLoading] = useState(false)
 
-  const refresh = useCallback(() => setOrders(repository.list()), [repository])
+  const refresh = useCallback(async () => {
+    if (!isAdmin) {
+      setOrders([])
+      return
+    }
+
+    setLoading(true)
+    try {
+      setOrders(await repository.list())
+    } finally {
+      setLoading(false)
+    }
+  }, [repository, isAdmin])
+
+  // Admin order data is only available with a bearer token, so load it when
+  // the signed-in role changes (and clear it again on sign-out).
+  useEffect(() => {
+    let cancelled = false
+
+    if (!isAdmin) {
+      setOrders([])
+      return
+    }
+
+    setLoading(true)
+    repository
+      .list()
+      .then((list) => {
+        if (!cancelled) setOrders(list)
+      })
+      .catch(() => {
+        if (!cancelled) setOrders([])
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [repository, isAdmin])
 
   const placeOrder = useCallback(
-    (order: Order) => {
-      repository.place(order)
+    async (input: PlaceOrderInput): Promise<Order> => {
+      const order = await repository.place(input)
       setLastOrder(order)
-      refresh()
+      return order
     },
-    [repository, setLastOrder, refresh],
+    [repository, setLastOrder],
   )
 
   const clearLastOrder = useCallback(() => setLastOrder(null), [setLastOrder])
@@ -62,38 +110,35 @@ export function OrdersProvider({
     [repository],
   )
 
-  const listForEmail = useCallback(
-    (email: string) => repository.listForEmail(email),
-    [repository],
-  )
-
   const updateStatus = useCallback(
-    (orderNumber: string, status: OrderStatus, note?: string) => {
-      const updated = repository.updateStatus(orderNumber, status, note)
-      refresh()
+    async (orderNumber: string, status: OrderStatus, note?: string): Promise<Order> => {
+      const updated = await repository.updateStatus(orderNumber, status, note)
+      setOrders((current) =>
+        current.map((order) => (order.orderNumber === updated.orderNumber ? updated : order)),
+      )
       return updated
     },
-    [repository, refresh],
+    [repository],
   )
 
   const value = useMemo<OrdersContextValue>(
     () => ({
       lastOrder,
       orders,
+      loading,
       placeOrder,
       clearLastOrder,
       trackOrder,
-      listForEmail,
       updateStatus,
       refresh,
     }),
     [
       lastOrder,
       orders,
+      loading,
       placeOrder,
       clearLastOrder,
       trackOrder,
-      listForEmail,
       updateStatus,
       refresh,
     ],

@@ -52,8 +52,9 @@ export function OrderConfirmation() {
           <p className="mt-4 max-w-xl text-[13px] font-light leading-[1.85] text-ash">
             Your order is with our team and will be confirmed shortly on{' '}
             <span className="text-ivory">{shipping.phone}</span> or by email at{' '}
-            <span className="text-ivory">{lastOrder.email}</span>. Delivery is fully insured,
-            and payment is collected as per your chosen method, nothing more.
+            <span className="text-ivory">{lastOrder.email}</span>. A receipt has also been emailed
+            to you. Delivery is fully insured, and payment is collected as per your chosen method,
+            nothing more.
           </p>
         </div>
 

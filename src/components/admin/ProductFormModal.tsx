@@ -1,10 +1,11 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { X } from 'lucide-react'
 import type { Product } from '../../types'
 import { BRANDS, COLLECTIONS, DIAL_COLORS, STRAP_TYPES } from '../../data/products'
 import { adminProductSchema, type AdminProductValues } from '../../lib/validation'
+import { ApiError, errorMessage } from '../../lib/api'
 import { useCatalog, useToast } from '../../store'
 import { classNames } from '../../lib/format'
 import { Button } from '../ui/Button'
@@ -82,6 +83,7 @@ export function ProductFormModal({
   const { saveProduct, suggestSlug } = useCatalog()
   const { notify } = useToast()
   const isNew = editing === null
+  const [formError, setFormError] = useState('')
 
   const defaultValues = useMemo(() => (editing ? toFormValues(editing) : BLANK), [editing])
 
@@ -90,6 +92,7 @@ export function ProductFormModal({
     handleSubmit,
     watch,
     setValue,
+    setError,
     setFocus,
     formState: { errors, isSubmitting, dirtyFields },
   } = useForm<AdminProductValues>({
@@ -132,8 +135,10 @@ export function ProductFormModal({
     })
   }
 
-  const onSubmit = (values: AdminProductValues) => {
-    const compareAt = values.compareAtPrice && values.compareAtPrice > 0 ? values.compareAtPrice : undefined
+  const onSubmit = async (values: AdminProductValues) => {
+    setFormError('')
+    const compareAt =
+      values.compareAtPrice && values.compareAtPrice > 0 ? values.compareAtPrice : null
     const product: Product = {
       id: editing?.id ?? `custom_${Date.now().toString(36)}`,
       slug: values.slug,
@@ -153,14 +158,26 @@ export function ProductFormModal({
       movement: values.movement.trim(),
       features: editing?.features ?? ['Automatic Movement'],
       specs: parseSpecs(values.specs),
-      badge: (values.badge || undefined) as Product['badge'],
+      badge: (values.badge || null) as Product['badge'],
       inStock: values.inStock,
       stock: values.stock,
       addedAt: editing?.addedAt ?? new Date().toISOString().slice(0, 10),
     }
-    saveProduct(product)
-    notify(isNew ? `${product.name} added to the boutique.` : `${product.name} updated.`)
-    onClose()
+
+    try {
+      await saveProduct(product, isNew)
+      notify(isNew ? `${product.name} added to the boutique.` : `${product.name} updated.`)
+      onClose()
+    } catch (error) {
+      if (error instanceof ApiError) {
+        for (const [field, message] of Object.entries(error.fields)) {
+          setError(field as Parameters<typeof setError>[0], { type: 'server', message })
+        }
+      }
+      const message = errorMessage(error, 'The product could not be saved.')
+      setFormError(message)
+      notify(message, 'error')
+    }
   }
 
   const inputClass = 'text-sm'
@@ -269,15 +286,23 @@ export function ProductFormModal({
                   value === '' || Number.isNaN(Number(value)) ? undefined : Number(value),
               })}
             />
-            <TextField
-              label="Stock"
-              id="stock"
-              type="number"
-              min={0}
-              step={1}
-              error={errors.stock?.message}
-              {...register('stock', { valueAsNumber: true })}
-            />
+            {isNew ? (
+              <TextField
+                label="Opening stock"
+                id="stock"
+                type="number"
+                min={0}
+                step={1}
+                hint="After this, use the Stock module"
+                error={errors.stock?.message}
+                {...register('stock', { valueAsNumber: true })}
+              />
+            ) : (
+              <div className="flex flex-col justify-end border border-line bg-charcoal px-3 py-2.5">
+                <span className="eyebrow text-[9px] text-muted">Stock</span>
+                <span className="mt-1 text-[12.5px] text-ivory">Managed in the Stock module</span>
+              </div>
+            )}
             <SelectField
               label="Badge"
               id="badge"
@@ -394,6 +419,15 @@ export function ProductFormModal({
           </div>
 
           {/* Actions */}
+          {formError && (
+            <p
+              role="alert"
+              className="mt-5 border border-error/40 bg-error/10 px-4 py-3 text-[12px] leading-relaxed text-error"
+            >
+              {formError}
+            </p>
+          )}
+
           <div className="sticky bottom-0 -mx-6 mt-6 flex items-center justify-end gap-3 bg-obsidian px-6 py-4">
             <Button type="button" variant="ghost" onClick={onClose}>
               Cancel

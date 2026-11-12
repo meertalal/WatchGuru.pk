@@ -1,0 +1,45 @@
+{
+    "name": "watchguru/api",
+    "description": "WatchGuru.pk storefront API — Slim 4, Doctrine ORM, MySQL",
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": "^8.2",
+        "ext-json": "*",
+        "ext-pdo": "*",
+        "doctrine/dbal": "^4.0",
+        "doctrine/migrations": "^3.0",
+        "doctrine/orm": "^3.0",
+        "monolog/monolog": "^2.8",
+        "php-di/php-di": "^6.4",
+        "phpmailer/phpmailer": "^7.2",
+        "slim/psr7": "^1.5",
+        "slim/slim": "^4.10",
+        "symfony/cache": "^7.0",
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5",
+        "squizlabs/php_codesniffer": "^3.7"
+    },
+    "config": {
+        "process-timeout": 0,
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "WatchGuru\\Migrations\\": "migrations/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "start": "@php -S 127.0.0.1:8090 -t public",
+        "console": "@php bin/console",
+        "test": "@php vendor/bin/phpunit"
+    }
+}

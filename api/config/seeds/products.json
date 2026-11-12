@@ -1,0 +1,2059 @@
+[
+  {
+    "id": "tc-001",
+    "slug": "meridian-heritage-classic-38",
+    "name": "Heritage Classic 38",
+    "brand": "Meridian",
+    "price": 1341160,
+    "description": "The Heritage Classic 38 distils more than a century of Swiss watchmaking into a restrained three-hand dress watch. Its ivory lacquer dial is applied by hand, and the in-house automatic calibre is finished with Côtes de Genève visible through the sapphire case back.",
+    "highlights": [
+      "Hand-lacquered ivory dial",
+      "In-house automatic calibre",
+      "38mm case for an understated wrist presence"
+    ],
+    "category": "men",
+    "collections": [
+      "Heritage",
+      "Dress"
+    ],
+    "dialColor": "Ivory",
+    "strapType": "Leather",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "38mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "Sapphire Crystal",
+      "Date Display"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "38mm polished stainless steel"
+      },
+      {
+        "label": "Movement",
+        "value": "Meridian MC-201 automatic, 42h power reserve"
+      },
+      {
+        "label": "Crystal",
+        "value": "Domed sapphire, anti-reflective"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "50m / 5 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Saddle-brown alligator leather"
+      }
+    ],
+    "badge": "bestseller",
+    "inStock": true,
+    "stock": 12,
+    "addedAt": "2025-02-14",
+    "images": [
+      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1518131672697-613becd4fab5?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-001-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 1341160,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-001-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 1408356,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-001-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 1341160,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-001-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 1448453,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-002",
+    "slug": "meridian-chronomaster-automatic",
+    "name": "Chronomaster Automatic",
+    "brand": "Meridian",
+    "price": 1714472,
+    "compareAtPrice": 2046306,
+    "description": "A column-wheel chronograph with an unmistakable architectural dial. Two tone-on-tone sub-dials and a tachymeter scale frame a movement that beats at 28,800 vibrations per hour. Measured, precise and quietly confident.",
+    "highlights": [
+      "Column-wheel chronograph movement",
+      "Tone-on-tone tri-compax dial",
+      "Tachymeter bezel in polished steel"
+    ],
+    "category": "men",
+    "collections": [
+      "Chronograph",
+      "Sport"
+    ],
+    "dialColor": "Charcoal",
+    "strapType": "Stainless Steel",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "41mm",
+    "movement": "Automatic Chronograph",
+    "features": [
+      "Automatic Movement",
+      "Chronograph",
+      "Sapphire Crystal",
+      "Date Display"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "41mm brushed and polished steel"
+      },
+      {
+        "label": "Movement",
+        "value": "Meridian MC-450 column-wheel chronograph, 60h"
+      },
+      {
+        "label": "Crystal",
+        "value": "Sapphire with double AR coating"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "100m / 10 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Integrated steel bracelet, butterfly clasp"
+      }
+    ],
+    "badge": "sale",
+    "inStock": true,
+    "stock": 8,
+    "addedAt": "2025-03-02",
+    "images": [
+      "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-002-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 1714472,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-002-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 1800196,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-002-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 1714472,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-002-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 1851630,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-003",
+    "slug": "meridian-marina-diver-300",
+    "name": "Marina Diver 300",
+    "brand": "Meridian",
+    "price": 1092285,
+    "description": "Engineered for the deep and refined for the desk. A 300-metre diver with a ceramic bezel, screw-down crown and a lumed dial that stays legible in the murkiest water.",
+    "highlights": [
+      "300m water resistance",
+      "Ceramic unidirectional bezel",
+      "SuperLumiNova hour markers"
+    ],
+    "category": "men",
+    "collections": [
+      "Diver",
+      "Sport"
+    ],
+    "dialColor": "Midnight Blue",
+    "strapType": "Stainless Steel",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "42mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "Sapphire Crystal",
+      "Water Resistant",
+      "Date Display"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "42mm stainless steel, screw-down crown"
+      },
+      {
+        "label": "Movement",
+        "value": "Meridian MC-320 automatic, 48h"
+      },
+      {
+        "label": "Bezel",
+        "value": "Unidirectional ceramic, 120 clicks"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "300m / 30 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Steel bracelet with dive extension"
+      }
+    ],
+    "inStock": true,
+    "stock": 20,
+    "addedAt": "2024-11-18",
+    "images": [
+      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1547996160-71dfabbce5fa?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-003-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 1092285,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-003-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 1147037,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-003-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 1092285,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-003-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 1179668,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-004",
+    "slug": "beaumont-sovereign-moonphase",
+    "name": "Sovereign Moonphase",
+    "brand": "Beaumont",
+    "price": 3428945,
+    "description": "A moonphase complication rendered in enamel and gold. The Sovereign pairs an astronomical display with a hand-guilloché dial, a quietly extraordinary piece for those who read the sky as well as the time.",
+    "highlights": [
+      "Astronomical moonphase complication",
+      "Hand-guilloché dial in ivory enamel",
+      "18k rose gold case"
+    ],
+    "category": "men",
+    "collections": [
+      "Heritage",
+      "Dress",
+      "Executive"
+    ],
+    "dialColor": "Champagne",
+    "strapType": "Leather",
+    "caseMaterial": "18k Rose Gold",
+    "caseSize": "39mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "Sapphire Crystal",
+      "Power Reserve",
+      "Date Display"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "39mm 18k rose gold"
+      },
+      {
+        "label": "Movement",
+        "value": "Beaumont B-14 automatic, 72h"
+      },
+      {
+        "label": "Complication",
+        "value": "Moonphase with power-reserve indicator"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "30m / 3 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Hand-stitched cognac alligator"
+      }
+    ],
+    "badge": "bestseller",
+    "inStock": true,
+    "stock": 5,
+    "addedAt": "2025-01-22",
+    "images": [
+      "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-004-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 3428945,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-004-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 3600392,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-004-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 3428945,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-004-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 3703260,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-005",
+    "slug": "beaumont-aurelia-rose-34",
+    "name": "Aurelia Rosé 34",
+    "brand": "Beaumont",
+    "price": 2461097,
+    "description": "Feminine, luminous and precise. The Aurelia Rosé pairs a mother-of-pearl dial with a rose gold case and a slender leather strap. A watch designed to be worn close and noticed quietly.",
+    "highlights": [
+      "Natural mother-of-pearl dial",
+      "Slim 8.4mm rose gold case",
+      "Diamond-set hour markers"
+    ],
+    "category": "women",
+    "collections": [
+      "Dress",
+      "Heritage"
+    ],
+    "dialColor": "Mother of Pearl",
+    "strapType": "Leather",
+    "caseMaterial": "18k Rose Gold",
+    "caseSize": "34mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "Sapphire Crystal",
+      "Diamond Set"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "34mm 18k rose gold, 8.4mm thin"
+      },
+      {
+        "label": "Movement",
+        "value": "Beaumont B-09 automatic, 38h"
+      },
+      {
+        "label": "Dial",
+        "value": "Natural mother-of-pearl with diamond indices"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "50m / 5 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Blush calf leather"
+      }
+    ],
+    "badge": "new",
+    "inStock": true,
+    "stock": 9,
+    "addedAt": "2025-06-05",
+    "images": [
+      "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1513094735237-8f2714d57c13?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-005-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 2461097,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-005-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 2584152,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-005-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 2461097,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-005-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 2657985,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-006",
+    "slug": "beaumont-regent-chronograph",
+    "name": "Regent Chronograph",
+    "brand": "Beaumont",
+    "price": 2115438,
+    "description": "An English sporting chronograph with a warm champagne dial and vintage-inspired proportions. Understated hardware, an oversized crown, and a case profile that slips beneath a cuff.",
+    "highlights": [
+      "Bi-compax chronograph layout",
+      "Sunburst champagne dial",
+      "Vintage-inspired 40mm case"
+    ],
+    "category": "men",
+    "collections": [
+      "Chronograph",
+      "Heritage"
+    ],
+    "dialColor": "Champagne",
+    "strapType": "Leather",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "40mm",
+    "movement": "Automatic Chronograph",
+    "features": [
+      "Automatic Movement",
+      "Chronograph",
+      "Sapphire Crystal"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "40mm stainless steel"
+      },
+      {
+        "label": "Movement",
+        "value": "Beaumont B-32 automatic chronograph, 55h"
+      },
+      {
+        "label": "Crystal",
+        "value": "Box-domed sapphire"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "100m / 10 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Tan calf leather with pin buckle"
+      }
+    ],
+    "inStock": true,
+    "stock": 14,
+    "addedAt": "2024-09-30",
+    "images": [
+      "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-006-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 2115438,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-006-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 2221348,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-006-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 2115438,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-006-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 2284673,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-007",
+    "slug": "aurelian-celestia-diamond-32",
+    "name": "Celestia Diamond 32",
+    "brand": "Aurelian",
+    "price": 3097111,
+    "description": "The Celestia sets sixty brilliant-cut diamonds into a snow-set bezel that catches every flicker of light. Beneath it, a silvered dial and a whisper-thin automatic movement keep time with equal grace.",
+    "highlights": [
+      "Sixty snow-set diamonds",
+      "Silvered opaline dial",
+      "Ultra-thin automatic movement"
+    ],
+    "category": "women",
+    "collections": [
+      "Dress",
+      "Executive"
+    ],
+    "dialColor": "Silver",
+    "strapType": "Milanese Mesh",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "32mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "Sapphire Crystal",
+      "Diamond Set"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "32mm steel with diamond-set bezel"
+      },
+      {
+        "label": "Movement",
+        "value": "Aurelian A-05 automatic, 40h"
+      },
+      {
+        "label": "Stones",
+        "value": "60 brilliant-cut diamonds, 0.48ct"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "30m / 3 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Milanese mesh with sliding clasp"
+      }
+    ],
+    "badge": "new",
+    "inStock": true,
+    "stock": 6,
+    "addedAt": "2025-07-11",
+    "images": [
+      "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1513094735237-8f2714d57c13?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-007-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 3097111,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-007-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 3251967,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-007-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 3097111,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-007-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 3344880,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-008",
+    "slug": "aurelian-nocturne-skeleton",
+    "name": "Nocturne Skeleton",
+    "brand": "Aurelian",
+    "price": 2696146,
+    "description": "Every bridge is chamfered by hand and every wheel left exposed. The Nocturne is an open-worked automatic that turns a movement into architecture, presented behind sapphire on both sides.",
+    "highlights": [
+      "Hand-chamfered open-worked movement",
+      "Sapphire dial and exhibition back",
+      "Blackened skeleton hands"
+    ],
+    "category": "unisex",
+    "collections": [
+      "Dress",
+      "Chronograph"
+    ],
+    "dialColor": "Black",
+    "strapType": "Milanese Mesh",
+    "caseMaterial": "Titanium",
+    "caseSize": "40mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "Sapphire Crystal",
+      "Skeleton Dial"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "40mm grade-5 titanium"
+      },
+      {
+        "label": "Movement",
+        "value": "Aurelian A-22 skeleton automatic, 50h"
+      },
+      {
+        "label": "Crystal",
+        "value": "Sapphire front and case back"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "50m / 5 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Black Milanese mesh"
+      }
+    ],
+    "inStock": true,
+    "stock": 7,
+    "addedAt": "2025-04-19",
+    "images": [
+      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1622434641406-a158123450f9?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1518131672697-613becd4fab5?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-008-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 2696146,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-008-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 2831092,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-008-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 2696146,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-008-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 2911838,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-009",
+    "slug": "aurelian-solstice-gmt",
+    "name": "Solstice GMT",
+    "brand": "Aurelian",
+    "price": 1493250,
+    "compareAtPrice": 1686820,
+    "description": "A traveller’s companion with a second time zone and a 24-hour chapter ring in sapphire blue. The jumping local hour makes resetting the time across borders effortless.",
+    "highlights": [
+      "True GMT with jumping local hour",
+      "Two-tone sapphire-blue bezel",
+      "70-hour power reserve"
+    ],
+    "category": "men",
+    "collections": [
+      "Aviator",
+      "Sport"
+    ],
+    "dialColor": "Midnight Blue",
+    "strapType": "Milanese Mesh",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "41mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "GMT",
+      "Sapphire Crystal",
+      "Water Resistant"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "41mm stainless steel"
+      },
+      {
+        "label": "Movement",
+        "value": "Aurelian A-31 GMT automatic, 70h"
+      },
+      {
+        "label": "Bezel",
+        "value": "Sapphire crystal 24h bidirection"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "200m / 20 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Steel mesh with quick-release"
+      }
+    ],
+    "badge": "sale",
+    "inStock": true,
+    "stock": 16,
+    "addedAt": "2024-12-08",
+    "images": [
+      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-009-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 1493250,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-009-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 1567913,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-009-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 1493250,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-009-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 1612710,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-010",
+    "slug": "halcyon-aeris-aviator",
+    "name": "Aeris Aviator",
+    "brand": "Halcyon",
+    "price": 884889,
+    "description": "A cockpit instrument reimagined for the wrist. High-contrast Arabic numerals, an oversize onion crown and an anti-magnetic movement keep the Aeris legible and reliable at altitude.",
+    "highlights": [
+      "Anti-magnetic movement",
+      "High-contrast luminous numerals",
+      "Oversize onion crown"
+    ],
+    "category": "men",
+    "collections": [
+      "Aviator",
+      "Sport"
+    ],
+    "dialColor": "Black",
+    "strapType": "Leather",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "43mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "Sapphire Crystal",
+      "Date Display"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "43mm stainless steel, sandblasted"
+      },
+      {
+        "label": "Movement",
+        "value": "Halcyon H-7 automatic, 56h"
+      },
+      {
+        "label": "Crystal",
+        "value": "Flat sapphire, AR coated"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "100m / 10 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Black aviator leather"
+      }
+    ],
+    "inStock": true,
+    "stock": 22,
+    "addedAt": "2024-10-04",
+    "images": [
+      "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-010-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 884889,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-010-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 929133,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-010-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 884889,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-010-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 955680,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-011",
+    "slug": "halcyon-lumen-slim-dress",
+    "name": "Lumen Slim Dress",
+    "brand": "Halcyon",
+    "price": 799165,
+    "description": "A slim, Bauhaus-inspired dress watch with a matte midnight dial and a single, perfect date window. At 8.2mm it disappears under a shirt cuff and reappears only when you need it.",
+    "highlights": [
+      "Ultra-thin 8.2mm profile",
+      "Matte midnight-blue dial",
+      "Bauhaus-minimal indices"
+    ],
+    "category": "unisex",
+    "collections": [
+      "Dress"
+    ],
+    "dialColor": "Midnight Blue",
+    "strapType": "Leather",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "38mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "Sapphire Crystal",
+      "Date Display"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "38mm steel, 8.2mm thin"
+      },
+      {
+        "label": "Movement",
+        "value": "Halcyon H-3 automatic, 42h"
+      },
+      {
+        "label": "Dial",
+        "value": "Matte midnight blue with applied indices"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "50m / 5 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Black shell cordovan leather"
+      }
+    ],
+    "inStock": true,
+    "stock": 18,
+    "addedAt": "2025-02-28",
+    "images": [
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-011-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 799165,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-011-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 839262,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-011-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 799165,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-011-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 863043,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-012",
+    "slug": "halcyon-tide-diver-gmt",
+    "name": "Tide Diver GMT",
+    "brand": "Halcyon",
+    "price": 1133764,
+    "description": "A dive watch that also keeps a second time zone. The ceramic bezel and 300-metre rating handle the water; the GMT hand handles the itinerary.",
+    "highlights": [
+      "Dual-time GMT complication",
+      "Ceramic dive bezel",
+      "300m water resistance"
+    ],
+    "category": "men",
+    "collections": [
+      "Diver",
+      "Sport"
+    ],
+    "dialColor": "Forest Green",
+    "strapType": "Rubber",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "42mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "GMT",
+      "Water Resistant",
+      "Sapphire Crystal"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "42mm stainless steel"
+      },
+      {
+        "label": "Movement",
+        "value": "Halcyon H-21 GMT automatic, 64h"
+      },
+      {
+        "label": "Bezel",
+        "value": "Green ceramic, 120-click"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "300m / 30 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Green FKM rubber with buckle"
+      }
+    ],
+    "inStock": true,
+    "stock": 13,
+    "addedAt": "2025-03-21",
+    "images": [
+      "https://images.unsplash.com/photo-1547996160-71dfabbce5fa?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-012-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 1133764,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-012-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 1190452,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-012-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 1133764,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-012-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 1224465,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-013",
+    "slug": "nordvik-fjord-diver-42",
+    "name": "Fjord Diver 42",
+    "brand": "Nordvik",
+    "price": 732799,
+    "compareAtPrice": 857236,
+    "description": "Built for cold water and long days. The Fjord pairs a brushed steel case with a glacier dial and a rubber strap engineered to stay supple in sub-zero conditions.",
+    "highlights": [
+      "Cold-resistant rubber strap",
+      "Glacier-blue gradient dial",
+      "Screw-down crown"
+    ],
+    "category": "men",
+    "collections": [
+      "Diver",
+      "Sport"
+    ],
+    "dialColor": "Silver",
+    "strapType": "Rubber",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "42mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "Water Resistant",
+      "Sapphire Crystal",
+      "Date Display"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "42mm brushed stainless steel"
+      },
+      {
+        "label": "Movement",
+        "value": "Nordvik N-18 automatic, 41h"
+      },
+      {
+        "label": "Crystal",
+        "value": "Sapphire, domed"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "200m / 20 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Black FKM rubber"
+      }
+    ],
+    "badge": "sale",
+    "inStock": true,
+    "stock": 25,
+    "addedAt": "2024-08-15",
+    "images": [
+      "https://images.unsplash.com/photo-1547996160-71dfabbce5fa?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-013-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 732799,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-013-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 769577,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-013-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 732799,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-013-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 791423,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-014",
+    "slug": "nordvik-glacier-sport-chrono",
+    "name": "Glacier Sport Chrono",
+    "brand": "Nordvik",
+    "price": 962317,
+    "description": "A quartz-accurate sports chronograph with a high-contrast panda dial and a tachymeter scale. Rugged, readable, and ready for the weekend.",
+    "highlights": [
+      "Panda-dial chronograph",
+      "Tachymeter bezel",
+      "Shock-resistant case"
+    ],
+    "category": "men",
+    "collections": [
+      "Sport",
+      "Chronograph"
+    ],
+    "dialColor": "Ivory",
+    "strapType": "Stainless Steel",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "44mm",
+    "movement": "Quartz Chronograph",
+    "features": [
+      "Chronograph",
+      "Sapphire Crystal",
+      "Water Resistant",
+      "Date Display"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "44mm stainless steel"
+      },
+      {
+        "label": "Movement",
+        "value": "Nordvik N-Q7 thermocompensated quartz"
+      },
+      {
+        "label": "Crystal",
+        "value": "Sapphire"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "100m / 10 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Steel bracelet with spring bars"
+      }
+    ],
+    "inStock": true,
+    "stock": 30,
+    "addedAt": "2024-07-02",
+    "images": [
+      "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-014-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 962317,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-014-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 1010433,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-014-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 962317,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-014-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 1039191,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-015",
+    "slug": "nordvik-aurora-automatic-39",
+    "name": "Aurora Automatic 39",
+    "brand": "Nordvik",
+    "price": 547525,
+    "description": "An entry into mechanical watchmaking that compromises nothing on finish. A green sunray dial, applied numerals, and a reliable automatic movement at an honest price.",
+    "highlights": [
+      "Forest-green sunray dial",
+      "Applied polished numerals",
+      "Everyday automatic movement"
+    ],
+    "category": "unisex",
+    "collections": [
+      "Heritage",
+      "Dress"
+    ],
+    "dialColor": "Forest Green",
+    "strapType": "Milanese Mesh",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "39mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "Sapphire Crystal",
+      "Date Display"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "39mm stainless steel"
+      },
+      {
+        "label": "Movement",
+        "value": "Nordvik N-12 automatic, 40h"
+      },
+      {
+        "label": "Dial",
+        "value": "Green sunray with applied indices"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "50m / 5 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Steel Milanese mesh"
+      }
+    ],
+    "badge": "bestseller",
+    "inStock": true,
+    "stock": 40,
+    "addedAt": "2025-05-10",
+    "images": [
+      "https://images.unsplash.com/photo-1609587312208-cad544e31466?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-015-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 547525,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-015-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 574901,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-015-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 547525,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-015-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 591216,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-016",
+    "slug": "delacroix-parisian-rose-30",
+    "name": "Parisian Rosé 30",
+    "brand": "Delacroix",
+    "price": 1866563,
+    "description": "A jewel of a watch from the Paris atelier. The Parisian Rosé fits a rose-gold case, a guilloché dial and a cabochon crown onto a 30mm canvas. Pure, precise and unmistakably French.",
+    "highlights": [
+      "Guilloché rose-gold dial",
+      "Cabochon-set crown",
+      "Petal-shaped 30mm case"
+    ],
+    "category": "women",
+    "collections": [
+      "Dress",
+      "Fashion"
+    ],
+    "dialColor": "Rose Gold",
+    "strapType": "Leather",
+    "caseMaterial": "18k Rose Gold",
+    "caseSize": "30mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "Sapphire Crystal"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "30mm 18k rose gold, petal profile"
+      },
+      {
+        "label": "Movement",
+        "value": "Delacroix D-6 automatic, 44h"
+      },
+      {
+        "label": "Dial",
+        "value": "Hand-guilloché rose gold"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "30m / 3 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Ivory satin leather"
+      }
+    ],
+    "badge": "new",
+    "inStock": true,
+    "stock": 8,
+    "addedAt": "2025-07-28",
+    "images": [
+      "https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1513094735237-8f2714d57c13?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-016-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 1866563,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-016-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 1960029,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-016-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 1866563,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-016-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 2015888,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-017",
+    "slug": "delacroix-grand-complication",
+    "name": "Grand Complication",
+    "brand": "Delacroix",
+    "price": 7604515,
+    "description": "The atelier’s masterwork: a perpetual calendar, minute repeater and tourbillon united in a single movement, cased in platinum and limited to twenty-five pieces worldwide. A collector’s horological statement.",
+    "highlights": [
+      "Perpetual calendar and minute repeater",
+      "One-minute tourbillon",
+      "Limited to 25 pieces worldwide"
+    ],
+    "category": "men",
+    "collections": [
+      "Heritage",
+      "Dress",
+      "Executive",
+      "Fashion"
+    ],
+    "dialColor": "Charcoal",
+    "strapType": "Leather",
+    "caseMaterial": "Platinum",
+    "caseSize": "41mm",
+    "movement": "Manual Tourbillon",
+    "features": [
+      "Sapphire Crystal",
+      "Power Reserve",
+      "Limited Edition",
+      "Date Display"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "41mm 950 platinum"
+      },
+      {
+        "label": "Movement",
+        "value": "Delacroix DC-1 hand-wound, tourbillon, 100h"
+      },
+      {
+        "label": "Complications",
+        "value": "Perpetual calendar, minute repeater"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "30m / 3 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Hand-stitched black alligator"
+      }
+    ],
+    "badge": "limited",
+    "inStock": true,
+    "stock": 2,
+    "addedAt": "2025-01-05",
+    "images": [
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-017-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 7604515,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-017-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 7984740,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-017-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 7604515,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-017-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 8212876,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-018",
+    "slug": "delacroix-etoile-diamond",
+    "name": "Étoile Diamond",
+    "brand": "Delacroix",
+    "price": 3954348,
+    "description": "A constellation set in diamonds around a deep midnight dial. The Étoile scatters brilliant-cut stones across the bezel and lugs, mirroring a clear winter sky.",
+    "highlights": [
+      "Snow-set diamond bezel and lugs",
+      "Midnight-blue sunray dial",
+      "Limited annual production"
+    ],
+    "category": "women",
+    "collections": [
+      "Dress",
+      "Executive",
+      "Fashion"
+    ],
+    "dialColor": "Midnight Blue",
+    "strapType": "Leather",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "33mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "Sapphire Crystal",
+      "Diamond Set",
+      "Limited Edition"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "33mm steel with diamond-set bezel"
+      },
+      {
+        "label": "Movement",
+        "value": "Delacroix D-11 automatic, 46h"
+      },
+      {
+        "label": "Stones",
+        "value": "112 brilliant-cut diamonds, 0.92ct"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "50m / 5 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Midnight satin leather"
+      }
+    ],
+    "badge": "limited",
+    "inStock": true,
+    "stock": 4,
+    "addedAt": "2025-06-30",
+    "images": [
+      "https://images.unsplash.com/photo-1513094735237-8f2714d57c13?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-018-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 3954348,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-018-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 4152065,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-018-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 3954348,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-018-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 4270695,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-019",
+    "slug": "meridian-ivory-dress-36",
+    "name": "Ivory Dress 36",
+    "brand": "Meridian",
+    "price": 995500,
+    "description": "A softly rounded dress watch with an ivory lacquer dial and a warm gold-tone case. The Ivory Dress 36 is the quiet answer to everyday elegance.",
+    "highlights": [
+      "Warm ivory lacquer dial",
+      "Rounded 36mm case",
+      "Slim profile for daily wear"
+    ],
+    "category": "women",
+    "collections": [
+      "Dress",
+      "Heritage"
+    ],
+    "dialColor": "Ivory",
+    "strapType": "Leather",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "36mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "Sapphire Crystal",
+      "Date Display"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "36mm steel with gold-tone finish"
+      },
+      {
+        "label": "Movement",
+        "value": "Meridian MC-118 automatic, 40h"
+      },
+      {
+        "label": "Dial",
+        "value": "Ivory lacquer with applied indices"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "50m / 5 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Cognac calf leather"
+      }
+    ],
+    "inStock": true,
+    "stock": 15,
+    "addedAt": "2025-04-02",
+    "images": [
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-019-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 995500,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-019-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 1045275,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-019-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 995500,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-019-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 1075140,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "tc-020",
+    "slug": "beaumont-monarch-perpetual",
+    "name": "Monarch Perpetual",
+    "brand": "Beaumont",
+    "price": 5226375,
+    "description": "A perpetual calendar that will not need a correction until the year 2100. The Monarch displays day, date, month and moonphase with English restraint and Swiss precision.",
+    "highlights": [
+      "Perpetual calendar to 2100",
+      "Moonphase at six o’clock",
+      "Limited to 50 pieces"
+    ],
+    "category": "men",
+    "collections": [
+      "Heritage",
+      "Dress",
+      "Executive"
+    ],
+    "dialColor": "Ivory",
+    "strapType": "Leather",
+    "caseMaterial": "18k Rose Gold",
+    "caseSize": "40mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "Sapphire Crystal",
+      "Date Display",
+      "Power Reserve",
+      "Limited Edition"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "40mm 18k rose gold"
+      },
+      {
+        "label": "Movement",
+        "value": "Beaumont B-40 perpetual calendar, 65h"
+      },
+      {
+        "label": "Complications",
+        "value": "Day, date, month, moonphase"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "30m / 3 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Dark brown alligator"
+      }
+    ],
+    "badge": "limited",
+    "inStock": true,
+    "stock": 3,
+    "addedAt": "2025-02-01",
+    "images": [
+      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80"
+    ],
+    "variants": [
+      {
+        "id": "tc-020-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 5226375,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-020-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 5487694,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-020-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 5226375,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "tc-020-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 5644485,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ]
+  },
+  {
+    "id": "wg-001",
+    "slug": "watchguru-atelier-wg01-heritage-auto",
+    "name": "WG-01 Heritage Auto",
+    "brand": "WatchGuru Atelier",
+    "price": 677493,
+    "compareAtPrice": 801931,
+    "description": "The first piece from our own maison. The WG-01 pairs a hand-grained silver sunray dial with the in-house WG-2101 automatic calibre, finished with perlage and assembled in Geneva. Every case back is individually engraved with its edition number.",
+    "highlights": [
+      "In-house WG-2101 automatic calibre, 46h reserve",
+      "Hand-grained silver sunray dial",
+      "Numbered case back, engraved by hand"
+    ],
+    "category": "men",
+    "collections": [
+      "Heritage",
+      "Signature"
+    ],
+    "dialColor": "Silver",
+    "strapType": "Leather",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "39mm",
+    "movement": "Automatic",
+    "features": [
+      "Automatic Movement",
+      "Sapphire Crystal",
+      "Date Display"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "39mm brushed steel, 10.5mm thin"
+      },
+      {
+        "label": "Movement",
+        "value": "WatchGuru WG-2101 automatic, 46h power reserve"
+      },
+      {
+        "label": "Crystal",
+        "value": "Box sapphire, anti-reflective underside"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "50m / 5 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Caramel calf leather, quick-release"
+      },
+      {
+        "label": "Warranty",
+        "value": "1-year WatchGuru Atelier warranty"
+      }
+    ],
+    "variants": [
+      {
+        "id": "wg-001-silver",
+        "name": "Classic Silver",
+        "swatch": "#cfc9c0",
+        "price": 677493,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "wg-001-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 677493,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "wg-001-slate",
+        "name": "Slate Black",
+        "swatch": "#33343a",
+        "price": 677493,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "wg-001-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 677493,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      }
+    ],
+    "badge": "new",
+    "inStock": true,
+    "stock": 15,
+    "addedAt": "2026-09-18",
+    "images": [
+      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1518131672697-613becd4fab5?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&w=1200&q=80"
+    ]
+  },
+  {
+    "id": "wg-002",
+    "slug": "watchguru-atelier-wg02-chronosport-42",
+    "name": "WG-02 Chronosport 42",
+    "brand": "WatchGuru Atelier",
+    "price": 871063,
+    "description": "Our sports chronograph, built around a column-wheel WG-440 calibre with a vertical clutch. The matte ceramic bezel, waffle-style pushers and tachymeter scale make it the sharpest tool we have ever cased.",
+    "highlights": [
+      "Column-wheel WG-440 with vertical clutch",
+      "Matte ceramic bezel, 120 clicks",
+      "Tachymeter scale, applied steel indices"
+    ],
+    "category": "men",
+    "collections": [
+      "Chronograph",
+      "Sport",
+      "Signature"
+    ],
+    "dialColor": "Charcoal",
+    "strapType": "Stainless Steel",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "42mm",
+    "movement": "Automatic Chronograph",
+    "features": [
+      "Automatic Movement",
+      "Chronograph",
+      "Sapphire Crystal",
+      "Date Display"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "42mm satin-brushed steel, 13.2mm"
+      },
+      {
+        "label": "Movement",
+        "value": "WatchGuru WG-440 column-wheel chronograph, 55h"
+      },
+      {
+        "label": "Crystal",
+        "value": "Sapphire, double anti-reflective coating"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "100m / 10 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Brushed steel bracelet, tool-free micro-adjust"
+      },
+      {
+        "label": "Warranty",
+        "value": "1-year WatchGuru Atelier warranty"
+      }
+    ],
+    "variants": [
+      {
+        "id": "wg-002-matte",
+        "name": "Matte Black",
+        "swatch": "#2b2c2f",
+        "price": 871063,
+        "image": "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "wg-002-steel",
+        "name": "Classic Silver",
+        "swatch": "#c9c7c2",
+        "price": 871063,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "wg-002-champagne",
+        "name": "Champagne Gold",
+        "swatch": "#d8bb8a",
+        "price": 871063,
+        "image": "https://images.unsplash.com/photo-1594576722512-582bcd021646?auto=format&fit=crop&w=1200&q=80"
+      }
+    ],
+    "badge": "bestseller",
+    "inStock": true,
+    "stock": 9,
+    "addedAt": "2026-08-02",
+    "images": [
+      "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&w=1200&q=80"
+    ]
+  },
+  {
+    "id": "wg-003",
+    "slug": "watchguru-atelier-wg03-luna-34",
+    "name": "WG-03 Luna 34",
+    "brand": "WatchGuru Atelier",
+    "price": 522638,
+    "compareAtPrice": 622188,
+    "description": "A dress watch for her, in our own atelier. The WG-03 sets a mother-of-pearl dial beneath slender dauphine hands, carried on a Milanese mesh bracelet woven in Italy. Quietly radiant, every single day.",
+    "highlights": [
+      "Genuine mother-of-pearl dial",
+      "Italian Milanese mesh bracelet",
+      "Slender dauphine hands, double-domed sapphire"
+    ],
+    "category": "women",
+    "collections": [
+      "Dress",
+      "Signature"
+    ],
+    "dialColor": "Mother of Pearl",
+    "strapType": "Milanese Mesh",
+    "caseMaterial": "Stainless Steel",
+    "caseSize": "34mm",
+    "movement": "Quartz",
+    "features": [
+      "Sapphire Crystal",
+      "Date Display"
+    ],
+    "specs": [
+      {
+        "label": "Case",
+        "value": "34mm polished steel, 8.1mm thin"
+      },
+      {
+        "label": "Movement",
+        "value": "Swiss Ronda 515 quartz, 54-month battery"
+      },
+      {
+        "label": "Crystal",
+        "value": "Double-domed sapphire"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "30m / 3 ATM"
+      },
+      {
+        "label": "Strap",
+        "value": "Italian Milanese mesh, adjustable clasp"
+      },
+      {
+        "label": "Warranty",
+        "value": "1-year WatchGuru Atelier warranty"
+      }
+    ],
+    "variants": [
+      {
+        "id": "wg-003-silver",
+        "name": "Classic Silver",
+        "swatch": "#d5d2cc",
+        "price": 522638,
+        "image": "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "wg-003-rose",
+        "name": "Rose Gold",
+        "swatch": "#c9948a",
+        "price": 522638,
+        "image": "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80"
+      },
+      {
+        "id": "wg-003-pearl",
+        "name": "Mother of Pearl",
+        "swatch": "#eadfd4",
+        "price": 522638,
+        "image": "https://images.unsplash.com/photo-1513094735237-8f2714d57c13?auto=format&fit=crop&w=1200&q=80"
+      }
+    ],
+    "badge": "sale",
+    "inStock": true,
+    "stock": 18,
+    "addedAt": "2026-10-11",
+    "images": [
+      "https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1612817288484-6f916006741a?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1513094735237-8f2714d57c13?auto=format&fit=crop&w=1200&q=80"
+    ]
+  }
+]
