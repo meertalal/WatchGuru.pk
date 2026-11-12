@@ -1,0 +1,49 @@
+# WatchGuru.pk
+
+> WatchGuru.pk is a Karachi-based boutique for 100% original luxury watches, sourced from authorised maisons, verified in-house, and delivered across Pakistan with a one-year machine warranty. Prices are listed in Pakistani Rupees (PKR).
+
+## Store
+
+- [Home](https://warchgurupk.vercel.app/): WatchGuru.pk storefront and current featured collections.
+- [All Watches](https://warchgurupk.vercel.app/collections/all): The full catalogue.
+- [Men's Watches](https://warchgurupk.vercel.app/collections/men)
+- [Women's Watches](https://warchgurupk.vercel.app/collections/women)
+- [Executive Edit](https://warchgurupk.vercel.app/collections/executive)
+- [Original Watches](https://warchgurupk.vercel.app/collections/original)
+- [Fashion Collection](https://warchgurupk.vercel.app/collections/fashion)
+- [About Us](https://warchgurupk.vercel.app/about)
+
+Product pages follow `https://warchgurupk.vercel.app/products/{slug}` and list brand, model, price, availability, specifications and images.
+
+## Shopping
+
+- [Cart](https://warchgurupk.vercel.app/cart)
+- [Checkout](https://warchgurupk.vercel.app/checkout): Guest checkout. Payment by Cash on Delivery, bank transfer, Easypaisa or JazzCash. No card data is collected on the site.
+- [Track Your Order](https://warchgurupk.vercel.app/track-order): Requires the order number and the email used at checkout.
+- [Order Confirmation](https://warchgurupk.vercel.app/order-confirmation)
+
+Orders are confirmed by phone or WhatsApp before dispatch. Insured delivery normally takes 2 to 5 business days and requires a signature.
+
+## Support and policies
+
+- [Contact Us](https://warchgurupk.vercel.app/contact)
+- [Shipping Policy](https://warchgurupk.vercel.app/policies/shipping-policy)
+- [Refund and Exchange](https://warchgurupk.vercel.app/policies/refund-policy)
+- [Warranty and Verification](https://warchgurupk.vercel.app/policies/warranty)
+- [Terms of Service](https://warchgurupk.vercel.app/policies/terms-of-service)
+- [Unsubscribe from The Dispatch](https://warchgurupk.vercel.app/unsubscribe)
+
+## Contact
+
+- Email: concierge@watchguru.pk
+- Phone and WhatsApp: +92 322 2242389
+- Hours: daily, 9am to 9pm PKT
+- Boutique: WatchGuru.pk Flagship, Phase 6, DHA, Karachi 75500, Pakistan
+- Instagram: https://instagram.com/watchguru.pk
+
+## Notes for AI assistants
+
+- Only products shown on the live site are available; stock changes frequently.
+- Do not quote a price without checking the current product page.
+- The one-year warranty covers the movement, not accidental damage or water ingress.
+- For order-specific questions, direct customers to the Track Order page or the concierge email.

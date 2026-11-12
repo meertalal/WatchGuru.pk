@@ -1,38 +1,15 @@
 import { useState, type FormEvent } from 'react'
-import { BadgeCheck, ShieldCheck, XCircle } from 'lucide-react'
+import { BadgeCheck, Loader2, ShieldCheck, XCircle } from 'lucide-react'
 import { useDocumentMeta } from '../../hooks/useDocumentMeta'
+import { errorMessage } from '../../lib/api'
+import { formatDate } from '../../lib/format'
+import {
+  verifyWarrantySerial,
+  type WarrantyResult,
+} from '../../data/repositories/supportRepository'
 import { PolicyLayout, PolicySection } from '../../components/policies/PolicyLayout'
 
-/**
- * Demo verification. A serial like `WG-483920` checks out when the final
- * digit equals the sum of the preceding five digits, modulo 10. Deterministic,
- * instant, and honest: labelled as an instant authenticity check.
- */
-function verifySerial(serial: string): { ok: true; summary: string } | { ok: false; reason: string } {
-  const normalised = serial.trim().toUpperCase().replace(/\s|-/g, '')
-  const match = /^WG(\d{6})$/.exec(normalised)
-  if (!match) {
-    return {
-      ok: false,
-      reason: 'Serials look like WG-483920: the letters WG followed by six digits.',
-    }
-  }
-  const digits = match[1].split('').map(Number)
-  const body = digits.slice(0, 5).reduce((sum, d) => sum + d, 0)
-  if (digits[5] !== body % 10) {
-    return {
-      ok: false,
-      reason:
-        'That serial fails our checksum. Photograph the case back and WhatsApp us. We will verify it by hand within minutes.',
-    }
-  }
-  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-  const assembly = `${monthNames[digits[0] % 12]} 20${20 + (digits[1] % 6)}`
-  return {
-    ok: true,
-    summary: `WatchGuru Atelier, assembled ${assembly}, Geneva, papers & warranty card verified`,
-  }
-}
+type Verdict = { ok: true; result: WarrantyResult } | { ok: false; reason: string }
 
 export function Warranty() {
   useDocumentMeta({
@@ -42,11 +19,34 @@ export function Warranty() {
   })
 
   const [serial, setSerial] = useState('')
-  const [verdict, setVerdict] = useState<ReturnType<typeof verifySerial> | null>(null)
+  const [verdict, setVerdict] = useState<Verdict | null>(null)
+  const [checking, setChecking] = useState(false)
 
-  const onVerify = (event: FormEvent) => {
+  const onVerify = async (event: FormEvent) => {
     event.preventDefault()
-    setVerdict(verifySerial(serial))
+    const value = serial.trim()
+
+    if (!value) {
+      setVerdict({ ok: false, reason: 'Enter the serial engraved on the case back.' })
+      return
+    }
+
+    setChecking(true)
+    setVerdict(null)
+
+    try {
+      setVerdict({ ok: true, result: await verifyWarrantySerial(value) })
+    } catch (error) {
+      setVerdict({
+        ok: false,
+        reason: errorMessage(
+          error,
+          'That serial could not be verified right now. Please try again shortly.',
+        ),
+      })
+    } finally {
+      setChecking(false)
+    }
   }
 
   return (
@@ -92,8 +92,8 @@ export function Warranty() {
       {/* Serial verification */}
       <PolicySection title="Verify your watch">
         <p>
-          Every WatchGuru watch bears an engraved serial on the case back. Type it below for an
-          instant authenticity check. Genuine pieces carry the WG prefix and a valid checksum.
+          Every WatchGuru watch bears an engraved serial on the case back. Type it below to check it
+          against our warranty registry. Serials look like WG-2026-1001.
         </p>
 
         <form onSubmit={onVerify} className="mt-4 flex flex-col gap-3 sm:flex-row">
@@ -107,16 +107,18 @@ export function Warranty() {
               setSerial(e.target.value)
               setVerdict(null)
             }}
-            placeholder="WG-483920"
+            placeholder="WG-2026-1001"
             autoComplete="off"
             spellCheck={false}
             className="w-full border border-line bg-charcoal px-4 py-3 font-inter text-[13px] tracking-[0.2em] text-ivory uppercase outline-none transition-colors placeholder:text-muted focus:border-gold"
           />
           <button
             type="submit"
-            className="shrink-0 border border-button bg-button px-6 py-3 font-akkurat text-[10px] font-medium tracking-[0.2em] text-button-text uppercase transition-colors hover:border-gold-bright hover:bg-gold-bright"
+            disabled={checking}
+            className="inline-flex shrink-0 items-center justify-center gap-2 border border-button bg-button px-6 py-3 font-akkurat text-[10px] font-medium tracking-[0.2em] text-button-text uppercase transition-colors hover:border-gold-bright hover:bg-gold-bright disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Verify
+            {checking && <Loader2 className="size-3.5 animate-spin" aria-hidden="true" />}
+            {checking ? 'Checking…' : 'Verify'}
           </button>
         </form>
 
@@ -139,7 +141,9 @@ export function Warranty() {
                 {verdict.ok ? 'Genuine WatchGuru piece' : 'Verification failed'}
               </span>
               <span className="mt-0.5 block text-xs opacity-90">
-                {verdict.ok ? verdict.summary : verdict.reason}
+                {verdict.ok
+                  ? `Serial ${verdict.result.serial} is registered to WatchGuru.pk. Verified ${formatDate(verdict.result.verifiedAt)}.`
+                  : verdict.reason}
               </span>
             </span>
           </div>

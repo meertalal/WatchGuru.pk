@@ -53,7 +53,7 @@ export function useDocumentMeta({
 
   useEffect(() => {
     const fullTitle = title.endsWith(SITE_SUFFIX) ? title : `${title}${SITE_SUFFIX}`
-    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://www.watchguru.pk'
+    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://warchgurupk.vercel.app'
     const canonical = `${origin}${pathname}`
     const resolvedImage = image
       ? image.startsWith('http')

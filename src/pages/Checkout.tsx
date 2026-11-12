@@ -12,18 +12,14 @@ import {
   Tag,
 } from 'lucide-react'
 import { formatPrice, classNames } from '../lib/format'
-import {
-  DEMO_COUPONS,
-  computeTotals,
-  findCoupon,
-  nowIso,
-  type Coupon,
-} from '../lib/cart'
-import { COD_ADVANCE_PKR, PAYMENT_METHOD_LABEL, generateOrderNumber } from '../lib/orders'
+import { DEMO_COUPONS, computeTotals, type Coupon } from '../lib/cart'
+import { COD_ADVANCE_PKR, PAYMENT_METHOD_LABEL } from '../lib/orders'
+import { errorMessage } from '../lib/api'
+import { lookupCoupon } from '../data/repositories/couponRepository'
 import { COUNTRIES, checkoutSchema, type CheckoutValues } from '../lib/validation'
 import { useCart, useOrders, useToast } from '../store'
 import { useDocumentMeta } from '../hooks/useDocumentMeta'
-import type { Order, PaymentMethod, ShippingDetails } from '../types'
+import type { PaymentMethod, ShippingDetails } from '../types'
 import { PageBanner } from '../components/layout/PageBanner'
 import { Container } from '../components/ui/Container'
 import { Button } from '../components/ui/Button'
@@ -79,8 +75,10 @@ export function Checkout() {
   const [couponInput, setCouponInput] = useState('')
   const [coupon, setCoupon] = useState<Coupon | null>(null)
   const [couponError, setCouponError] = useState('')
+  const [checkingCoupon, setCheckingCoupon] = useState(false)
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('cod')
   const [redirecting, setRedirecting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const {
     register,
@@ -131,20 +129,30 @@ export function Checkout() {
     )
   }
 
-  const applyCoupon = () => {
-    const found = findCoupon(couponInput)
-    if (!found) {
+  const applyCoupon = async () => {
+    const code = couponInput.trim()
+    if (!code) {
       setCoupon(null)
-      setCouponError('That code isn’t recognised. Try WATCHGURU10.')
+      setCouponError('Enter a coupon code.')
       return
     }
-    setCoupon(found)
-    setCouponError('')
-    notify(`Coupon ${found.code} applied: ${found.label}`, 'success')
+
+    setCheckingCoupon(true)
+    try {
+      const found = await lookupCoupon(code)
+      setCoupon(found)
+      setCouponError('')
+      notify(`Coupon ${found.code} applied: ${found.label}`, 'success')
+    } catch (error) {
+      setCoupon(null)
+      setCouponError(errorMessage(error, 'That code isn’t recognised.'))
+    } finally {
+      setCheckingCoupon(false)
+    }
   }
 
   const onSubmit = async (values: CheckoutValues) => {
-    await new Promise((resolve) => setTimeout(resolve, 700))
+    setSubmitError('')
 
     const shipping: ShippingDetails = {
       firstName: values.firstName,
@@ -159,37 +167,22 @@ export function Checkout() {
       country: values.country,
     }
 
-    const order: Order = {
-      orderNumber: generateOrderNumber(),
-      placedAt: nowIso(),
-      email: values.email,
-      customerName: `${values.firstName} ${values.lastName}`,
-      shipping,
-      lines: items.map(({ product, quantity }) => ({
-        productId: product.id,
-        slug: product.slug,
-        name: product.name,
-        brand: product.brand,
-        price: product.price,
-        quantity,
-        image: product.images[0],
-      })),
-      subtotal: totals.subtotal,
-      shippingCost: totals.shippingCost,
-      discount: totals.discount,
-      tax: totals.tax,
-      total: totals.total,
-      couponCode: coupon?.code,
-      paymentMethod,
-      status: 'processing',
-      statusHistory: [{ status: 'processing', at: nowIso() }],
-    }
+    try {
+      await placeOrder({
+        shipping,
+        items: items.map(({ product, quantity }) => ({ productId: product.id, quantity })),
+        couponCode: coupon?.code,
+        paymentMethod,
+      })
 
-    setRedirecting(true)
-    placeOrder(order)
-    clear()
-    notify('Order received. Our team will confirm within minutes.')
-    navigate('/order-confirmation')
+      setRedirecting(true)
+      clear()
+      notify('Order received. Our team will confirm within minutes.')
+      navigate('/order-confirmation')
+    } catch (error) {
+      setSubmitError(errorMessage(error, 'Your order could not be placed. Please try again.'))
+      notify(errorMessage(error, 'Your order could not be placed.'), 'error')
+    }
   }
 
   return (
@@ -409,8 +402,14 @@ export function Checkout() {
                       placeholder="Enter code"
                       className="w-full border border-line bg-charcoal px-3 py-2.5 font-inter text-[13px] font-light text-ivory outline-none transition-colors placeholder:text-muted focus:border-gold"
                     />
-                    <Button type="button" variant="outline" size="sm" onClick={applyCoupon}>
-                      Apply
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => void applyCoupon()}
+                      disabled={checkingCoupon}
+                    >
+                      {checkingCoupon ? 'Checking…' : 'Apply'}
                     </Button>
                   </div>
                   {couponError && <p className="mt-1.5 text-xs text-error">{couponError}</p>}
@@ -460,6 +459,12 @@ export function Checkout() {
                     </dd>
                   </div>
                 </dl>
+
+                {submitError && (
+                  <p role="alert" className="mt-4 border border-error/40 bg-error/10 px-4 py-3 text-[12px] leading-relaxed text-error">
+                    {submitError}
+                  </p>
+                )}
 
                 <Button
                   type="submit"

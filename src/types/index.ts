@@ -66,7 +66,7 @@ export interface Product {
   brand: string
   price: number
   /** Original price when the product is discounted. */
-  compareAtPrice?: number
+  compareAtPrice?: number | null
   description: string
   highlights: string[]
   images: string[]
@@ -81,7 +81,7 @@ export interface Product {
   specs: ProductSpec[]
   /** Optional finish variants (only where the catalogue actually offers them). */
   variants?: ProductVariant[]
-  badge?: ProductBadge
+  badge?: ProductBadge | null
   inStock: boolean
   stock: number
   /** ISO date used for "New Arrivals" ordering. */
@@ -149,40 +149,114 @@ export interface Order {
   paymentMethod: PaymentMethod
   status: OrderStatus
   statusHistory: OrderStatusEntry[]
-  /** Set when the order was placed by a signed-in customer. */
-  accountId?: string
 }
 
 /* ------------------------------------------------------------------ */
-/*  Customer accounts                                                  */
+/*  Store admin                                                        */
 /* ------------------------------------------------------------------ */
 
-export type AccountRole = 'customer' | 'admin'
+/* ------------------------------------------------------------------ */
+/*  Store admin — operations modules                                   */
+/* ------------------------------------------------------------------ */
 
-export interface CustomerAccount {
+/** One entry in the inventory ledger. */
+export interface StockMovement {
+  id: number | null
+  productId: string
+  productName: string
+  type: 'in' | 'out' | 'correction'
+  /** Signed change applied to stock. */
+  quantity: number
+  balanceAfter: number
+  reason: string
+  reference: string | null
+  createdAt: string
+}
+
+export interface StockSummary {
+  products: number
+  units: number
+  retailValue: number
+  lowStock: number
+  soldOut: number
+  threshold: number
+}
+
+export interface StockOverview {
+  summary: StockSummary
+  levels: Product[]
+  movements: StockMovement[]
+  threshold: number
+}
+
+export interface StockAdjustment {
+  productId: string
+  type: 'in' | 'out' | 'correction'
+  quantity: number
+  reason?: string
+}
+
+export interface AdminCoupon {
+  id: number
+  code: string
+  type: 'percent' | 'fixed'
+  value: number
+  label: string
+  active: boolean
+}
+
+export interface CouponInput {
+  code: string
+  type: 'percent' | 'fixed'
+  value: number
+  label: string
+  active: boolean
+}
+
+/** An aggregated guest customer, built from order history. */
+export interface Customer {
+  email: string
+  name: string
+  phone: string
+  city: string
+  ordersCount: number
+  totalSpent: number
+  firstOrderAt: string
+  lastOrderAt: string
+  orderNumbers: string[]
+}
+
+export interface AdminWarrantySerial {
+  id: number
+  serial: string
+  productId: string | null
+  verified: boolean
+  verifiedAt: string | null
+  createdAt: string
+}
+
+export interface NewsletterSubscriber {
+  id: number
+  email: string
+  createdAt: string
+}
+
+export interface ContactMessage {
+  id: number
+  name: string
+  email: string
+  subject: string
+  message: string
+  createdAt: string
+}
+
+/** The admin account returned by `/api/auth/login` and `/api/auth/me`. */
+export interface AdminAccount {
   id: string
   firstName: string
   lastName: string
   email: string
   phone: string
-  passwordHash: string
-  salt: string
-  role: AccountRole
+  role: 'admin'
   createdAt: string
-  address?: string
-  city?: string
-  state?: string
-  postalCode?: string
-  country?: string
 }
-
-/** The account shape that is safe to keep in memory and render. */
-export type AccountProfile = Omit<CustomerAccount, 'passwordHash' | 'salt'>
-
-/** Fields a customer may edit from their account dashboard. */
-export type ProfilePatch = Partial<
-  Pick<
-    CustomerAccount,
-    'firstName' | 'lastName' | 'phone' | 'address' | 'city' | 'state' | 'postalCode' | 'country'
-  >
->

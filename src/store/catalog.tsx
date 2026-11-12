@@ -2,34 +2,39 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
 } from 'react'
 import type { Product } from '../types'
 import { productRepository, type ProductRepository } from '../data/repositories/productRepository'
+import { errorMessage } from '../lib/api'
 import { priceBounds, searchCatalog, type PriceBounds } from '../lib/catalog'
 import { slugify } from '../lib/format'
 
 /**
  * Live catalogue: the single source of truth for products on screen.
  *
- * Wraps the ProductRepository implementation (default: localStorage seeded
- * from the factory catalogue). Admins mutate the catalogue through this
- * context; storefront pages read from it, so edits are visible everywhere
- * instantly.
+ * Loads the catalogue from the WatchGuru.pk API on mount. Admins mutate it
+ * through this context; storefront pages read from it, so edits are visible
+ * everywhere without a reload.
  */
 export interface CatalogContextValue {
   products: Product[]
   bounds: PriceBounds
+  loading: boolean
+  error: string | null
   getById: (id: string) => Product | undefined
   getBySlug: (slug: string) => Product | undefined
   search: (query: string) => Product[]
-  /** Insert or update a product. Returns the stored entity. */
-  saveProduct: (product: Product) => Product
-  removeProduct: (id: string) => void
-  /** Restore the factory catalogue (admin escape hatch). */
-  resetCatalogue: () => void
+  /** Insert (isNew) or update a product. Resolves with the stored entity. */
+  saveProduct: (product: Product, isNew?: boolean) => Promise<Product>
+  removeProduct: (id: string) => Promise<void>
+  /** Restore the seeded catalogue (admin escape hatch). */
+  resetCatalogue: () => Promise<void>
+  /** Re-fetch the catalogue from the API. */
+  refresh: () => Promise<void>
   /** Build a collision-free slug for a new product. */
   suggestSlug: (name: string) => string
 }
@@ -49,9 +54,49 @@ export function CatalogProvider({
   children: ReactNode
   repository?: ProductRepository
 }) {
-  const [products, setProducts] = useState<Product[]>(() => repository.list())
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-  const refresh = useCallback(() => setProducts(repository.list()), [repository])
+  const load = useCallback(async () => {
+    setLoading(true)
+    try {
+      const list = await repository.list()
+      setProducts(list)
+      setError(null)
+    } catch (err) {
+      setError(errorMessage(err, 'The catalogue could not be loaded.'))
+    } finally {
+      setLoading(false)
+    }
+  }, [repository])
+
+  useEffect(() => {
+    let cancelled = false
+
+    repository
+      .list()
+      .then((list) => {
+        if (cancelled) return
+        setProducts(list)
+        setError(null)
+      })
+      .catch((err: unknown) => {
+        if (cancelled) return
+        setError(errorMessage(err, 'The catalogue could not be loaded.'))
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [repository])
+
+  const refresh = useCallback(async () => {
+    await load()
+  }, [load])
 
   const bounds = useMemo(() => priceBounds(products), [products])
 
@@ -60,26 +105,36 @@ export function CatalogProvider({
   const search = useCallback((query: string) => searchCatalog(products, query), [products])
 
   const saveProduct = useCallback(
-    (product: Product): Product => {
-      const saved = repository.save(product)
-      refresh()
+    async (product: Product, isNew = false): Promise<Product> => {
+      const saved = isNew
+        ? await repository.create(product)
+        : await repository.update(product.id, product)
+
+      setProducts((current) => {
+        const index = current.findIndex((p) => p.id === saved.id)
+        if (index < 0) return [...current, saved]
+        const next = [...current]
+        next[index] = saved
+        return next
+      })
+
       return saved
     },
-    [repository, refresh],
+    [repository],
   )
 
   const removeProduct = useCallback(
-    (id: string) => {
-      repository.remove(id)
-      refresh()
+    async (id: string) => {
+      await repository.remove(id)
+      setProducts((current) => current.filter((p) => p.id !== id))
     },
-    [repository, refresh],
+    [repository],
   )
 
-  const resetCatalogue = useCallback(() => {
-    repository.resetToSeed()
-    refresh()
-  }, [repository, refresh])
+  const resetCatalogue = useCallback(async () => {
+    const list = await repository.reset()
+    setProducts(list)
+  }, [repository])
 
   const suggestSlug = useCallback(
     (name: string): string => {
@@ -97,23 +152,29 @@ export function CatalogProvider({
     () => ({
       products,
       bounds,
+      loading,
+      error,
       getById,
       getBySlug,
       search,
       saveProduct,
       removeProduct,
       resetCatalogue,
+      refresh,
       suggestSlug,
     }),
     [
       products,
       bounds,
+      loading,
+      error,
       getById,
       getBySlug,
       search,
       saveProduct,
       removeProduct,
       resetCatalogue,
+      refresh,
       suggestSlug,
     ],
   )

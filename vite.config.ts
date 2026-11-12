@@ -4,12 +4,27 @@ import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
+const apiProxy = {
+  '/api': {
+    target: process.env.VITE_API_PROXY_TARGET ?? 'http://127.0.0.1:8090',
+    changeOrigin: true,
+  },
+}
+
 export default defineConfig({
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
   ],
+  server: {
+    // The API runs on the Laragon PHP dev server during development.
+    proxy: apiProxy,
+  },
+  preview: {
+    // Keep `npm run preview` usable against the local API too.
+    proxy: apiProxy,
+  },
   build: {
     rollupOptions: {
       output: {

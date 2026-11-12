@@ -1,0 +1,13 @@
+.idea/
+.vscode/
+/coverage/
+/vendor/
+/logs/*
+!/logs/README.md
+/var/*
+!/var/.gitkeep
+.env
+.env.local
+.env.*.local
+.phpunit.result.cache
+.phpunit.cache/

@@ -4,6 +4,7 @@ import type { Product } from '../../types'
 import { useCatalog, useToast } from '../../store'
 import { useDocumentMeta } from '../../hooks/useDocumentMeta'
 import { formatPrice, classNames } from '../../lib/format'
+import { errorMessage } from '../../lib/api'
 import { discountPercent } from '../../lib/catalog'
 import { ProductFormModal } from '../../components/admin/ProductFormModal'
 import { ProductImage } from '../../components/ui/ProductImage'
@@ -11,7 +12,7 @@ import { Button } from '../../components/ui/Button'
 import { BRANDS } from '../../data/collections'
 
 export function AdminProducts() {
-  const { products, removeProduct, saveProduct, resetCatalogue } = useCatalog()
+  const { products, loading, removeProduct, saveProduct, resetCatalogue } = useCatalog()
   const { notify } = useToast()
   const [query, setQuery] = useState('')
   const [brand, setBrand] = useState<string>('all')
@@ -39,21 +40,35 @@ export function AdminProducts() {
     })
   }, [products, query, brand])
 
-  const handleDelete = (product: Product) => {
+  const handleDelete = async (product: Product) => {
     if (!window.confirm(`Remove “${product.name}” from the boutique? This cannot be undone.`)) return
-    removeProduct(product.id)
-    notify(`${product.name} removed from the catalogue.`, 'info')
+
+    try {
+      await removeProduct(product.id)
+      notify(`${product.name} removed from the catalogue.`, 'info')
+    } catch (error) {
+      notify(errorMessage(error, 'The product could not be removed.'), 'error')
+    }
   }
 
-  const toggleStock = (product: Product) => {
-    saveProduct({ ...product, inStock: !product.inStock })
-    notify(product.inStock ? `${product.name} marked sold out.` : `${product.name} is back in stock.`, 'info')
+  const toggleStock = async (product: Product) => {
+    try {
+      await saveProduct({ ...product, inStock: !product.inStock })
+      notify(product.inStock ? `${product.name} marked sold out.` : `${product.name} is back in stock.`, 'info')
+    } catch (error) {
+      notify(errorMessage(error, 'The stock status could not be updated.'), 'error')
+    }
   }
 
-  const handleReset = () => {
+  const handleReset = async () => {
     if (!window.confirm('Restore the original factory catalogue? Your edits will be lost.')) return
-    resetCatalogue()
-    notify('Catalogue restored to factory settings.', 'info')
+
+    try {
+      await resetCatalogue()
+      notify('Catalogue restored to factory settings.', 'info')
+    } catch (error) {
+      notify(errorMessage(error, 'The catalogue could not be restored.'), 'error')
+    }
   }
 
   return (
@@ -63,7 +78,9 @@ export function AdminProducts() {
           <p className="eyebrow text-gold">Catalogue</p>
           <h1 className="mt-1 font-cormorant text-2xl text-ivory sm:text-3xl">Products</h1>
           <p className="mt-1 text-[12px] font-light text-ash">
-            {products.length} pieces. Changes appear in the boutique instantly.
+            {loading && products.length === 0
+              ? 'Loading the catalogue…'
+              : `${products.length} pieces. Changes appear in the boutique instantly.`}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">

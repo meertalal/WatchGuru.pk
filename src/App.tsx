@@ -24,6 +24,9 @@ const OrderConfirmation = lazy(() =>
 const TrackOrder = lazy(() => import('./pages/TrackOrder').then((m) => ({ default: m.TrackOrder })))
 const About = lazy(() => import('./pages/About').then((m) => ({ default: m.About })))
 const Contact = lazy(() => import('./pages/Contact').then((m) => ({ default: m.Contact })))
+const Unsubscribe = lazy(() =>
+  import('./pages/Unsubscribe').then((m) => ({ default: m.Unsubscribe })),
+)
 const AdminLogin = lazy(() =>
   import('./pages/AdminLogin').then((m) => ({ default: m.AdminLogin })),
 )
@@ -61,6 +64,30 @@ const AdminOrders = lazy(() =>
 )
 const AdminProducts = lazy(() =>
   import('./pages/admin/AdminProducts').then((m) => ({ default: m.AdminProducts })),
+)
+const AdminCollections = lazy(() =>
+  import('./pages/admin/AdminCollections').then((m) => ({ default: m.AdminCollections })),
+)
+const AdminCollection = lazy(() =>
+  import('./pages/admin/AdminCollection').then((m) => ({ default: m.AdminCollection })),
+)
+const AdminStock = lazy(() =>
+  import('./pages/admin/AdminStock').then((m) => ({ default: m.AdminStock })),
+)
+const AdminDiscounts = lazy(() =>
+  import('./pages/admin/AdminDiscounts').then((m) => ({ default: m.AdminDiscounts })),
+)
+const AdminCustomers = lazy(() =>
+  import('./pages/admin/AdminCustomers').then((m) => ({ default: m.AdminCustomers })),
+)
+const AdminWarranty = lazy(() =>
+  import('./pages/admin/AdminWarranty').then((m) => ({ default: m.AdminWarranty })),
+)
+const AdminInbox = lazy(() =>
+  import('./pages/admin/AdminInbox').then((m) => ({ default: m.AdminInbox })),
+)
+const AdminOrderNew = lazy(() =>
+  import('./pages/admin/AdminOrderNew').then((m) => ({ default: m.AdminOrderNew })),
 )
 
 /** Legacy /product/:id links → canonical slug route. */
@@ -112,6 +139,7 @@ function App() {
 
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="unsubscribe" element={<Unsubscribe />} />
 
             <Route path="policies/refund-policy" element={<RefundPolicy />} />
             <Route path="policies/shipping-policy" element={<ShippingPolicy />} />
@@ -142,7 +170,16 @@ function App() {
           >
             <Route index element={<AdminOverview />} />
             <Route path="orders" element={<AdminOrders />} />
+            <Route path="orders/new" element={<AdminOrderNew />} />
             <Route path="products" element={<AdminProducts />} />
+            <Route path="collections" element={<AdminCollections />} />
+            <Route path="collections/brand/:brandSlug" element={<AdminCollection />} />
+            <Route path="collections/:slug" element={<AdminCollection />} />
+            <Route path="stock" element={<AdminStock />} />
+            <Route path="discounts" element={<AdminDiscounts />} />
+            <Route path="customers" element={<AdminCustomers />} />
+            <Route path="warranty" element={<AdminWarranty />} />
+            <Route path="inbox" element={<AdminInbox />} />
             <Route path="*" element={<Navigate to="/admin" replace />} />
           </Route>
         </Routes>
