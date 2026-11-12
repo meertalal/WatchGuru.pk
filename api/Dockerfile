@@ -3,7 +3,8 @@ FROM php:8.3-apache
 RUN apt-get update \
     && apt-get install -y --no-install-recommends unzip git libzip-dev \
     && docker-php-ext-install pdo_mysql zip \
-    && a2enmod rewrite \
+    && (a2dismod mpm_event mpm_worker || true) \
+    && a2enmod mpm_prefork rewrite \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -19,7 +20,8 @@ RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoload
 
 COPY api/ .
 
-RUN mkdir -p var/cache var/rate-limit logs \
+RUN apache2ctl configtest \
+    && mkdir -p var/cache var/rate-limit logs \
     && chown -R www-data:www-data var logs
 
 COPY api/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
