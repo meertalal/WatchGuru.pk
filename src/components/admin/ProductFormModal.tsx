@@ -1,11 +1,12 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { X } from 'lucide-react'
+import { ImagePlus, X } from 'lucide-react'
 import type { Product } from '../../types'
 import { BRANDS, COLLECTIONS, DIAL_COLORS, STRAP_TYPES } from '../../data/products'
 import { adminProductSchema, type AdminProductValues } from '../../lib/validation'
 import { ApiError, errorMessage } from '../../lib/api'
+import { fileToImageDataUrl } from '../../lib/imageUpload'
 import { useCatalog, useToast } from '../../store'
 import { classNames } from '../../lib/format'
 import { Button } from '../ui/Button'
@@ -84,6 +85,8 @@ export function ProductFormModal({
   const { notify } = useToast()
   const isNew = editing === null
   const [formError, setFormError] = useState('')
+  const [uploading, setUploading] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const defaultValues = useMemo(() => (editing ? toFormValues(editing) : BLANK), [editing])
 
@@ -101,6 +104,41 @@ export function ProductFormModal({
   })
 
   const watchedCollections = watch('collections')
+  const imageList = parseLines(watch('images') ?? '')
+
+  const removeImage = (index: number) => {
+    setValue('images', imageList.filter((_, position) => position !== index).join('\n'), {
+      shouldDirty: true,
+      shouldValidate: true,
+    })
+  }
+
+  const addImages = async (files: FileList | null) => {
+    if (!files || files.length === 0) return
+
+    const slots = Math.max(0, 8 - imageList.length)
+    if (slots === 0) {
+      notify('A product can hold up to 8 photos.', 'error')
+      return
+    }
+
+    setUploading(true)
+    try {
+      const urls: string[] = []
+      for (const file of Array.from(files).slice(0, slots)) {
+        urls.push(await fileToImageDataUrl(file))
+      }
+      setValue('images', [...imageList, ...urls].join('\n'), {
+        shouldDirty: true,
+        shouldValidate: true,
+      })
+    } catch (error) {
+      notify(errorMessage(error, 'The photo could not be added.'), 'error')
+    } finally {
+      setUploading(false)
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
+  }
 
   // Auto-derive the slug from the name until the user edits it manually.
   const nameValue = watch('name')
@@ -400,14 +438,54 @@ export function ProductFormModal({
               error={errors.highlights?.message}
               {...register('highlights')}
             />
-            <TextAreaField
-              label="Image URLs (one per line)"
-              id="images"
-              rows={3}
-              placeholder="https://…/photo-1.jpg"
-              error={errors.images?.message}
-              {...register('images')}
-            />
+            <div className="sm:col-span-2">
+              <span className="mb-2 block font-akkurat text-[9px] font-medium tracking-[0.2em] text-ash uppercase">
+                Product photos
+              </span>
+              <div className="flex flex-wrap gap-3">
+                {imageList.map((src, index) => (
+                  <div key={index} className="group relative size-24 border border-line bg-coal">
+                    <img src={src} alt="" className="size-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => removeImage(index)}
+                      aria-label="Remove photo"
+                      className="absolute right-1 top-1 flex size-6 items-center justify-center bg-black/70 text-ivory transition-colors hover:text-error"
+                    >
+                      <X className="size-3.5" strokeWidth={1.5} />
+                    </button>
+                  </div>
+                ))}
+                {imageList.length < 8 && (
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploading}
+                    className="flex size-24 flex-col items-center justify-center gap-1.5 border border-dashed border-line text-muted transition-colors hover:border-gold hover:text-gold disabled:opacity-60"
+                  >
+                    <ImagePlus className="size-5" strokeWidth={1.3} aria-hidden="true" />
+                    <span className="text-[10px] uppercase tracking-[0.12em]">
+                      {uploading ? 'Adding…' : 'Add photo'}
+                    </span>
+                  </button>
+                )}
+              </div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                multiple
+                className="hidden"
+                onChange={(event) => void addImages(event.target.files)}
+              />
+              {errors.images?.message ? (
+                <p className="mt-1.5 text-[11px] text-error">{errors.images.message}</p>
+              ) : (
+                <p className="mt-1.5 text-[11px] text-muted">
+                  Up to 8 photos. Large images are resized automatically.
+                </p>
+              )}
+            </div>
             <TextAreaField
               label="Specifications (Label: Value, one per line)"
               id="specs"

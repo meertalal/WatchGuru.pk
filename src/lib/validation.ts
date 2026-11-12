@@ -160,7 +160,7 @@ export const adminProductSchema = z.object({
   images: z
     .string()
     .refine((value) => value.split('\n').map((l) => l.trim()).filter(Boolean).length > 0, {
-      message: 'Add at least one image URL',
+      message: 'Add at least one photo',
     }),
   specs: z.string(),
 })

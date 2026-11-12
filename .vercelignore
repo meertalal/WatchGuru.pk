@@ -1,0 +1,10 @@
+api
+dist
+node_modules
+.git
+.qoder
+.freebuff
+.env
+.env.*
+coverage
+*.log
