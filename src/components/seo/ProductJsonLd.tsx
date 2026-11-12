@@ -6,7 +6,7 @@ import { serializeJsonLd } from '../../lib/jsonLd'
  * the catalogue are emitted — no reviews, ratings or stock claims are invented.
  */
 export function ProductJsonLd({ product }: { product: Product }) {
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://warchgurupk.vercel.app'
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://watchgurupk.vercel.app'
   const url = `${origin}/products/${product.slug}`
 
   const data = {

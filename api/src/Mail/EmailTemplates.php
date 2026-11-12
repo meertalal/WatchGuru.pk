@@ -335,7 +335,7 @@ final class EmailTemplates
 
     private static function siteUrl(): string
     {
-        return rtrim((string) Env::get('SITE_URL', 'https://warchgurupk.vercel.app'), '/');
+        return rtrim((string) Env::get('SITE_URL', 'https://watchgurupk.vercel.app'), '/');
     }
 
     private static function e(string $value): string

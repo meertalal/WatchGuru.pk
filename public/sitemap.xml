@@ -2,86 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Core storefront pages -->
   <url>
-    <loc>https://warchgurupk.vercel.app/</loc>
+    <loc>https://watchgurupk.vercel.app/</loc>
     <priority>1.0</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>https://warchgurupk.vercel.app/collections</loc>
+    <loc>https://watchgurupk.vercel.app/collections</loc>
     <priority>0.9</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>https://warchgurupk.vercel.app/collections/all</loc>
+    <loc>https://watchgurupk.vercel.app/collections/all</loc>
     <priority>0.9</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>https://warchgurupk.vercel.app/collections/men</loc>
+    <loc>https://watchgurupk.vercel.app/collections/men</loc>
     <priority>0.8</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>https://warchgurupk.vercel.app/collections/women</loc>
+    <loc>https://watchgurupk.vercel.app/collections/women</loc>
     <priority>0.8</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>https://warchgurupk.vercel.app/collections/executive</loc>
+    <loc>https://watchgurupk.vercel.app/collections/executive</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://warchgurupk.vercel.app/collections/original</loc>
+    <loc>https://watchgurupk.vercel.app/collections/original</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://warchgurupk.vercel.app/collections/fashion</loc>
+    <loc>https://watchgurupk.vercel.app/collections/fashion</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
 
   <!-- Brand Collections -->
-  <url><loc>https://warchgurupk.vercel.app/collections/brand/meridian</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/collections/brand/beaumont</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/collections/brand/aurelian</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/collections/brand/halcyon</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/collections/brand/nordvik</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/collections/brand/delacroix</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/collections/brand/watchguru-atelier</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/collections/brand/meridian</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/collections/brand/beaumont</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/collections/brand/aurelian</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/collections/brand/halcyon</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/collections/brand/nordvik</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/collections/brand/delacroix</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/collections/brand/watchguru-atelier</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
 
   <!-- Complete Catalogue Product Detail URLs -->
-  <url><loc>https://warchgurupk.vercel.app/products/meridian-heritage-classic-38</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/meridian-chronomaster-automatic</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/meridian-marina-diver-300</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/meridian-ivory-dress-36</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/beaumont-monarch-perpetual</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/beaumont-regent-chronograph</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/beaumont-sovereign-moonphase</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/beaumont-aurelia-rose-34</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/aurelian-celestia-diamond-32</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/aurelian-nocturne-skeleton</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/aurelian-solstice-gmt</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/halcyon-aeris-aviator</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/halcyon-lumen-slim-dress</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/halcyon-tide-diver-gmt</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/nordvik-aurora-automatic-39</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/nordvik-fjord-diver-42</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/nordvik-glacier-sport-chrono</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/delacroix-grand-complication</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/delacroix-etoile-diamond</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/delacroix-parisian-rose-30</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/watchguru-atelier-wg01-heritage-auto</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/watchguru-atelier-wg02-chronosport-42</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/products/watchguru-atelier-wg03-luna-34</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/meridian-heritage-classic-38</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/meridian-chronomaster-automatic</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/meridian-marina-diver-300</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/meridian-ivory-dress-36</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/beaumont-monarch-perpetual</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/beaumont-regent-chronograph</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/beaumont-sovereign-moonphase</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/beaumont-aurelia-rose-34</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/aurelian-celestia-diamond-32</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/aurelian-nocturne-skeleton</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/aurelian-solstice-gmt</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/halcyon-aeris-aviator</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/halcyon-lumen-slim-dress</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/halcyon-tide-diver-gmt</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/nordvik-aurora-automatic-39</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/nordvik-fjord-diver-42</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/nordvik-glacier-sport-chrono</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/delacroix-grand-complication</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/delacroix-etoile-diamond</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/delacroix-parisian-rose-30</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/watchguru-atelier-wg01-heritage-auto</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/watchguru-atelier-wg02-chronosport-42</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/products/watchguru-atelier-wg03-luna-34</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
 
   <!-- Information and Legal Policies -->
-  <url><loc>https://warchgurupk.vercel.app/about</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/contact</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/track-order</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/policies/refund-policy</loc><priority>0.4</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/policies/shipping-policy</loc><priority>0.4</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/policies/terms-of-service</loc><priority>0.4</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://warchgurupk.vercel.app/policies/warranty</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/about</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/contact</loc><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/track-order</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/policies/refund-policy</loc><priority>0.4</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/policies/shipping-policy</loc><priority>0.4</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/policies/terms-of-service</loc><priority>0.4</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://watchgurupk.vercel.app/policies/warranty</loc><priority>0.5</priority><changefreq>monthly</changefreq></url>
 </urlset>

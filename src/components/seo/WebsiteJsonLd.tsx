@@ -4,7 +4,7 @@ import { serializeJsonLd } from '../../lib/jsonLd'
  * Schema.org WebSite structured data with SearchAction for site search indexing.
  */
 export function WebsiteJsonLd() {
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://warchgurupk.vercel.app'
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://watchgurupk.vercel.app'
 
   const data = {
     '@context': 'https://schema.org',
