@@ -7,30 +7,31 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import type { CustomerAccount, ProfilePatch } from '../types'
+import type { AdminAccount } from '../types'
 import {
-  accountRepository,
-  type AccountRepository,
-  type RegisterInput,
-} from '../data/repositories/accountRepository'
-import { storageKeys, readJson, removeKey, writeJson, defaultStorage } from '../lib/storage'
+  ApiError,
+  clearAdminToken,
+  getAdminToken,
+  request,
+  setAdminToken,
+} from '../lib/api'
 
-interface Session {
-  accountId: string
-  signedInAt: string
+interface LoginResponse {
+  token: string
+  expiresAt: string
+  account: AdminAccount
 }
 
 export type AuthResult = { ok: true } | { ok: false; error: string }
 
 export interface AuthContextValue {
-  /** Null while the persisted session is being resolved. */
-  account: CustomerAccount | null
+  /** The signed-in store admin, or null for guests. */
+  account: AdminAccount | null
   isAdmin: boolean
+  /** True while a persisted token is being verified. */
   loading: boolean
   login: (email: string, password: string) => Promise<AuthResult>
-  register: (input: RegisterInput) => Promise<AuthResult>
   logout: () => void
-  updateProfile: (patch: ProfilePatch) => Promise<boolean>
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null)
@@ -41,90 +42,67 @@ export function useAuth(): AuthContextValue {
   return ctx
 }
 
-export function AuthProvider({
-  children,
-  repository = accountRepository,
-}: {
-  children: ReactNode
-  repository?: AccountRepository
-}) {
-  const [account, setAccount] = useState<CustomerAccount | null>(null)
-  // Only start in the loading state when there is actually a session to resolve.
-  const [loading, setLoading] = useState(() => {
-    const storage = defaultStorage()
-    const session = readJson<Session | null>(storage, storageKeys.session, null)
-    return Boolean(session?.accountId)
-  })
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [account, setAccount] = useState<AdminAccount | null>(null)
+  // Only start in the loading state when there is a token to verify.
+  const [loading, setLoading] = useState(() => Boolean(getAdminToken()))
 
-  // Resolve any persisted session exactly once on mount.
   useEffect(() => {
-    const storage = defaultStorage()
-    const session = readJson<Session | null>(storage, storageKeys.session, null)
-    if (!session?.accountId) return
+    if (!getAdminToken()) {
+      setLoading(false)
+      return
+    }
+
     let cancelled = false
-    repository
-      .getById(session.accountId)
+
+    request<AdminAccount>('/auth/me', { auth: true })
       .then((resolved) => {
-        if (cancelled) return
-        if (resolved) setAccount(resolved)
-        else removeKey(storage, storageKeys.session)
-        setLoading(false)
+        if (!cancelled) setAccount(resolved)
       })
-      .catch(() => {
+      .catch((error: unknown) => {
+        if (cancelled) return
+        // An expired or revoked token should not keep the UI in limbo.
+        if (error instanceof ApiError && error.status === 401) clearAdminToken()
+        setAccount(null)
+      })
+      .finally(() => {
         if (!cancelled) setLoading(false)
       })
+
     return () => {
       cancelled = true
     }
-  }, [repository])
-
-  const persistSession = useCallback((next: Session | null) => {
-    const storage = defaultStorage()
-    if (next) writeJson(storage, storageKeys.session, next)
-    else removeKey(storage, storageKeys.session)
   }, [])
 
   const login = useCallback(
     async (email: string, password: string): Promise<AuthResult> => {
-      const resolved = await repository.authenticate(email, password)
-      if (!resolved) return { ok: false, error: 'Incorrect email or password. Please try again.' }
-      setAccount(resolved)
-      persistSession({ accountId: resolved.id, signedInAt: new Date().toISOString() })
-      return { ok: true }
-    },
-    [repository, persistSession],
-  )
+      try {
+        const resolved = await request<LoginResponse>('/auth/login', {
+          method: 'POST',
+          body: { email, password },
+        })
 
-  const register = useCallback(
-    async (input: RegisterInput): Promise<AuthResult> => {
-      const result = await repository.register(input)
-      if (!result.ok) {
-        return result.error === 'EMAIL_TAKEN'
-          ? { ok: false, error: 'An account with this email already exists. Try signing in instead.' }
-          : { ok: false, error: 'Please check your details and try again.' }
+        setAdminToken(resolved.token)
+        setAccount(resolved.account)
+        return { ok: true }
+      } catch (error) {
+        const message =
+          error instanceof ApiError
+            ? error.message
+            : 'Unable to sign in right now. Please try again.'
+        return { ok: false, error: message }
       }
-      setAccount(result.account)
-      persistSession({ accountId: result.account.id, signedInAt: new Date().toISOString() })
-      return { ok: true }
     },
-    [repository, persistSession],
+    [],
   )
 
   const logout = useCallback(() => {
+    // Fire-and-forget revocation; the local token is cleared immediately so
+    // the admin UI never waits on the network to sign out.
+    void request('/auth/logout', { method: 'POST', auth: true }).catch(() => {})
+    clearAdminToken()
     setAccount(null)
-    persistSession(null)
-  }, [persistSession])
-
-  const updateProfile = useCallback(
-    async (patch: ProfilePatch): Promise<boolean> => {
-      if (!account) return false
-      const updated = await repository.updateProfile(account.id, patch)
-      if (!updated) return false
-      setAccount(updated)
-      return true
-    },
-    [account, repository],
-  )
+  }, [])
 
   const value = useMemo<AuthContextValue>(
     () => ({
@@ -132,11 +110,9 @@ export function AuthProvider({
       isAdmin: account?.role === 'admin',
       loading,
       login,
-      register,
       logout,
-      updateProfile,
     }),
-    [account, loading, login, register, logout, updateProfile],
+    [account, loading, login, logout],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

@@ -1,3 +1,5 @@
+import { serializeJsonLd } from '../../lib/jsonLd'
+
 interface BreadcrumbItem {
   label: string
   to?: string
@@ -7,7 +9,7 @@ interface BreadcrumbItem {
  * Schema.org BreadcrumbList structured data for rich breadcrumbs in search results.
  */
 export function BreadcrumbJsonLd({ items }: { items: BreadcrumbItem[] }) {
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://www.watchguru.pk'
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://warchgurupk.vercel.app'
 
   const data = {
     '@context': 'https://schema.org',
@@ -23,7 +25,7 @@ export function BreadcrumbJsonLd({ items }: { items: BreadcrumbItem[] }) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }}
     />
   )
 }

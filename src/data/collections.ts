@@ -14,6 +14,8 @@ export interface CollectionDef {
   title: string
   eyebrow: string
   description: string
+  /** Human-readable membership rule, shown in the admin collection modules. */
+  rule?: string
   /** Which products belong to this collection. */
   match: (product: Product) => boolean
 }
@@ -28,6 +30,7 @@ export const COLLECTION_DEFS: readonly CollectionDef[] = [
     eyebrow: 'The Boutique',
     description:
       'Every watch in the WatchGuru.pk boutique, authenticated, serviced and prepared by hand before dispatch.',
+    rule: 'Every product in the catalogue',
     match: () => true,
   },
   {
@@ -36,6 +39,7 @@ export const COLLECTION_DEFS: readonly CollectionDef[] = [
     eyebrow: 'Gentlemen',
     description:
       'Dress pieces, tool watches and grand complications, built for the boardroom, the runway and everywhere in between.',
+    rule: 'Product category: men',
     match: (product) => product.category === 'men',
   },
   {
@@ -44,6 +48,7 @@ export const COLLECTION_DEFS: readonly CollectionDef[] = [
     eyebrow: 'Hers',
     description:
       'High jewellery and quiet dials, pieces designed to be kept, worn and passed on.',
+    rule: 'Product category: women',
     match: (product) => product.category === 'women',
   },
   {
@@ -52,7 +57,17 @@ export const COLLECTION_DEFS: readonly CollectionDef[] = [
     eyebrow: 'The Executive Edit',
     description:
       'Specially imported for clients who want the extraordinary: perpetual calendars, tourbillons and numbered editions.',
+    rule: 'Product tag: Executive',
     match: hasTag('Executive'),
+  },
+  {
+    slug: 'premium',
+    title: 'Premium Watches',
+    eyebrow: 'The Finest Pieces',
+    description:
+      'The most valuable references in the boutique: grand complications, high jewellery and our finest case and dial work.',
+    rule: 'Price at or above PKR 2,000,000',
+    match: (product) => product.price >= 2_000_000,
   },
   {
     slug: 'original',
@@ -60,6 +75,7 @@ export const COLLECTION_DEFS: readonly CollectionDef[] = [
     eyebrow: '100% Authentic',
     description:
       'Only 100% original watches from our authorised partner maisons, each piece verified, warrantied and sealed.',
+    rule: 'Every brand except WatchGuru Atelier',
     match: (product) => product.brand !== OWN_BRAND,
   },
   {
@@ -68,6 +84,7 @@ export const COLLECTION_DEFS: readonly CollectionDef[] = [
     eyebrow: 'The Fashion Edit',
     description:
       'Statement pieces from Parisian and Milanese ateliers, where design leads and horology follows.',
+    rule: 'Product tag: Fashion',
     match: hasTag('Fashion'),
   },
 ] as const

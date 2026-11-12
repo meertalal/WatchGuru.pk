@@ -1,8 +1,9 @@
 import type { OrderStatus, PaymentMethod } from '../types'
 
 /**
- * Order fulfilment vocabulary, shared by the tracking page, the account
- * dashboard, and the admin order manager so statuses never drift apart.
+ * Order fulfilment vocabulary, shared by the tracking page and the admin
+ * order manager so statuses never drift apart. The transition map mirrors
+ * the rules enforced by the API.
  */
 
 export const ORDER_STATUS_FLOW: readonly OrderStatus[] = [
@@ -12,6 +13,20 @@ export const ORDER_STATUS_FLOW: readonly OrderStatus[] = [
   'out-for-delivery',
   'delivered',
 ] as const
+
+export const ORDER_STATUS_TRANSITIONS: Record<OrderStatus, OrderStatus[]> = {
+  processing: ['confirmed', 'cancelled'],
+  confirmed: ['shipped', 'cancelled'],
+  shipped: ['out-for-delivery', 'cancelled'],
+  'out-for-delivery': ['delivered', 'cancelled'],
+  delivered: [],
+  cancelled: [],
+}
+
+/** The current status plus every status the API will accept next. */
+export function selectableStatuses(status: OrderStatus): OrderStatus[] {
+  return [status, ...ORDER_STATUS_TRANSITIONS[status]]
+}
 
 export const ORDER_STATUS_LABEL: Record<OrderStatus, string> = {
   processing: 'Processing',
@@ -45,12 +60,6 @@ export const PAYMENT_METHOD_LABEL: Record<PaymentMethod, string> = {
   'bank-transfer': 'Bank Transfer',
   easypaisa: 'Easypaisa',
   jazzcash: 'JazzCash',
-}
-
-export function generateOrderNumber(): string {
-  const stamp = Date.now().toString(36).toUpperCase().slice(-5)
-  const random = Math.random().toString(36).toUpperCase().slice(2, 6)
-  return `WG-${stamp}${random}`
 }
 
 export const COD_ADVANCE_PKR = 1000

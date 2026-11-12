@@ -11,7 +11,13 @@ node_modules
 dist
 dist-ssr
 *.local
+
+# Environment
+.env
+.env.*
+!.env.example
 .qoder/
+.freebuff/
 
 # Editor directories and files
 .vscode/*

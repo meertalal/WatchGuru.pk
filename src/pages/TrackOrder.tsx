@@ -1,7 +1,8 @@
-import { useEffect, useState, type FormEvent } from 'react'
+import { useCallback, useEffect, useState, type FormEvent } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
-import { MessageCircle, PackageSearch, SearchX, ShieldCheck, Truck } from 'lucide-react'
+import { Loader2, MessageCircle, PackageSearch, SearchX, ShieldCheck, Truck } from 'lucide-react'
 import { PAYMENT_METHOD_LABEL } from '../lib/orders'
+import { errorMessage } from '../lib/api'
 import { formatPriceExact, formatDate } from '../lib/format'
 import { useOrders } from '../store'
 import { useDocumentMeta } from '../hooks/useDocumentMeta'
@@ -19,6 +20,8 @@ export function TrackOrder() {
   const [email, setEmail] = useState(searchParams.get('email') ?? '')
   const [result, setResult] = useState<Order | null>(null)
   const [searched, setSearched] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   useDocumentMeta({
     title: 'Track Your Order',
@@ -27,27 +30,47 @@ export function TrackOrder() {
     noindex: true,
   })
 
+  const lookup = useCallback(
+    async (number: string, address: string) => {
+      setLoading(true)
+      setError('')
+      try {
+        setResult(await trackOrder(number, address))
+      } catch (err) {
+        setResult(null)
+        setError(errorMessage(err, 'We could not look up that order right now.'))
+      } finally {
+        setSearched(true)
+        setLoading(false)
+      }
+    },
+    [trackOrder],
+  )
+
   // Deep link support: /track-order?number=…&email=… auto-runs the lookup.
   useEffect(() => {
     const number = searchParams.get('number')
     const address = searchParams.get('email')
-    if (number && address) {
-      setOrderNumber(number)
-      setEmail(address)
-      setResult(trackOrder(number, address))
-      setSearched(true)
-    }
-    // Only on mount / param change; trackOrder is stable enough for this.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams])
+    if (!number || !address) return
+    setOrderNumber(number)
+    setEmail(address)
+    void lookup(number, address)
+  }, [searchParams, lookup])
 
   const onSubmit = (event: FormEvent) => {
     event.preventDefault()
     const normalisedNumber = orderNumber.trim().toUpperCase()
     const normalisedEmail = email.trim().toLowerCase()
+
+    if (
+      searchParams.get('number') === normalisedNumber &&
+      searchParams.get('email') === normalisedEmail
+    ) {
+      void lookup(normalisedNumber, normalisedEmail)
+      return
+    }
+
     setSearchParams({ number: normalisedNumber, email: normalisedEmail }, { replace: true })
-    setResult(trackOrder(normalisedNumber, normalisedEmail))
-    setSearched(true)
   }
 
   return (
@@ -128,7 +151,15 @@ export function TrackOrder() {
 
           {/* Result */}
           <div className="lg:col-span-8" aria-live="polite">
-            {!searched ? (
+            {loading ? (
+              <div className="flex h-full flex-col items-center justify-center bg-charcoal px-6 py-20 text-center">
+                <Loader2 className="size-10 animate-spin text-gold/70" strokeWidth={1.2} aria-hidden="true" />
+                <p className="mt-4 font-cormorant text-xl text-ivory">Looking up your order…</p>
+                <p className="mt-1 max-w-sm text-[12.5px] font-light leading-relaxed text-ash">
+                  This only takes a moment.
+                </p>
+              </div>
+            ) : !searched ? (
               <div className="flex h-full flex-col items-center justify-center bg-coal/50 px-6 py-20 text-center">
                 <PackageSearch className="size-12 text-gold/60" strokeWidth={1} aria-hidden="true" />
                 <p className="mt-4 font-cormorant text-xl text-ivory">Your tracking details will appear here</p>
@@ -208,8 +239,8 @@ export function TrackOrder() {
                 <SearchX className="size-12 text-gold/60" strokeWidth={1} aria-hidden="true" />
                 <p className="mt-4 font-cormorant text-xl text-ivory">No order matches those details</p>
                 <p className="mt-1 max-w-sm text-[12.5px] font-light leading-relaxed text-ash">
-                  Double-check the order number and the email used at checkout. If the problem
-                  persists, message us on WhatsApp with your confirmation message.
+                  {error ||
+                    'Double-check the order number and the email used at checkout. If the problem persists, message us on WhatsApp with your confirmation message.'}
                 </p>
               </div>
             )}

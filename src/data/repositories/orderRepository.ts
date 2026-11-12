@@ -1,81 +1,59 @@
-import type { Order, OrderStatus, OrderStatusEntry } from '../../types'
-import {
-  defaultStorage,
-  readJson,
-  storageKeys,
-  writeJson,
-  type StorageLike,
-} from '../../lib/storage'
+import type { Order, OrderStatus, PaymentMethod, ShippingDetails } from '../../types'
+import { request } from '../../lib/api'
+
+/** The payload the API accepts when a guest places an order. */
+export interface PlaceOrderInput {
+  shipping: ShippingDetails
+  items: { productId: string; quantity: number }[]
+  couponCode?: string
+  paymentMethod: PaymentMethod
+}
 
 /**
- * Order persistence, behind an interface (DIP). Orders placed through
- * checkout are appended to local storage and read back by the tracking
- * page and admin order manager.
+ * Order persistence, behind an interface (DIP).
+ *
+ * Placement and tracking are public; listing and status changes require the
+ * admin bearer token, which the API client attaches automatically.
  */
 export interface OrderRepository {
-  list(): Order[]
-  listForEmail(email: string): Order[]
+  list(): Promise<Order[]>
   /** Order lookup for the tracking page — order number + email must match. */
-  find(orderNumber: string, email: string): Order | null
-  place(order: Order): void
-  updateStatus(orderNumber: string, status: OrderStatus, note?: string): Order | null
+  find(orderNumber: string, email: string): Promise<Order>
+  place(input: PlaceOrderInput): Promise<Order>
+  updateStatus(orderNumber: string, status: OrderStatus, note?: string): Promise<Order>
 }
 
-const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value)) as T
-
-export class LocalStorageOrderRepository implements OrderRepository {
-  private readonly storage: StorageLike | null
-
-  constructor(storage: StorageLike | null = defaultStorage()) {
-    this.storage = storage
+export class ApiOrderRepository implements OrderRepository {
+  list(): Promise<Order[]> {
+    return request<Order[]>('/admin/orders', { auth: true })
   }
 
-  list(): Order[] {
-    const stored = readJson<Order[] | null>(this.storage, storageKeys.orders, null)
-    return Array.isArray(stored) ? stored : []
+  find(orderNumber: string, email: string): Promise<Order> {
+    const query = new URLSearchParams({ orderNumber, email })
+    return request<Order>(`/orders/track?${query.toString()}`)
   }
 
-  listForEmail(email: string): Order[] {
-    const normalised = email.trim().toLowerCase()
-    return this.list()
-      .filter((order) => order.email.toLowerCase() === normalised)
-      .sort((a, b) => Date.parse(b.placedAt) - Date.parse(a.placedAt))
+  place(input: PlaceOrderInput): Promise<Order> {
+    return request<Order>('/orders', { method: 'POST', body: input })
   }
 
-  find(orderNumber: string, email: string): Order | null {
-    const number = orderNumber.trim().toUpperCase()
-    const address = email.trim().toLowerCase()
-    return (
-      this.list().find(
-        (order) =>
-          order.orderNumber.toUpperCase() === number &&
-          order.email.toLowerCase() === address,
-      ) ?? null
-    )
-  }
-
-  place(order: Order): void {
-    const list = this.list()
-    list.push(order)
-    writeJson(this.storage, storageKeys.orders, list)
-  }
-
-  updateStatus(orderNumber: string, status: OrderStatus, note?: string): Order | null {
-    const number = orderNumber.trim().toUpperCase()
-    const list = this.list()
-    const index = list.findIndex((order) => order.orderNumber.toUpperCase() === number)
-    if (index < 0) return null
-    const order = list[index]
-    const entry: OrderStatusEntry = { status, at: new Date().toISOString(), ...(note ? { note } : {}) }
-    const updated: Order = {
-      ...order,
-      status,
-      statusHistory: [...order.statusHistory, entry],
-    }
-    list[index] = updated
-    writeJson(this.storage, storageKeys.orders, list)
-    return clone(updated)
+  updateStatus(orderNumber: string, status: OrderStatus, note?: string): Promise<Order> {
+    return request<Order>(`/admin/orders/${encodeURIComponent(orderNumber)}/status`, {
+      method: 'PATCH',
+      body: { status, note },
+      auth: true,
+    })
   }
 }
 
-export const orderRepository = new LocalStorageOrderRepository()
+export const orderRepository = new ApiOrderRepository()
+
+/**
+ * Manual order entry for the store team. The API applies the same stock, coupon
+ * and total rules as guest checkout.
+ */
+export function createAdminOrder(
+  input: PlaceOrderInput & { status?: OrderStatus },
+): Promise<Order> {
+  return request<Order>('/admin/orders', { method: 'POST', body: input, auth: true })
+}

@@ -53,7 +53,9 @@ export function computeTotals(
   }
 
   const taxable = Math.max(0, subtotal - discount)
-  const tax = Math.round(taxable * TAX_RATE * 100) / 100
+  // The API rounds tax to whole rupees; mirror that so the checkout summary
+  // matches the order the server creates.
+  const tax = Math.round(taxable * TAX_RATE)
   const total = Math.max(0, taxable + shippingCost + tax)
 
   return {

@@ -1,0 +1,75 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use App\Command\SeedCommand;
+use App\Support\Env;
+use DI\ContainerBuilder;
+use Doctrine\Migrations\Configuration\EntityManager\ExistingEntityManager;
+use Doctrine\Migrations\Configuration\Migration\ConfigurationArray;
+use Doctrine\Migrations\DependencyFactory;
+use Doctrine\Migrations\Tools\Console\Command\DiffCommand;
+use Doctrine\Migrations\Tools\Console\Command\DumpSchemaCommand;
+use Doctrine\Migrations\Tools\Console\Command\ExecuteCommand;
+use Doctrine\Migrations\Tools\Console\Command\GenerateCommand;
+use Doctrine\Migrations\Tools\Console\Command\LatestCommand;
+use Doctrine\Migrations\Tools\Console\Command\ListCommand;
+use Doctrine\Migrations\Tools\Console\Command\MigrateCommand;
+use Doctrine\Migrations\Tools\Console\Command\RollupCommand;
+use Doctrine\Migrations\Tools\Console\Command\StatusCommand;
+use Doctrine\Migrations\Tools\Console\Command\SyncMetadataCommand;
+use Doctrine\Migrations\Tools\Console\Command\UpToDateCommand;
+use Doctrine\Migrations\Tools\Console\Command\VersionCommand;
+use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\NullLogger;
+use Symfony\Component\Console\Application;
+
+require dirname(__DIR__) . '/vendor/autoload.php';
+
+Env::load(dirname(__DIR__) . '/.env');
+
+$builder = new ContainerBuilder();
+$builder->useAutowiring(true);
+(require dirname(__DIR__) . '/config/dependencies.php')($builder);
+$container = $builder->build();
+
+/** @var EntityManagerInterface $em */
+$em = $container->get(EntityManagerInterface::class);
+
+$dependencyFactory = DependencyFactory::fromEntityManager(
+    new ConfigurationArray([
+        'migrations_paths' => [
+            'WatchGuru\\Migrations' => dirname(__DIR__) . '/migrations',
+        ],
+        'table_storage' => [
+            'table_name' => 'doctrine_migration_versions',
+        ],
+        'all_or_nothing' => true,
+        'transactional' => true,
+        'check_database_platform' => true,
+    ]),
+    new ExistingEntityManager($em),
+    new NullLogger(),
+);
+
+$application = new Application('WatchGuru.pk API', '1.0.0');
+
+$application->addCommands([
+    new DiffCommand($dependencyFactory, 'migrations:diff'),
+    new DumpSchemaCommand($dependencyFactory, 'migrations:dump-schema'),
+    new ExecuteCommand($dependencyFactory, 'migrations:execute'),
+    new GenerateCommand($dependencyFactory, 'migrations:generate'),
+    new LatestCommand($dependencyFactory, 'migrations:latest'),
+    new ListCommand($dependencyFactory, 'migrations:list'),
+    new MigrateCommand($dependencyFactory, 'migrations:migrate'),
+    new RollupCommand($dependencyFactory, 'migrations:rollup'),
+    new StatusCommand($dependencyFactory, 'migrations:status'),
+    new SyncMetadataCommand($dependencyFactory, 'migrations:sync-metadata-storage'),
+    new UpToDateCommand($dependencyFactory, 'migrations:up-to-date'),
+    new VersionCommand($dependencyFactory, 'migrations:version'),
+]);
+
+$application->add($container->get(SeedCommand::class));
+
+$application->run();

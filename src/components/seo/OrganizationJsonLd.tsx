@@ -1,8 +1,10 @@
+import { serializeJsonLd } from '../../lib/jsonLd'
+
 /**
  * Schema.org Organization structured data for WatchGuru.pk.
  */
 export function OrganizationJsonLd() {
-  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://www.watchguru.pk'
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://warchgurupk.vercel.app'
 
   const data = {
     '@context': 'https://schema.org',
@@ -31,7 +33,7 @@ export function OrganizationJsonLd() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }}
     />
   )
 }

@@ -3,10 +3,12 @@ import { ChevronDown, Search } from 'lucide-react'
 import { useOrders, useToast } from '../../store'
 import { useDocumentMeta } from '../../hooks/useDocumentMeta'
 import { formatDate, formatPriceExact, classNames } from '../../lib/format'
+import { errorMessage } from '../../lib/api'
 import {
   ORDER_STATUS_FLOW,
   ORDER_STATUS_LABEL,
   PAYMENT_METHOD_LABEL,
+  selectableStatuses,
 } from '../../lib/orders'
 import type { OrderStatus } from '../../types'
 import { OrderTimeline } from '../../components/order/OrderTimeline'
@@ -18,19 +20,30 @@ const TABS: { label: string; value: OrderStatus | 'all' }[] = [
   { label: 'Cancelled', value: 'cancelled' },
 ]
 
-const SELECTABLE_STATUSES: OrderStatus[] = [...ORDER_STATUS_FLOW, 'cancelled']
-
 export function AdminOrders() {
-  const { orders, updateStatus } = useOrders()
+  const { orders, loading, updateStatus } = useOrders()
   const { notify } = useToast()
   const [tab, setTab] = useState<OrderStatus | 'all'>('all')
   const [query, setQuery] = useState('')
   const [expanded, setExpanded] = useState<string | null>(null)
+  const [updating, setUpdating] = useState<string | null>(null)
 
   useDocumentMeta({
     title: 'Admin | Orders',
     description: 'WatchGuru.pk order manager. Confirm, ship and track every order.',
   })
+
+  const changeStatus = async (orderNumber: string, next: OrderStatus) => {
+    setUpdating(orderNumber)
+    try {
+      await updateStatus(orderNumber, next)
+      notify(`${orderNumber} marked ${ORDER_STATUS_LABEL[next].toLowerCase()}.`)
+    } catch (error) {
+      notify(errorMessage(error, 'The order status could not be updated.'), 'error')
+    } finally {
+      setUpdating(null)
+    }
+  }
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase()
@@ -105,7 +118,7 @@ export function AdminOrders() {
       <ul className="mt-6 flex flex-col gap-4">
         {filtered.length === 0 && (
           <li className="bg-coal/60 px-6 py-12 text-center text-[12.5px] font-light text-ash">
-            No orders match that filter.
+            {loading ? 'Loading orders…' : 'No orders match that filter.'}
           </li>
         )}
 
@@ -184,14 +197,13 @@ export function AdminOrders() {
                         <select
                           id={`status-${order.orderNumber}`}
                           value={order.status}
+                          disabled={updating === order.orderNumber}
                           onChange={(e) => {
-                            const next = e.target.value as OrderStatus
-                            updateStatus(order.orderNumber, next)
-                            notify(`${order.orderNumber} marked ${ORDER_STATUS_LABEL[next].toLowerCase()}.`)
+                            void changeStatus(order.orderNumber, e.target.value as OrderStatus)
                           }}
-                          className="border border-line bg-charcoal px-3 py-2 font-inter text-[11px] text-ivory outline-none focus:border-gold"
+                          className="border border-line bg-charcoal px-3 py-2 font-inter text-[11px] text-ivory outline-none focus:border-gold disabled:opacity-60"
                         >
-                          {SELECTABLE_STATUSES.map((status) => (
+                          {selectableStatuses(order.status).map((status) => (
                             <option key={status} value={status}>
                               {ORDER_STATUS_LABEL[status]}
                             </option>

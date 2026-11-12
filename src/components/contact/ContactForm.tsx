@@ -3,40 +3,47 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { MailCheck, Send } from 'lucide-react'
 import { contactSchema, type ContactValues } from '../../lib/validation'
+import { errorMessage } from '../../lib/api'
+import { sendContactMessage } from '../../data/repositories/supportRepository'
 import { Button } from '../ui/Button'
 import { TextAreaField, TextField } from '../ui/FormControls'
 
 type ContactFormVariant = 'default' | 'contact'
 
-const CONCIERGE_EMAIL = 'concierge@watchguru.pk'
-
 /**
  * The concierge contact form — shared by the Contact page and the homepage
- * contact section. Every submission composes an email draft in the visitor's
- * mail client, so a success state is only shown once a real draft exists.
+ * contact section. Messages are stored by the API so nothing depends on the
+ * visitor having a mail client configured.
  */
 export function ContactForm({ variant = 'default' }: { variant?: ContactFormVariant }) {
   const [sent, setSent] = useState(false)
-  const [mailtoHref, setMailtoHref] = useState('')
+  const [submitError, setSubmitError] = useState('')
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitting },
   } = useForm<ContactValues>({
     resolver: zodResolver(contactSchema),
     mode: 'onTouched',
     defaultValues: { name: '', email: '', subject: '', message: '' },
   })
 
-  const onSubmit = (values: ContactValues) => {
-    const body = `Name: ${values.name}\nEmail: ${values.email}\n\n${values.message}`
-    const href = `mailto:${CONCIERGE_EMAIL}?subject=${encodeURIComponent(
-      values.subject,
-    )}&body=${encodeURIComponent(body)}`
-    setMailtoHref(href)
-    setSent(true)
-    window.location.assign(href)
+  const onSubmit = async (values: ContactValues) => {
+    setSubmitError('')
+    try {
+      await sendContactMessage({
+        name: values.name.trim(),
+        email: values.email.trim().toLowerCase(),
+        subject: values.subject.trim(),
+        message: values.message.trim(),
+      })
+      reset()
+      setSent(true)
+    } catch (error) {
+      setSubmitError(errorMessage(error, 'Your message could not be sent. Please try again.'))
+    }
   }
 
   if (sent) {
@@ -45,27 +52,19 @@ export function ContactForm({ variant = 'default' }: { variant?: ContactFormVari
         <span className="flex size-14 items-center justify-center rounded-full border border-gold/30 bg-gold/10 text-gold">
           <MailCheck className="size-6" strokeWidth={1.3} aria-hidden="true" />
         </span>
-        <h3 className="mt-5 font-cormorant text-2xl text-ivory">Your email app is opening</h3>
+        <h3 className="mt-5 font-cormorant text-2xl text-ivory">Message received</h3>
         <p className="mt-3 max-w-sm text-[12.5px] font-light leading-relaxed text-ash">
-          Send the message from your email app to reach our concierge. If nothing opened, use the
-          direct link below.
+          Thank you for writing. A confirmation has been sent to your inbox, and our concierge
+          replies within one business day, usually much sooner.
         </p>
-        <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row">
-          <a
-            href={mailtoHref}
-            className="inline-flex items-center justify-center gap-2 border border-button bg-button px-6 py-3 font-akkurat text-[10px] font-medium tracking-[0.2em] text-button-text uppercase transition-colors duration-300 hover:border-gold-bright hover:bg-gold-bright"
-          >
-            Open email draft
-          </a>
-          <Button
-            type="button"
-            variant="outline"
-            className="rounded-full!"
-            onClick={() => setSent(false)}
-          >
-            Write another message
-          </Button>
-        </div>
+        <Button
+          type="button"
+          variant="outline"
+          className="mt-6 rounded-full!"
+          onClick={() => setSent(false)}
+        >
+          Write another message
+        </Button>
       </div>
     )
   }
@@ -115,17 +114,24 @@ export function ContactForm({ variant = 'default' }: { variant?: ContactFormVari
         {...register('message')}
       />
 
+      {submitError && (
+        <p role="alert" className="border border-error/40 bg-error/10 px-4 py-3 text-[12px] leading-relaxed text-error">
+          {submitError}
+        </p>
+      )}
+
       <Button
         type="submit"
         size="lg"
+        disabled={isSubmitting}
         className={isContact ? 'mt-1 w-full rounded-full! py-4' : 'w-full sm:w-auto'}
       >
         <Send className="size-4" aria-hidden="true" />
-        {isContact ? 'Submit' : 'Send message'}
+        {isSubmitting ? 'Sending…' : isContact ? 'Submit' : 'Send message'}
       </Button>
 
       <p className="text-[10.5px] leading-relaxed text-muted">
-        This form opens your email app. Nothing is sent until you press send there.
+        Your message goes straight to our concierge desk. We reply within one business day.
       </p>
     </form>
   )
